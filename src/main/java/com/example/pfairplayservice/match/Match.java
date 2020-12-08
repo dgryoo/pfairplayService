@@ -1,5 +1,6 @@
 package com.example.pfairplayservice.match;
 
+import com.example.pfairplayservice.team.Grade;
 import com.example.pfairplayservice.team.Team;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,9 @@ public class Match {
     private Timestamp matchStartTime;
     private Timestamp matchEndTime;
     private Integer price;
+    private String description;
+    private Grade grade;
+    private boolean status;
 
 
 }

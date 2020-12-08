@@ -16,8 +16,9 @@ import java.util.List;
 public class Team {
 
     private List<Member> memberList;
-    private Date FOUND_DATE;
     private List<Match> matchList;
+    private Date REGISTRATION_DATE;
+    private Date FOUND_DATE;
     private String name;
     private Grade grade;
 
