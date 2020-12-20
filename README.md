@@ -17,7 +17,7 @@
 
 |필드|타입|설명|
 |---|---|---|
-|teamName|String|등록된 팀이름|
+|registerdTeams|List|등록된 teamName의 List를 반환합니다.|
 |name|String|이름|
 |birthday|Date|생년월일|
 |address|String|주소 (법정동 단위까지만)|
@@ -32,7 +32,7 @@
 
 |메서드|요청URL|출력포맷|설명|
 |---|---|---|---|
-|POST|/members/register|json|멤버 가입|
+|POST|/member|json|멤버 가입|
 
 ### 요청변수
 |요청변수명|타입|필수 여부|기본값|설명|
@@ -59,7 +59,7 @@
 
 |메서드|요청URL|출력포맷|설명|
 |---|---|---|---|
-|PUT|/members/update/{UID}|json|자신의 정보 수정|
+|PUT|/members/{UID}|json|멤버의 정보 수정|
 
 ### 요청 변수
 |요청변수명|타입|필수 여부|기본값|설명|
@@ -84,7 +84,7 @@
 
 |메서드|요청URL|출력포맷|설명|
 |---|---|---|---|
-|DELETE|/members/delete/{UID}|json|멤버 삭제|
+|DELETE|/members/{UID}|json|멤버 삭제|
 
 ### 요청 변수
 
@@ -105,7 +105,7 @@
 
 |메서드|요청URL|출력포맷|설명|
 |---|---|---|---|
-|GET|/teams/myteam|json|나의 팀 정보 조회|
+|GET|/team/myteam|json|나의 팀 정보 조회|
 
 ### 요청 변수
 
@@ -129,7 +129,7 @@
 
 |메서드|요청URL|출력포맷|설명|
 |---|---|---|---|
-|POST|/teams/register|json|팀 등록|
+|POST|/team|json|팀 등록|
 
 ### 요청 변수
 
@@ -154,7 +154,7 @@
 
 |메서드|요청URL|출력포맷|설명|
 |---|---|---|---|
-|PUT|/teams/update/{TID}|json|팀 정보 수정|
+|PUT|/team/{TID}|json|팀 정보 수정|
 
 ### 요청 변수
 
@@ -178,7 +178,7 @@
 
 |메서드|요청URL|출력포맷|설명|
 |---|---|---|---|
-|DELETE|/teams/delete/{TID}|json|팀 삭제|
+|DELETE|/team/{TID}|json|팀 삭제|
 
 ### 요청 변수
 
@@ -209,7 +209,7 @@
 
 |필드|타입|설명|
 |---|---|---|
-|json array|List|- 게시글 번호 <br> - 제목<br> - 이름<br> - 작성일<br> - 조회수<br> 정보를 가진 객체의 List를 반환 합니다.|
+|needteamArticles|List|- 게시글 번호 int <br> - 제목 String<br> - 이름 String<br> - 작성일 Date<br> - 조회수 int<br> 정보를 가진 객체의 List를 반환 합니다.|
 
 ## 팀 구해요 게시판 상세글 조회
 
@@ -234,7 +234,7 @@
 |contents|String|게시글 내용|
 |writeDate|Date|작성일|
 |count|int|조회수|
-|memberInfo|Member|- 이름<br> - 나이<br> - 주소<br> - 핸드폰번호(설정에 따라 적용)<br> - 선호포지션<br> - 실력 <br>정보를 포함한 객체를 반환합니다.|
+|memberInfo|Member|- 이름 String<br> - 나이 int<br> - 주소 String<br> - 핸드폰번호(설정에 따라 적용) String<br> - 선호포지션 String<br> - 실력 int<br>정보를 포함한 객체를 반환합니다.|
 
 
 ## 팀원 구해요 게시판 조회
@@ -253,7 +253,7 @@
 
 |필드|타입|설명|
 |---|---|---|
-|json array|List|- 게시글 번호 <br> - 제목<br> - 팀이름<br> - 작성일<br> - 조회수<br> 정보를 가진 객체의 List를 반환 합니다.|
+|needmemberArticles|List|- 게시글 번호 int <br> - 제목 String<br> - 팀이름 String<br> - 작성일 Date<br> - 조회수 int<br> 정보를 가진 객체의 List를 반환 합니다.|
 
 
 ## 팀원 구해요 게시판 상세글 조회
@@ -262,7 +262,7 @@
 
 |메서드|요청URL|출력포맷|설명|
 |---|---|---|---|
-|GET|/borad/needtmember/{articleNo}|json|팀원 구해요 게시판 게시글 상세 조회|
+|GET|/borad/needmember/{articleNo}|json|팀원 구해요 게시판 게시글 상세 조회|
 
 ### 요청 변수
 
@@ -279,7 +279,7 @@
 |contents|String|게시글 내용|
 |writeDate|Date|작성일|
 |count|int|조회수|
-|teamInfo|Team| - 팀이름<br> - 팀 평균 나이<br> - 팀 주활동 주소<br> - 팀 대표 번호<br> - 팀이 필요한 포지션<br> - 팀 평균 레벨<br> 정보를 포함한 객체를 반환합니다.|
+|teamInfo|Team| - 팀이름 String<br> - 팀 평균 나이 int<br> - 팀 주활동 주소 String<br> - 팀 대표 번호 String<br> - 팀이 필요한 포지션 String<br> - 팀 평균 레벨 int<br> 정보를 포함한 객체를 반환합니다.|
 
 
 
