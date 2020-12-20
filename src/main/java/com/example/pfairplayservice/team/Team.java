@@ -19,7 +19,7 @@ public class Team {
     private List<Match> matchList;
     private Date REGISTRATION_DATE;
     private Date FOUND_DATE;
-    private String name;
+    private String teamName;
     private Grade grade;
 
 

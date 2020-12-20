@@ -5,7 +5,7 @@
 ### API 기본정보
 |메서드|요청URL|출력포맷|
 |---|---|---|
-|GET|/members/myPage|json|
+|GET|/member/mypage|json|
 
 ### 요청변수
  
@@ -18,11 +18,11 @@
 |필드|타입|설명|
 |---|---|---|
 |teamName|String|등록된 팀이름|
-|memberName|String|이름|
+|name|String|이름|
 |birthday|Date|생년월일|
 |address|String|주소 (법정동 단위까지만)|
 |phoneNumber|String|핸드폰번호|
-|preferPosition|String|선호포지션|
+|preferPosition|String|선호포지션 <br> 1. ST <br> 2. CAM <br> 3. CM <br> 4. CDM <br> 5. WF <br> 6. WB <br> 7. CB <br> 8. GK|
 |level|String|실력 (1~5)|
 |phoneNumberDisclosureOption|int|핸드폰번호 공개 범위<br> 1 : 전체공개<br> 2 : 팀원에게만 공개<br> 3 : 공개안함|
 
@@ -37,11 +37,11 @@
 ### 요청변수
 |요청변수명|타입|필수 여부|기본값|설명|
 |---|---|---|---|---|
-|memberName|String|Y|-|이름|
+|name|String|Y|-|이름|
 |birthday|Date|Y|-|생년월일|
 |address|String|Y|-|주소 (법정동 단위까지만)|
 |phoneNumber|String|Y|-|핸드폰번호|
-|preferPosition|String|N|-|선호포지션|
+|preferPosition|String|N|-|선호포지션 <br> 1. ST <br> 2. CAM <br> 3. CM <br> 4. CDM <br> 5. WF <br> 6. WB <br> 7. CB <br> 8. GK|
 |level|String|Y|1|실력 (1~5)|
 |phoneNumberDisclosureOption|int|Y|1|핸드폰번호 공개 범위<br> 1 : 전체공개<br> 2 : 팀원에게만 공개<br> 3 : 공개안함|
 
@@ -67,7 +67,7 @@
 |UID|String|Y|-|멤버 식별자|
 |address|String|Y|-|주소 (법정동 단위까지만)|
 |phoneNumber|String|Y|-|핸드폰번호|
-|preferPosition|String|N|-|선호포지션|
+|preferPosition|String|N|-|선호포지션 <br> 1. ST <br> 2. CAM <br> 3. CM <br> 4. CDM <br> 5. WF <br> 6. WB <br> 7. CB <br> 8. GK|
 |level|String|Y|1|실력 (1~5)|
 |phoneNumberDisclosureOption|int|Y|1|핸드폰번호 공개 범위<br> 1 : 전체공개<br> 2 : 팀원에게만 공개<br> 3 : 공개안함|
 
@@ -121,7 +121,7 @@
 |activityAreaAddress|String|주 활동지역 주소 (구 단위까지)|
 |foundDate|Date|팀 창단일|
 |UID|String|대표자|
-|memberList|List|팀에 등록 된 멤버 리스트|
+|memberList|List| - 이름<br> - 나이 <br> - 주소<br> - 핸드폰번호<br> - 선호포지션<br> 이 포함된 팀에 등록 된 멤버 리스트를 반환합니다.|
 
 ## 팀 등록
 
@@ -164,7 +164,6 @@
 |teamName|String|Y|-|이름|
 |activityAreaAddress|String|Y|-|주 활동지역 주소 (구 단위까지)|
 |foundDate|Date|N|-|팀 창단일|
-|UID|String|Y|-|대표자|
 
 ### 출력 결과
 
@@ -200,23 +199,17 @@
 
 |메서드|요청URL|출력포맷|설명|
 |---|---|---|---|
-|GET|/teams/borad/needteam|json|팀을 구하는 멤버들의 게시판 조회|
+|GET|/borad/needteam|json|팀을 구하는 멤버들의 게시판 조회|
 
 ### 요청 변수
 
-|요청변수명|타입|필수 여부|기본값|설명|
-|---|---|---|---|---|
-|boardID|String|Y|-|게시판 식별자|
+요청변수가 없습니다.
 
 ### 출력 결과
 
 |필드|타입|설명|
 |---|---|---|
-|articleNo|int|게시글 번호|
-|subject|String|제목|
-|writeMember|String|작성한 멤버 이름|
-|writeDate|Date|작성일|
-|count|int|조회수|
+|json array|List|- 게시글 번호 <br> - 제목<br> - 이름<br> - 작성일<br> - 조회수<br> 정보를 가진 객체의 List를 반환 합니다.|
 
 ## 팀 구해요 게시판 상세글 조회
 
@@ -224,13 +217,12 @@
 
 |메서드|요청URL|출력포맷|설명|
 |---|---|---|---|
-|GET|/teams/borad/needteam/{articleNo}|json|팀 구해요 게시판 게시글 상세 조회|
+|GET|/borad/needteam/{articleNo}|json|팀 구해요 게시판 게시글 상세 조회|
 
 ### 요청 변수
 
 |요청변수명|타입|필수 여부|기본값|설명|
 |---|---|---|---|---|
-|boardID|String|Y|-|게시판 식별자|
 |articleNo|int|Y|-|게시글 번호|
 
 ### 출력 결과
@@ -242,12 +234,8 @@
 |contents|String|게시글 내용|
 |writeDate|Date|작성일|
 |count|int|조회수|
-|memberName|String|작성자 이름|
-|age|Date|작성자 나이|
-|address|String|작성자 주소 (법정동 단위까지만)|
-|phoneNumber|String|작성자 핸드폰번호 작성자의 설정에 따라 공개 or 비공개 가능|
-|preferPosition|String|작성자 선호포지션|
-|level|String|작성자 실력 (1~5)|
+|memberInfo|Member|- 이름<br> - 나이<br> - 주소<br> - 핸드폰번호(설정에 따라 적용)<br> - 선호포지션<br> - 실력 <br>정보를 포함한 객체를 반환합니다.|
+
 
 ## 팀원 구해요 게시판 조회
 
@@ -255,23 +243,18 @@
 
 |메서드|요청URL|출력포맷|설명|
 |---|---|---|---|
-|GET|/teams/borad/needmember|json|팀원을 구하는 팀의 게시판 조회|
+|GET|/borad/needmember|json|팀원을 구하는 팀의 게시판 조회|
 
 ### 요청 변수
 
-|요청변수명|타입|필수 여부|기본값|설명|
-|---|---|---|---|---|
-|boardID|String|Y|-|게시판 식별자|
+요청변수가 없습니다.
 
 ### 출력 결과
 
 |필드|타입|설명|
 |---|---|---|
-|articleNo|int|게시글 번호|
-|subject|String|제목|
-|writeTeam|String|작성한 팀 이름|
-|writeDate|Date|작성일|
-|count|int|조회수|
+|json array|List|- 게시글 번호 <br> - 제목<br> - 팀이름<br> - 작성일<br> - 조회수<br> 정보를 가진 객체의 List를 반환 합니다.|
+
 
 ## 팀원 구해요 게시판 상세글 조회
 
@@ -279,13 +262,12 @@
 
 |메서드|요청URL|출력포맷|설명|
 |---|---|---|---|
-|GET|/teams/borad/needtmember/{articleNo}|json|팀원 구해요 게시판 게시글 상세 조회|
+|GET|/borad/needtmember/{articleNo}|json|팀원 구해요 게시판 게시글 상세 조회|
 
 ### 요청 변수
 
 |요청변수명|타입|필수 여부|기본값|설명|
 |---|---|---|---|---|
-|boardID|String|Y|-|게시판 식별자|
 |articleNo|int|Y|-|게시글 번호|
 
 ### 출력 결과
@@ -297,11 +279,7 @@
 |contents|String|게시글 내용|
 |writeDate|Date|작성일|
 |count|int|조회수|
-|teamName|String|작성팀 이름|
-|AverageAge|Date|팀 평균 나이|
-|activityAreaAddress|String|팀 주 활동 주소 (법정동 단위까지만)|
-|phoneNumber|String|팀 대표 번호|
-|needPosition|String|팀이 필요한 포지션|
-|teamAverageLevel|double|팀 평균 레벨|
+|teamInfo|Team| - 팀이름<br> - 팀 평균 나이<br> - 팀 주활동 주소<br> - 팀 대표 번호<br> - 팀이 필요한 포지션<br> - 팀 평균 레벨<br> 정보를 포함한 객체를 반환합니다.|
+
 
 
