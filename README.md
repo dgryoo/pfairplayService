@@ -24,7 +24,7 @@
 |address|String|주소 (법정동 단위까지만)|
 |phoneNumber|String|핸드폰번호|
 |preferPosition|String|선호포지션 <br> 1. ST <br> 2. CAM <br> 3. CM <br> 4. CDM <br> 5. WF <br> 6. WB <br> 7. CB <br> 8. GK|
-|level|String|실력 (1~5)|
+|level|String|실력 <br> 1. 상 <br> 2. 중상<br> 3. 중<br> 4. 중하<br> 5. 하|
 |phoneNumberDisclosureOption|int|핸드폰번호 공개 범위<br> 1 : 전체공개<br> 2 : 팀원에게만 공개<br> 3 : 공개안함|
 
 ### status code
@@ -52,7 +52,7 @@
 |address|String|Y|-|주소 (법정동 단위까지만)|
 |phoneNumber|String|Y|-|핸드폰번호|
 |preferPosition|String|N|-|선호포지션 <br> 1. ST <br> 2. CAM <br> 3. CM <br> 4. CDM <br> 5. WF <br> 6. WB <br> 7. CB <br> 8. GK|
-|level|String|Y|1|실력 (1~5)|
+|level|String|Y|1|실력 <br> 1. 상 <br> 2. 중상<br> 3. 중<br> 4. 중하<br> 5. 하|
 |phoneNumberDisclosureOption|int|Y|1|핸드폰번호 공개 범위<br> 1 : 전체공개<br> 2 : 팀원에게만 공개<br> 3 : 공개안함|
 
 ### response body
@@ -65,6 +65,7 @@
 |---|---|
 |201|멤버 생성 성공|
 |400|클라이언트의 잘못된 요청으로 인해 생성 실패|
+|409|해당 (주민등록번호 or 핸드폰 or 카카오 등)으로 계정이 이미 존재할 경우|
 |500|서버 오류로 인해 생성 실패|
 
 ## 멤버 정보수정
@@ -87,7 +88,7 @@
 |address|String|Y|-|주소 (법정동 단위까지만)|
 |phoneNumber|String|Y|-|핸드폰번호|
 |preferPosition|String|N|-|선호포지션 <br> 1. ST <br> 2. CAM <br> 3. CM <br> 4. CDM <br> 5. WF <br> 6. WB <br> 7. CB <br> 8. GK|
-|level|String|Y|1|실력 (1~5)|
+|level|String|Y|1|실력 <br> 1. 상 <br> 2. 중상<br> 3. 중<br> 4. 중하<br> 5. 하|
 |phoneNumberDisclosureOption|int|Y|1|핸드폰번호 공개 범위<br> 1 : 전체공개<br> 2 : 팀원에게만 공개<br> 3 : 공개안함|
 
 ### response body
@@ -136,7 +137,7 @@
 
 |메서드|요청URL|출력포맷|설명|
 |---|---|---|---|
-|GET|/team{TID}|json|팀 정보 조회|
+|GET|/team/{TID}|json|팀 정보 조회|
 
 ### path variable
 
@@ -190,6 +191,7 @@
 |---|---|
 |201|팀 생성 성공|
 |400|클라이언트의 잘못된 요청으로 인해 생성 실패|
+|409|해당 대표자, 팀정보로 이미 팀이 존재할 경우|
 |500|서버 오류로 인해 생성 실패|
 
 ## 팀 정보 수정
