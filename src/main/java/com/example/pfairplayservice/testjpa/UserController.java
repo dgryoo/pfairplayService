@@ -1,7 +1,6 @@
 package com.example.pfairplayservice.testjpa;
 
-import com.example.pfairplayservice.member.Member;
-import com.example.pfairplayservice.member.MemberRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
