@@ -4,6 +4,7 @@ package com.example.pfairplayservice.member;
 import com.example.pfairplayservice.testjpa.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,18 +52,15 @@ public class MemberController {
     }
 
     @PutMapping("/member/{UID}")
-    public int updatePasswordByUID(@PathVariable String UID, @RequestParam String password) {
+    public ResponseEntity<Void> updatePasswordByUID(@PathVariable String UID, @RequestParam String password) {
         Optional<Member> member = memberRepository.findById(UID);
-
         if (!member.isPresent()) {
             throw new MemberNotFoundException(String.format("UID{%s} not found", UID));
         }
-        System.out.println("requestparam password : " + password);
         member.get().setPassword(password);
-        System.out.println("updated member password : " + member.get().getPassword());
         memberRepository.save(member.get());
-        return 1;
 
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/member/{UID}")
