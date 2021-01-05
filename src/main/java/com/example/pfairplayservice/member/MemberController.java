@@ -2,7 +2,6 @@ package com.example.pfairplayservice.member;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,17 +28,14 @@ public class MemberController {
     }
 
     @GetMapping("/member/{UID}")
-    public EntityModel<Member> findByUID(@PathVariable String UID) {
+    public ResponseEntity<Member> findByUID(@PathVariable String UID) {
         Optional<Member> member = memberRepository.findById(UID);
 
         if (!member.isPresent()) {
             throw new MemberNotFoundException(String.format("UID{%s} not found", UID));
         }
 
-        EntityModel<Member> entityModel;
-        entityModel = new EntityModel<>(member.get());
-
-        return entityModel;
+        return ResponseEntity.status(HttpStatus.OK).body(member.get());
     }
 
     @PostMapping("/member")
@@ -61,7 +57,7 @@ public class MemberController {
     }
 
     @DeleteMapping("/member/{UID}")
-    public void deleteByUID(@PathVariable String UID) {
+    public ResponseEntity<Void> deleteByUID(@PathVariable String UID) {
 
         Optional<Member> member = memberRepository.findById(UID);
 
@@ -69,6 +65,8 @@ public class MemberController {
             throw new MemberNotFoundException(String.format("UID{%s} not found", UID));
         }
         memberRepository.deleteById(UID);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 

@@ -22,7 +22,7 @@ import java.util.Date;
 public class Member {
 
     @Id
-    @GeneratedValue(generator="system-uuid")
+    @GeneratedValue(generator="member-uid", strategy = GenerationType.AUTO)
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String UID;
 
