@@ -23,7 +23,7 @@ public class Member {
 
     @Id
     @GeneratedValue(generator="member-uid", strategy = GenerationType.AUTO)
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @GenericGenerator(name="member-uid", strategy = "uuid")
     private String UID;
 
     @Column(nullable = false)
