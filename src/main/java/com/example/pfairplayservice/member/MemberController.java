@@ -40,6 +40,12 @@ public class MemberController {
 
     @PostMapping("/member")
     public ResponseEntity<Void> createMember(@RequestBody Member saveMember) {
+        if (saveMember.getName() == null ||
+                saveMember.getBirthday() == null ||
+                saveMember.getAddress() == null ||
+                saveMember.getPhoneNumber() == null) {
+            throw new requiredParamNotFoundException("이름, 생년월일, 주소, 핸드폰번호를 정확히 입력해 주세요. ");
+        }
         memberRepository.save(saveMember);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
