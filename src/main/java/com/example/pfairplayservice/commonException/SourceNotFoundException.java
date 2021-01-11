@@ -1,12 +1,12 @@
-package com.example.pfairplayservice.member;
+package com.example.pfairplayservice.commonException;
 
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class MemberNotFoundException extends RuntimeException {
-    public MemberNotFoundException(String message) {
+public class SourceNotFoundException extends RuntimeException {
+    public SourceNotFoundException(String message) {
         super(message);
     }
 }
