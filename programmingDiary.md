@@ -34,4 +34,4 @@
   Reference : https://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html
                       -> 2.6.6. Generated identifier values
 
- 
+  //@JsonIgnore() // JsonIgnoreProperties은 오타로 인해 런타임 에러가 날 수 있음 type system에 의해 보장됨

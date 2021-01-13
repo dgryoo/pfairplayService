@@ -1,6 +1,8 @@
 package com.example.pfairplayservice.member;
 
 
+import com.example.pfairplayservice.commonException.RequiredParamNotFoundException;
+import com.example.pfairplayservice.commonException.SourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +34,7 @@ public class MemberController {
         Optional<Member> member = memberRepository.findById(UID);
 
         if (!member.isPresent()) {
-            throw new MemberNotFoundException(String.format("UID{%s} not found", UID));
+            throw new SourceNotFoundException(String.format("UID{%s} not found", UID));
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(member.get());
@@ -40,6 +42,12 @@ public class MemberController {
 
     @PostMapping("/member")
     public ResponseEntity<Void> createMember(@RequestBody Member saveMember) {
+        if (saveMember.getName() == null ||
+                saveMember.getBirthday() == null ||
+                saveMember.getAddress() == null ||
+                saveMember.getPhoneNumber() == null) {
+            throw new RequiredParamNotFoundException("이름, 생년월일, 주소, 핸드폰번호를 정확히 입력해 주세요. ");
+        }
         memberRepository.save(saveMember);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -48,7 +56,7 @@ public class MemberController {
     public ResponseEntity<Void> updatePasswordByUID(@PathVariable String UID, @RequestParam String password) {
         Optional<Member> member = memberRepository.findById(UID);
         if (!member.isPresent()) {
-            throw new MemberNotFoundException(String.format("UID{%s} not found", UID));
+            throw new SourceNotFoundException(String.format("UID{%s} not found", UID));
         }
         member.get().setPassword(password);
         memberRepository.save(member.get());
@@ -62,7 +70,7 @@ public class MemberController {
         Optional<Member> member = memberRepository.findById(UID);
 
         if (!member.isPresent()) {
-            throw new MemberNotFoundException(String.format("UID{%s} not found", UID));
+            throw new RequiredParamNotFoundException(String.format("UID{%s} not found", UID));
         }
         memberRepository.deleteById(UID);
 
