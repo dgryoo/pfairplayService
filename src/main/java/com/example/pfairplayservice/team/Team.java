@@ -1,11 +1,14 @@
 package com.example.pfairplayservice.team;
 
-import com.example.pfairplayservice.match.Match;
 import com.example.pfairplayservice.member.Member;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -13,15 +16,40 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "team")
+
 public class Team {
 
-    private List<Member> memberList;
-    private List<Match> matchList;
-    private Date REGISTRATION_DATE;
-    private Date FOUND_DATE;
+    @Id
+    @GeneratedValue(generator="team-uid", strategy = GenerationType.AUTO)
+    @GenericGenerator(name="team-uid", strategy = "uuid")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String tid;
+
+    @Column(nullable = false)
     private String teamName;
-    private Grade grade;
 
+    @OneToOne
+    @Column(nullable = false)
+    private Member teamLeadMember;
 
+    @Column(nullable = false)
+    private String activityAreaAddress;
+
+    @OneToMany
+    @Column
+    private List<Member> memberList;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @CreationTimestamp
+    @Column(nullable = false)
+    private Date registrationDate;
+
+    @Column
+    private Date foundDate;
+
+    // TODO 매치 생성 후 적용
+    // private List<Match> matchList;
 
 }

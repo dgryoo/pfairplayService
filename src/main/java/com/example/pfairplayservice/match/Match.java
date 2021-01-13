@@ -1,14 +1,11 @@
 package com.example.pfairplayservice.match;
 
-import com.example.pfairplayservice.team.Grade;
 import com.example.pfairplayservice.team.Team;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Past;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -22,7 +19,6 @@ public class Match {
     private Timestamp matchEndTime;
     private Integer price;
     private String description;
-    private Grade grade;
     private boolean status;
 
 
