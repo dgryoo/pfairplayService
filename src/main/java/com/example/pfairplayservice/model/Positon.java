@@ -1,4 +1,4 @@
-package com.example.pfairplayservice.tempenum;
+package com.example.pfairplayservice.model;
 
 public enum Positon {
     ST(1),

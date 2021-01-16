@@ -1,4 +1,4 @@
-package com.example.pfairplayservice.member;
+package com.example.pfairplayservice.jpa.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
