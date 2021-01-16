@@ -1,8 +1,10 @@
-package com.example.pfairplayservice.member;
+package com.example.pfairplayservice.controller;
 
 
-import com.example.pfairplayservice.commonException.RequiredParamNotFoundException;
-import com.example.pfairplayservice.commonException.SourceNotFoundException;
+import com.example.pfairplayservice.common.exception.RequiredParamNotFoundException;
+import com.example.pfairplayservice.common.exception.SourceNotFoundException;
+import com.example.pfairplayservice.jpa.model.Member;
+import com.example.pfairplayservice.jpa.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

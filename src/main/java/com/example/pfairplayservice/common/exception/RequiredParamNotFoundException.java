@@ -1,4 +1,4 @@
-package com.example.pfairplayservice.commonException;
+package com.example.pfairplayservice.common.exception;
 
 
 import org.springframework.http.HttpStatus;

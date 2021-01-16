@@ -1,6 +1,6 @@
 package com.example.pfairplayservice.match;
 
-import com.example.pfairplayservice.team.Team;
+import com.example.pfairplayservice.jpa.model.Team;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

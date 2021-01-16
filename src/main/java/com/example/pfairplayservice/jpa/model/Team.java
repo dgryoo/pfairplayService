@@ -1,6 +1,6 @@
-package com.example.pfairplayservice.team;
+package com.example.pfairplayservice.jpa.model;
 
-import com.example.pfairplayservice.member.Member;
+import com.example.pfairplayservice.jpa.model.Member;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
