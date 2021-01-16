@@ -1,30 +1,32 @@
 package com.example.pfairplayservice.jpa.model;
 
-import com.example.pfairplayservice.jpa.model.Member;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
-
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "team")
-
 public class Team {
 
     @Id
-    @GeneratedValue(generator="team-uid", strategy = GenerationType.AUTO)
-    @GenericGenerator(name="team-uid", strategy = "uuid")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @GeneratedValue(generator = "team-uid", strategy = GenerationType.AUTO)
+    @GenericGenerator(name = "team-uid", strategy = "uuid")
     private String tid;
 
     @Column(nullable = false)
@@ -41,7 +43,6 @@ public class Team {
     @Column
     private List<Member> memberList;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @CreationTimestamp
     @Column(nullable = false)
     private Date registrationDate;
