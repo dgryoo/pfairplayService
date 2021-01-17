@@ -137,13 +137,13 @@
 
 |메서드|요청URL|출력포맷|설명|
 |---|---|---|---|
-|GET|/team/{TID}|json|팀 정보 조회|
+|GET|/team/{tid}|json|팀 정보 조회|
 
 ### path variable
 
 |요청변수명|타입|필수 여부|기본값|설명|
 |---|---|---|---|---|
-|TID|String|Y|-|팀 식별자|
+|tid|String|Y|-|팀 식별자|
 
 ### response body
 
@@ -152,7 +152,7 @@
 |teamName|String|이름|
 |activityAreaAddress|String|주 활동지역 주소 (구 단위까지)|
 |foundDate|Date|팀 창단일|
-|UID|String|대표자|
+|uid|String|대표자|
 |memberList|List| - 이름<br> - 나이 <br> - 주소<br> - 핸드폰번호<br> - 선호포지션<br> 이 포함된 팀에 등록 된 멤버 리스트를 반환합니다.|
 
 ### status code
@@ -160,8 +160,7 @@
 |code|설명|
 |---|---|
 |200|조회 성공|
-|400|클라이언트의 잘못된 요청으로 인해 조회 실패|
-|404|해당 TID의 팀이 없는 경우|
+|404|해당 tid의 팀이 없는 경우|
 |500|서버오류로 인해 조회 실패|
 
 ## 팀 등록

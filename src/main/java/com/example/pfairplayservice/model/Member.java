@@ -1,19 +1,26 @@
 package com.example.pfairplayservice.model;
 
 import com.example.pfairplayservice.jpa.model.MemberEntity;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Member {
 
+    public Member(String name, String phoneNumber) {
+        this.name = name;
+        this.phoneNumber= phoneNumber;
+    }
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String uid;
@@ -57,5 +64,14 @@ public class Member {
                 , member.getBirthday(), member.getAddress(), member.getPhoneNumber(), member.getPreferPosition().getPosition()
                 , member.getLevel(), member.getPhoneNumberDisclosureOption(), member.getJoinDate(), member.getRecentLoginDate());
         return result;
+    }
+
+    public static List<Member> fromList(List<MemberEntity> memberEntityList) {
+        if (memberEntityList == null) return null;
+        List<Member> memberListTemp = null;
+        memberEntityList
+                .stream()
+                .forEach(memberEntity -> memberListTemp.add(Member.from(memberEntity)));
+        return memberListTemp;
     }
 }

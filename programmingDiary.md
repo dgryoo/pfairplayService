@@ -35,3 +35,7 @@
                       -> 2.6.6. Generated identifier values
 
   //@JsonIgnore() // JsonIgnoreProperties은 오타로 인해 런타임 에러가 날 수 있음 type system에 의해 보장됨
+  
+## team-post NullPointerException
+
+- 에러코드 Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause

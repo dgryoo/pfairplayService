@@ -40,7 +40,7 @@ public class TeamEntity {
 
     @OneToMany
     @Column
-    private List<MemberEntity> memberList;
+    private List<MemberEntity> memberEntityList;
 
     @CreationTimestamp
     @Column(nullable = false)
