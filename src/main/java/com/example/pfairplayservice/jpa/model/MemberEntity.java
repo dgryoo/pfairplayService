@@ -8,13 +8,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -29,6 +26,12 @@ public class MemberEntity {
     @GeneratedValue(generator = "member-uid", strategy = GenerationType.AUTO)
     @GenericGenerator(name = "member-uid", strategy = "uuid")
     private String uid;
+
+    @ManyToMany
+    @JoinTable(name = "memberEntityTeamEntity"
+            , joinColumns = {@JoinColumn(name = "memberEntityUid")}
+            , inverseJoinColumns = {@JoinColumn(name = "teamEntityTid")})
+    private List<TeamEntity> teamEntityList = new ArrayList<>();
 
     @Column(nullable = false)
     private String name;
@@ -65,5 +68,5 @@ public class MemberEntity {
     @UpdateTimestamp
     @Column(nullable = false)
     private Date recentLoginDate;
-
+    
 }

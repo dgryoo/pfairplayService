@@ -40,4 +40,28 @@ public class Team {
         return result;
     }
 
+    public static List<Team> fromList(List<TeamEntity> teamEntityList) {
+        if (teamEntityList == null) return null;
+        List<Team> teamListTemp = null;
+        teamEntityList
+                .stream()
+                .forEach(teamEntity -> teamListTemp.add(Team.from(teamEntity)));
+        return teamListTemp;
+    }
+
+    public static TeamEntity to(Team team) {
+        TeamEntity result = new TeamEntity(team.getTid(),team.getTeamName(),Member.to(team.getTeamLeadMember())
+            , team.getActivityAreaAddress(), Member.toList(team.getMemberList()),team.getRegistrationDate(),team.getFoundDate());
+        return result;
+    }
+
+    public static List<TeamEntity> toList(List<Team> teamList) {
+        if (teamList == null) return null;
+        List<TeamEntity> teamEntityListTemp = null;
+        teamList
+                .stream()
+                .forEach(team -> teamEntityListTemp.add(Team.to(team)));
+        return teamEntityListTemp;
+    }
+
 }

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class Member {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String id;
 
+    private List<Team> teamList = new ArrayList<>();
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
@@ -51,19 +54,28 @@ public class Member {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Date recentLoginDate;
 
-    public static Member from(MemberEntity member) {
+    public static Member from(MemberEntity memberEntity) {
 
-        Member result = new Member(member.getUid(), member.getName(), member.getId(), member.getPassword()
-                , member.getBirthday(), member.getAddress(), member.getPhoneNumber(), Position.from(member.getPreferPosition())
-                , member.getLevel(), member.getPhoneNumberDisclosureOption(), member.getJoinDate(), member.getRecentLoginDate());
+        Member result = new Member(memberEntity.getUid(), memberEntity.getName(), memberEntity.getId(), Team.fromList(memberEntity.getTeamEntityList()), memberEntity.getPassword()
+                , memberEntity.getBirthday(), memberEntity.getAddress(), memberEntity.getPhoneNumber(), Position.from(memberEntity.getPreferPosition())
+                , memberEntity.getLevel(), memberEntity.getPhoneNumberDisclosureOption(), memberEntity.getJoinDate(), memberEntity.getRecentLoginDate());
         return result;
     }
 
     public static MemberEntity to(Member member) {
-        MemberEntity result = new MemberEntity(member.getUid(), member.getName(), member.getId(), member.getPassword()
-                , member.getBirthday(), member.getAddress(), member.getPhoneNumber(), member.getPreferPosition().getPosition()
-                , member.getLevel(), member.getPhoneNumberDisclosureOption(), member.getJoinDate(), member.getRecentLoginDate());
+        MemberEntity result = new MemberEntity(member.getUid(),Team.toList(member.getTeamList()),member.getName(),member.getId()
+            ,member.getPassword(),member.getBirthday(),member.getAddress(),member.getPhoneNumber(),member.getPreferPosition().getPosition()
+            ,member.getLevel(),member.getPhoneNumberDisclosureOption(),member.getJoinDate(),member.getRecentLoginDate());
         return result;
+    }
+
+    public static List<MemberEntity> toList(List<Member> memberList) {
+        if (memberList == null) return null;
+        List<MemberEntity> memberEntityListTemp = null;
+        memberList
+                .stream()
+                .forEach(member -> memberEntityListTemp.add(Member.to(member)));
+        return memberEntityListTemp;
     }
 
     public static List<Member> fromList(List<MemberEntity> memberEntityList) {
