@@ -1,6 +1,7 @@
 package com.example.pfairplayservice.controller;
 
 
+import com.example.pfairplayservice.common.exception.LengthOverException;
 import com.example.pfairplayservice.common.exception.RequiredParamNotFoundException;
 import com.example.pfairplayservice.common.exception.SourceNotFoundException;
 
@@ -41,13 +42,12 @@ public class MemberController {
     @PostMapping("/member")
     public ResponseEntity<Void> createMember(@RequestBody Member saveMember) {
         // TODO check id length
+        if (saveMember.getId().length() > 10) throw new LengthOverException("id는 10자를 초과 할 수 없습니다.");
+        if (saveMember.getName() == null) throw new RequiredParamNotFoundException("이름을 정확히 입력해주세요");
+        if (saveMember.getBirthday() == null) throw new RequiredParamNotFoundException("생년월일을 정확히 입력해주세요");
+        if (saveMember.getAddress() == null) throw new RequiredParamNotFoundException("주소를 정확히 입력해주세요");
+        if (saveMember.getPhoneNumber() == null) throw new RequiredParamNotFoundException("이름을 정확히 입력해주세요");
 
-        if (saveMember.getName() == null ||
-                saveMember.getBirthday() == null ||
-                saveMember.getAddress() == null ||
-                saveMember.getPhoneNumber() == null) {
-            throw new RequiredParamNotFoundException("이름, 생년월일, 주소, 핸드폰번호를 정확히 입력해 주세요. ");
-        }
         memberRepository.save(Member.to(saveMember));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
