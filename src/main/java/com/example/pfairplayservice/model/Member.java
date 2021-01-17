@@ -1,5 +1,6 @@
 package com.example.pfairplayservice.model;
 
+import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +32,7 @@ public class Member {
 
     private String phoneNumber;
 
-    private Integer preferPositon;
+    private Position preferPosition;
 
     private Integer level;
 
@@ -43,4 +44,18 @@ public class Member {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Date recentLoginDate;
 
+    public static Member from(MemberEntity member) {
+
+        Member result = new Member(member.getUid(), member.getName(), member.getId(), member.getPassword()
+                , member.getBirthday(), member.getAddress(), member.getPhoneNumber(), Position.from(member.getPreferPosition())
+                , member.getLevel(), member.getPhoneNumberDisclosureOption(), member.getJoinDate(), member.getRecentLoginDate());
+        return result;
+    }
+
+    public static MemberEntity to(Member member) {
+        MemberEntity result = new MemberEntity(member.getUid(), member.getName(), member.getId(), member.getPassword()
+                , member.getBirthday(), member.getAddress(), member.getPhoneNumber(), member.getPreferPosition().getPosition()
+                , member.getLevel(), member.getPhoneNumberDisclosureOption(), member.getJoinDate(), member.getRecentLoginDate());
+        return result;
+    }
 }

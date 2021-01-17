@@ -1,6 +1,6 @@
 package com.example.pfairplayservice.match;
 
-import com.example.pfairplayservice.jpa.model.Team;
+import com.example.pfairplayservice.jpa.model.TeamEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +13,8 @@ import java.sql.Timestamp;
 public class Match {
 
 
-    private Team ownerTeam;
-    private Team guestTeam;
+    private TeamEntity ownerTeam;
+    private TeamEntity guestTeam;
     private Timestamp matchStartTime;
     private Timestamp matchEndTime;
     private Integer price;

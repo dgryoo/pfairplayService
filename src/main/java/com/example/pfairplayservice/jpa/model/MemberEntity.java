@@ -22,7 +22,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "member")
-public class Member {
+public class MemberEntity {
 
     // TODO : implement registerdTeamNames
     @Id
@@ -49,7 +49,7 @@ public class Member {
     private String phoneNumber;
 
     @Column
-    private Integer preferPositon;
+    private Integer preferPosition;
 
     @Column
     private Integer level;

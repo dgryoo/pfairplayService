@@ -22,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "team")
-public class Team {
+public class TeamEntity {
 
     @Id
     @GeneratedValue(generator = "team-uid", strategy = GenerationType.AUTO)
@@ -33,15 +33,14 @@ public class Team {
     private String teamName;
 
     @OneToOne
-    @Column(nullable = false)
-    private Member teamLeadMember;
+    private MemberEntity teamLeadMember;
 
     @Column(nullable = false)
     private String activityAreaAddress;
 
     @OneToMany
     @Column
-    private List<Member> memberList;
+    private List<MemberEntity> memberList;
 
     @CreationTimestamp
     @Column(nullable = false)
