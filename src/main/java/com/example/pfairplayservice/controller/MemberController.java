@@ -41,7 +41,6 @@ public class MemberController {
 
     @PostMapping("/member")
     public ResponseEntity<Void> createMember(@RequestBody Member saveMember) {
-        // TODO check id length
         if (saveMember.getId().length() > 10) throw new LengthOverException("id는 10자를 초과 할 수 없습니다.");
         if (saveMember.getName() == null) throw new RequiredParamNotFoundException("이름을 정확히 입력해주세요");
         if (saveMember.getBirthday() == null) throw new RequiredParamNotFoundException("생년월일을 정확히 입력해주세요");
