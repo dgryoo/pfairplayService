@@ -4,6 +4,7 @@ import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,21 +21,21 @@ public class Member {
 
     public Member(String name, String phoneNumber) {
         this.name = name;
-        this.phoneNumber= phoneNumber;
+        this.phoneNumber = phoneNumber;
     }
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String uid;
 
-    private String name;
-
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String id;
 
-    private List<Team> teamList = new ArrayList<>();
-
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    private String name;
+
+    private List<Team> teamList = new ArrayList<>();
 
     private Date birthday;
 
@@ -56,16 +57,43 @@ public class Member {
 
     public static Member from(MemberEntity memberEntity) {
 
-        Member result = new Member(memberEntity.getUid(), memberEntity.getName(), memberEntity.getId(), Team.fromList(memberEntity.getTeamEntityList()), memberEntity.getPassword()
-                , memberEntity.getBirthday(), memberEntity.getAddress(), memberEntity.getPhoneNumber(), Position.from(memberEntity.getPreferPosition())
-                , memberEntity.getLevel(), memberEntity.getPhoneNumberDisclosureOption(), memberEntity.getJoinDate(), memberEntity.getRecentLoginDate());
+        Member result = Member.builder()
+                .uid(memberEntity.getUid())
+                .id(memberEntity.getId())
+                .password(memberEntity.getPassword())
+                .name(memberEntity.getName())
+                .teamList(Team.fromList(memberEntity.getTeamEntityList()))
+                .birthday(memberEntity.getBirthday())
+                .address(memberEntity.getAddress())
+                .phoneNumber(memberEntity.getPhoneNumber())
+                .preferPosition(Position.from(memberEntity.getPreferPosition()))
+                .level(memberEntity.getLevel())
+                .phoneNumberDisclosureOption(memberEntity.getPhoneNumberDisclosureOption())
+                .joinDate(memberEntity.getJoinDate())
+                .recentLoginDate(memberEntity.getRecentLoginDate())
+                .build();
+
         return result;
     }
 
     public static MemberEntity to(Member member) {
-        MemberEntity result = new MemberEntity(member.getUid(),Team.toList(member.getTeamList()),member.getName(),member.getId()
-            ,member.getPassword(),member.getBirthday(),member.getAddress(),member.getPhoneNumber(),member.getPreferPosition().getPosition()
-            ,member.getLevel(),member.getPhoneNumberDisclosureOption(),member.getJoinDate(),member.getRecentLoginDate());
+
+        MemberEntity result = MemberEntity.builder()
+                .uid(member.getUid())
+                .id(member.getId())
+                .password(member.getPassword())
+                .name(member.getName())
+                .teamEntityList(Team.toList(member.getTeamList()))
+                .birthday(member.getBirthday())
+                .address(member.getAddress())
+                .phoneNumber(member.getPhoneNumber())
+                .preferPosition(member.getPreferPosition().getPosition())
+                .level(member.getLevel())
+                .phoneNumberDisclosureOption(member.getPhoneNumberDisclosureOption())
+                .joinDate(member.getJoinDate())
+                .recentLoginDate(member.getRecentLoginDate())
+                .build();
+
         return result;
     }
 

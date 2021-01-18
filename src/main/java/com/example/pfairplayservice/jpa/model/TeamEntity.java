@@ -1,6 +1,7 @@
 package com.example.pfairplayservice.jpa.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,6 +1,7 @@
 package com.example.pfairplayservice.jpa.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,20 +28,21 @@ public class MemberEntity {
     @GenericGenerator(name = "member-uid", strategy = "uuid")
     private String uid;
 
+    @Column(nullable = false)
+    private String id;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String name;
+
     @ManyToMany
     @JoinTable(name = "memberEntityTeamEntity"
             , joinColumns = {@JoinColumn(name = "memberEntityUid")}
             , inverseJoinColumns = {@JoinColumn(name = "teamEntityTid")})
     private List<TeamEntity> teamEntityList = new ArrayList<>();
 
-    @Column(nullable = false)
-    private String name;
-
-    @Column(nullable = false)
-    private String id;
-
-    @Column(nullable = false)
-    private String password;
 
     @Column(nullable = false)
     private Date birthday;
@@ -68,5 +70,5 @@ public class MemberEntity {
     @UpdateTimestamp
     @Column(nullable = false)
     private Date recentLoginDate;
-    
+
 }

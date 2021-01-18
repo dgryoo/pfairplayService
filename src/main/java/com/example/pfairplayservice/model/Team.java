@@ -5,13 +5,14 @@ import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
 
-
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,9 +35,18 @@ public class Team {
 
     private Date foundDate;
 
-    public static Team from(TeamEntity team) {
-        Team result = new Team(team.getTid(), team.getTeamName(), FilterManager.teamLeadMemberFilter(Member.from(team.getTeamLeadMember()))
-                , team.getActivityAreaAddress(), Member.fromList(team.getMemberEntityList()), team.getRegistrationDate(), team.getFoundDate());
+    public static Team from(TeamEntity teamEntity) {
+
+        Team result = Team.builder()
+                .tid(teamEntity.getTid())
+                .teamName(teamEntity.getTeamName())
+                .teamLeadMember(Member.from(teamEntity.getTeamLeadMember()))
+                .activityAreaAddress(teamEntity.getActivityAreaAddress())
+                .memberList(Member.fromList(teamEntity.getMemberEntityList()))
+                .registrationDate(teamEntity.getRegistrationDate())
+                .foundDate(teamEntity.getFoundDate())
+                .build();
+
         return result;
     }
 
@@ -50,8 +60,17 @@ public class Team {
     }
 
     public static TeamEntity to(Team team) {
-        TeamEntity result = new TeamEntity(team.getTid(),team.getTeamName(),Member.to(team.getTeamLeadMember())
-            , team.getActivityAreaAddress(), Member.toList(team.getMemberList()),team.getRegistrationDate(),team.getFoundDate());
+
+        TeamEntity result = TeamEntity.builder()
+                .tid(team.getTid())
+                .teamName(team.getTeamName())
+                .teamLeadMember(Member.to(team.getTeamLeadMember()))
+                .activityAreaAddress(team.getActivityAreaAddress())
+                .memberEntityList(Member.toList(team.getMemberList()))
+                .registrationDate(team.getRegistrationDate())
+                .foundDate(team.getFoundDate())
+                .build();
+
         return result;
     }
 
