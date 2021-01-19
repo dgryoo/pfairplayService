@@ -9,8 +9,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Builder
 @Data
@@ -57,12 +59,12 @@ public class Member {
 
     public static Member from(MemberEntity memberEntity) {
 
-        Member result = Member.builder()
+        return Member.builder()
                 .uid(memberEntity.getUid())
                 .id(memberEntity.getId())
                 .password(memberEntity.getPassword())
                 .name(memberEntity.getName())
-                .teamList(Team.fromList(memberEntity.getTeamEntityList()))
+                .teamList(memberEntity.getTeamEntityList().stream().map(Team::from).collect(Collectors.toList()))
                 .birthday(memberEntity.getBirthday())
                 .address(memberEntity.getAddress())
                 .phoneNumber(memberEntity.getPhoneNumber())
@@ -72,46 +74,25 @@ public class Member {
                 .joinDate(memberEntity.getJoinDate())
                 .recentLoginDate(memberEntity.getRecentLoginDate())
                 .build();
-
-        return result;
     }
 
-    public static MemberEntity to(Member member) {
+    public MemberEntity toMemberEntity() {
 
-        MemberEntity result = MemberEntity.builder()
-                .uid(member.getUid())
-                .id(member.getId())
-                .password(member.getPassword())
-                .name(member.getName())
-                .teamEntityList(Team.toList(member.getTeamList()))
-                .birthday(member.getBirthday())
-                .address(member.getAddress())
-                .phoneNumber(member.getPhoneNumber())
-                .preferPosition(member.getPreferPosition().getPosition())
-                .level(member.getLevel())
-                .phoneNumberDisclosureOption(member.getPhoneNumberDisclosureOption())
-                .joinDate(member.getJoinDate())
-                .recentLoginDate(member.getRecentLoginDate())
+        return MemberEntity.builder()
+                .uid(getUid())
+                .id(getId())
+                .password(getPassword())
+                .name(getName())
+                .teamEntityList(getTeamList().stream().map(Team::toTeamEntity).collect(Collectors.toList()))
+                .birthday(getBirthday())
+                .address(getAddress())
+                .phoneNumber(getPhoneNumber())
+                .preferPosition(getPreferPosition().getPosition())
+                .level(getLevel())
+                .phoneNumberDisclosureOption(getPhoneNumberDisclosureOption())
+                .joinDate(getJoinDate())
+                .recentLoginDate(getRecentLoginDate())
                 .build();
-
-        return result;
     }
 
-    public static List<MemberEntity> toList(List<Member> memberList) {
-        if (memberList == null) return null;
-        List<MemberEntity> memberEntityListTemp = null;
-        memberList
-                .stream()
-                .forEach(member -> memberEntityListTemp.add(Member.to(member)));
-        return memberEntityListTemp;
-    }
-
-    public static List<Member> fromList(List<MemberEntity> memberEntityList) {
-        if (memberEntityList == null) return null;
-        List<Member> memberListTemp = null;
-        memberEntityList
-                .stream()
-                .forEach(memberEntity -> memberListTemp.add(Member.from(memberEntity)));
-        return memberListTemp;
-    }
 }

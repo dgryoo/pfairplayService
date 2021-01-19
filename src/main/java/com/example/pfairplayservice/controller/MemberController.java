@@ -46,7 +46,7 @@ public class MemberController {
         if (saveMember.getBirthday() == null) throw new RequiredParamNotFoundException("생년월일을 정확히 입력해주세요");
         if (saveMember.getAddress() == null) throw new RequiredParamNotFoundException("주소를 정확히 입력해주세요");
         if (saveMember.getPhoneNumber() == null) throw new RequiredParamNotFoundException("이름을 정확히 입력해주세요");
-
+        // TODO
         memberRepository.save(Member.to(saveMember));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Builder
 @Data
@@ -21,7 +22,7 @@ public class Team {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String tid;
-
+    
     private String teamName;
 
     private Member teamLeadMember;
@@ -37,50 +38,30 @@ public class Team {
 
     public static Team from(TeamEntity teamEntity) {
 
-        Team result = Team.builder()
+        return Team.builder()
                 .tid(teamEntity.getTid())
                 .teamName(teamEntity.getTeamName())
                 .teamLeadMember(Member.from(teamEntity.getTeamLeadMember()))
                 .activityAreaAddress(teamEntity.getActivityAreaAddress())
-                .memberList(Member.fromList(teamEntity.getMemberEntityList()))
+                .memberList(teamEntity.getMemberEntityList().stream().map(Member::from).collect(Collectors.toList()))
                 .registrationDate(teamEntity.getRegistrationDate())
                 .foundDate(teamEntity.getFoundDate())
                 .build();
 
-        return result;
     }
 
-    public static List<Team> fromList(List<TeamEntity> teamEntityList) {
-        if (teamEntityList == null) return null;
-        List<Team> teamListTemp = null;
-        teamEntityList
-                .stream()
-                .forEach(teamEntity -> teamListTemp.add(Team.from(teamEntity)));
-        return teamListTemp;
-    }
+    public TeamEntity toTeamEntity() {
 
-    public static TeamEntity to(Team team) {
-
-        TeamEntity result = TeamEntity.builder()
-                .tid(team.getTid())
-                .teamName(team.getTeamName())
-                .teamLeadMember(Member.to(team.getTeamLeadMember()))
-                .activityAreaAddress(team.getActivityAreaAddress())
-                .memberEntityList(Member.toList(team.getMemberList()))
-                .registrationDate(team.getRegistrationDate())
-                .foundDate(team.getFoundDate())
+        return TeamEntity.builder()
+                .tid(getTid())
+                .teamName(getTeamName())
+                .teamLeadMember(getTeamLeadMember().toMemberEntity())
+                .activityAreaAddress(getActivityAreaAddress())
+                .memberEntityList(getMemberList().stream().map(Member::toMemberEntity).collect(Collectors.toList()))
+                .registrationDate(getRegistrationDate())
+                .foundDate(getFoundDate())
                 .build();
 
-        return result;
-    }
-
-    public static List<TeamEntity> toList(List<Team> teamList) {
-        if (teamList == null) return null;
-        List<TeamEntity> teamEntityListTemp = null;
-        teamList
-                .stream()
-                .forEach(team -> teamEntityListTemp.add(Team.to(team)));
-        return teamEntityListTemp;
     }
 
 }
