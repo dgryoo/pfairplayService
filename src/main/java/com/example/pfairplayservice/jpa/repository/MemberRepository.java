@@ -2,9 +2,16 @@ package com.example.pfairplayservice.jpa.repository;
 
 import com.example.pfairplayservice.jpa.model.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface MemberRepository extends JpaRepository<MemberEntity, String> {
+
+    @Query(value = "SELECT * FROM test.member m WHERE m.uid in (SELECT mt.uid FROM test.member_team_list mt where mt.tid = :tid)", nativeQuery = true)
+    List<MemberEntity> findByMemberTeamIdTid(@Param("tid") String tid);
 
 }
