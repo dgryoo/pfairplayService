@@ -37,13 +37,6 @@ public class MemberEntity {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "memberEntityTeamEntity"
-            , joinColumns = {@JoinColumn(name = "memberEntityUid")}
-            , inverseJoinColumns = {@JoinColumn(name = "teamEntityTid")})
-    private List<TeamEntity> teamEntityList = new ArrayList<>();
-
-
     @Column(nullable = false)
     private Date birthday;
 

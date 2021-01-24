@@ -34,9 +34,6 @@ public class TeamEntity {
     @Column(nullable = false)
     private String activityAreaAddress;
 
-    @ManyToMany(mappedBy = "teamEntityList")
-    private List<MemberEntity> memberEntityList = new ArrayList<>();
-
     @CreationTimestamp
     @Column(nullable = false)
     private Date registrationDate;

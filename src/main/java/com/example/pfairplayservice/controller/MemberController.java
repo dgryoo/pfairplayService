@@ -4,7 +4,6 @@ package com.example.pfairplayservice.controller;
 import com.example.pfairplayservice.common.exception.LengthOverException;
 import com.example.pfairplayservice.common.exception.RequiredParamNotFoundException;
 import com.example.pfairplayservice.common.exception.SourceNotFoundException;
-
 import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.repository.MemberRepository;
 import com.example.pfairplayservice.model.Member;
@@ -47,7 +46,7 @@ public class MemberController {
         if (saveMember.getAddress() == null) throw new RequiredParamNotFoundException("주소를 정확히 입력해주세요");
         if (saveMember.getPhoneNumber() == null) throw new RequiredParamNotFoundException("이름을 정확히 입력해주세요");
 
-        memberRepository.save(Member.to(saveMember));
+        memberRepository.save(saveMember.toMemberEntity());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
