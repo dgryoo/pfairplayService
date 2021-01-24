@@ -1,6 +1,7 @@
 package com.example.pfairplayservice.model;
 
 import com.example.pfairplayservice.jpa.model.TeamEntity;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +16,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Team {
 
     @Id

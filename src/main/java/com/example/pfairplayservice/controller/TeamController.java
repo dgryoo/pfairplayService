@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class TeamController {
@@ -30,6 +32,18 @@ public class TeamController {
         team.get().setTeamLeadMember(FilterManager.teamLeadMemberFilter(team.get().getTeamLeadMember()));
 
         return ResponseEntity.status(HttpStatus.OK).body(Team.from(team.get()));
+    }
+
+    @GetMapping("/team/member/{uid}")
+    public ResponseEntity<List<Team>> findTeamListByUid(@PathVariable String uid) {
+        List<TeamEntity> teamEntityList = teamRepository.findByMemberTeamIdUid(uid);
+
+        if (teamEntityList == null)
+            new SourceNotFoundException(String.format("team not found uid{%s} registered)", uid));
+
+        List<Team> teamList = teamEntityList.stream().map(FilterManager::teamMemberFilter).map(Team::from).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(teamList);
     }
 
 }
