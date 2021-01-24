@@ -1,6 +1,7 @@
 package com.example.pfairplayservice.controller;
 
 import com.example.pfairplayservice.common.exception.SourceNotFoundException;
+import com.example.pfairplayservice.common.filter.FilterManager;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
 import com.example.pfairplayservice.jpa.repository.TeamRepository;
 import com.example.pfairplayservice.model.Team;
@@ -25,6 +26,9 @@ public class TeamController {
         if (!team.isPresent()) {
             throw new SourceNotFoundException(String.format("tid{%s} not found", tid));
         }
+
+        team.get().setTeamLeadMember(FilterManager.teamLeadMemberFilter(team.get().getTeamLeadMember()));
+
         return ResponseEntity.status(HttpStatus.OK).body(Team.from(team.get()));
     }
 
