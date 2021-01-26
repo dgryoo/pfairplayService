@@ -1,7 +1,7 @@
 package com.example.pfairplayservice.common.filter;
 
 import com.example.pfairplayservice.jpa.model.MemberEntity;
-import com.example.pfairplayservice.model.Member;
+import com.example.pfairplayservice.jpa.model.TeamEntity;
 
 public class FilterManager {
 
@@ -14,6 +14,7 @@ public class FilterManager {
 
     }
 
+
     public static MemberEntity teamMemberFilter(MemberEntity memberEntity) {
 
         return MemberEntity.builder()
@@ -22,6 +23,14 @@ public class FilterManager {
                 .address(memberEntity.getAddress())
                 .preferPosition(memberEntity.getPreferPosition())
                 .level(memberEntity.getLevel())
+                .build();
+    }
+
+    public static TeamEntity teamMemberFilter(TeamEntity teamEntity) {
+
+        return TeamEntity.builder()
+                .teamName(teamEntity.getTeamName())
+                .teamLeadMember(teamLeadMemberFilter(teamEntity.getTeamLeadMember()))
                 .build();
     }
 
