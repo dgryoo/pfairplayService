@@ -81,4 +81,17 @@ select memberteam0_.tid as tid1_1_, memberteam0_.uid as uid2_1_ from member_team
    MemberTeamEntity, MemberTeamEntity를 상속을 받은 클래스만을 다룰 수 있다.
    해결방법 : MemberTeamListRepository에서 해당 메소드들을 만드는 것이 아닌 MemberRepositroy, TeamRepository에 각각 해당 Entity를 다루는 메소드 들을 만들어 주었다.
    
+## Test case 작성시 에러
+
+ - create문에서 계속 에러가 나는것은 버전호환때문으로 추정 (버전을 낮추니 가능)
+ 
+ - Entity에 notnull으로 설정된것은 필수적으로 넣어주어야함.
+
+ - PersistenceException: org.hibernate.PersistentObjectException: detached entity passed to persist: com.example.pfairplayservice.jpa.model.MemberEntity
+     @GeneratedValue(generator = "member-uid", strategy = GenerationType.AUTO)
+     @GenericGenerator(name = "member-uid", strategy = "uuid")
+     와 같은 어노테이션이 있기때문에 임의로 builder에서 uid를 지정해주었을 경우 에러발생.
+     
+     
+   
  
