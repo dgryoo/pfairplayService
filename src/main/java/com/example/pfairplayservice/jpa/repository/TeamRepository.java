@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface TeamRepository extends JpaRepository<TeamEntity, String> {
 
-    @Query(value = "SELECT * FROM test.team t join test.member m on t.team_lead_member_uid = m.uid where t.tid in (SELECT mt.tid FROM test.member_team_list mt where mt.uid = :uid)", nativeQuery = true)
+    @Query(value = "SELECT * FROM team t join member m on t.team_lead_member_uid = m.uid where t.tid in (SELECT mt.tid FROM member_team_list mt where mt.uid = :uid)", nativeQuery = true)
     List<TeamEntity> findByMemberTeamIdUid(@Param("uid") String uid);
 
 }
