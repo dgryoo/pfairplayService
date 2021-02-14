@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
+
 @Builder
 @Data
 @AllArgsConstructor
@@ -21,8 +23,8 @@ import java.util.List;
 public class TeamEntity {
 
     @Id
-    @GeneratedValue(generator = "team-uid", strategy = GenerationType.AUTO)
-    @GenericGenerator(name = "team-uid", strategy = "uuid")
+    @GeneratedValue(generator = "team-tid", strategy = GenerationType.AUTO)
+    @GenericGenerator(name = "team-tid", strategy = "uuid")
     private String tid;
 
     @Column(nullable = false)
