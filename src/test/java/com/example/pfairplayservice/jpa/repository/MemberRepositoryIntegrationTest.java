@@ -45,13 +45,17 @@ public class MemberRepositoryIntegrationTest {
         MemberEntity memberEntity = TestEntityGenerator.generateMemberEntity();
 
         memberRepository.save(memberEntity);
-        memberRepository.flush();
+
 
         // when
         Optional<MemberEntity> found = memberRepository.findById(memberEntity.getUid());
 
         // then
         assertThat(found.get().getUid(), is(equalTo(memberEntity.getUid())));
+
+        // remove source
+        memberRepository.delete(memberEntity);
+        memberRepository.flush();
     }
 
     @Test
@@ -62,11 +66,12 @@ public class MemberRepositoryIntegrationTest {
         MemberEntity memberEntity1 = TestEntityGenerator.generateMemberEntity();
         MemberEntity memberEntity2 = TestEntityGenerator.generateMemberEntity();
 
-        TeamEntity teamEntity = TestEntityGenerator.generateTeamEntity(memberEntity0);
-
         memberRepository.save(memberEntity0);
         memberRepository.save(memberEntity1);
         memberRepository.save(memberEntity2);
+
+        TeamEntity teamEntity = TestEntityGenerator.generateTeamEntity(memberEntity0);
+
         teamRepository.save(teamEntity);
 
         MemberTeamEntity memberTeamEntity0 = TestEntityGenerator.generateMemberTeamEntity(memberEntity0.getUid(), teamEntity.getTid());
@@ -90,6 +95,18 @@ public class MemberRepositoryIntegrationTest {
         after.stream()
                 .forEach(memberEntity -> assertThat(memberEntity.getUid(), is(equalTo(memberEntityIterator.next().getUid()))));
 
+        // remove source
+        memberRepository.delete(memberEntity0);
+        memberRepository.delete(memberEntity1);
+        memberRepository.delete(memberEntity2);
+        teamRepository.delete(teamEntity);
+        memberTeamRepository.delete(memberTeamEntity0);
+        memberTeamRepository.delete(memberTeamEntity1);
+        memberTeamRepository.delete(memberTeamEntity2);
+
+        memberRepository.flush();
+        teamRepository.flush();
+        memberTeamRepository.flush();
     }
 
 }
