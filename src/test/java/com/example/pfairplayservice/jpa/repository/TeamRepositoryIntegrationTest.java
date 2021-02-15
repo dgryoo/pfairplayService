@@ -42,14 +42,18 @@ public class TeamRepositoryIntegrationTest {
         memberRepository.save(memberEntity);
         teamRepository.save(teamEntity);
 
-        memberRepository.flush();
-        teamRepository.flush();
-
         // when
         Optional<TeamEntity> found = teamRepository.findById(teamEntity.getTid());
 
         // then
         assertThat(found.get().getTid(), is(equalTo(teamEntity.getTid())));
+
+        // remove source
+        memberRepository.delete(memberEntity);
+        teamRepository.delete(teamEntity);
+
+        memberRepository.flush();
+        teamRepository.flush();
     }
 
     @Test
@@ -76,10 +80,6 @@ public class TeamRepositoryIntegrationTest {
         memberTeamRepository.save(memberTeamEntity1);
         memberTeamRepository.save(memberTeamEntity2);
 
-        memberRepository.flush();
-        teamRepository.flush();
-        memberTeamRepository.flush();
-
         List<TeamEntity> before = new ArrayList<>();
         before.add(teamEntity0);
         before.add(teamEntity1);
@@ -93,6 +93,18 @@ public class TeamRepositoryIntegrationTest {
         after.stream()
                 .forEach(teamEntity -> assertThat(teamEntity.getTid(), is(equalTo(teamEntityIterator.next().getTid()))));
 
+        // remove source
+        memberRepository.delete(memberEntity);
+        teamRepository.delete(teamEntity0);
+        teamRepository.delete(teamEntity1);
+        teamRepository.delete(teamEntity2);
+        memberTeamRepository.delete(memberTeamEntity0);
+        memberTeamRepository.delete(memberTeamEntity1);
+        memberTeamRepository.delete(memberTeamEntity2);
+
+        memberRepository.flush();
+        teamRepository.flush();
+        memberTeamRepository.flush();
     }
 
 }
