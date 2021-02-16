@@ -76,6 +76,8 @@ public class MemberRepositoryIntegrationTest {
         memberTeamRepository.save(memberTeamEntity1);
         memberTeamRepository.save(memberTeamEntity2);
 
+
+
         List<MemberEntity> before = new ArrayList<>();
         before.add(memberEntity0);
         before.add(memberEntity1);
