@@ -52,8 +52,6 @@ public class TeamRepositoryIntegrationTest {
         memberRepository.delete(memberEntity);
         teamRepository.delete(teamEntity);
 
-        memberRepository.flush();
-        teamRepository.flush();
     }
 
     @Test
@@ -102,9 +100,6 @@ public class TeamRepositoryIntegrationTest {
         memberTeamRepository.delete(memberTeamEntity1);
         memberTeamRepository.delete(memberTeamEntity2);
 
-        memberRepository.flush();
-        teamRepository.flush();
-        memberTeamRepository.flush();
     }
 
 }
