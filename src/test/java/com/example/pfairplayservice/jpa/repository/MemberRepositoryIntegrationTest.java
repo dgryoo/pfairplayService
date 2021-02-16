@@ -1,29 +1,23 @@
 package com.example.pfairplayservice.jpa.repository;
 
 
-import com.example.pfairplayservice.jpa.id.MemberTeamId;
 import com.example.pfairplayservice.jpa.model.MemberEntity;
-
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
 import com.example.pfairplayservice.jpa.model.MemberTeamEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
-import org.assertj.core.internal.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -55,7 +49,7 @@ public class MemberRepositoryIntegrationTest {
 
         // remove source
         memberRepository.delete(memberEntity);
-        memberRepository.flush();
+
     }
 
     @Test
@@ -104,9 +98,7 @@ public class MemberRepositoryIntegrationTest {
         memberTeamRepository.delete(memberTeamEntity1);
         memberTeamRepository.delete(memberTeamEntity2);
 
-        memberRepository.flush();
-        teamRepository.flush();
-        memberTeamRepository.flush();
+
     }
 
 }
