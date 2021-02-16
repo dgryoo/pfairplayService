@@ -24,7 +24,7 @@ public class MemberController {
     private MemberRepository memberRepository;
 
     @GetMapping("/member/{uid}")
-    public ResponseEntity<Member> findByUID(@PathVariable String uid) {
+    public ResponseEntity<Member> findByUid(@PathVariable String uid) {
         Optional<MemberEntity> member = memberRepository.findById(uid);
 
         if (!member.isPresent()) {
@@ -47,7 +47,7 @@ public class MemberController {
     }
 
     @PutMapping("/member/{uid}")
-    public ResponseEntity<Void> updatePasswordByUID(@PathVariable String uid, @RequestParam String password) {
+    public ResponseEntity<Void> updatePasswordByUid(@PathVariable String uid, @RequestParam String password) {
         Optional<MemberEntity> member = memberRepository.findById(uid);
         if (!member.isPresent()) {
             throw new SourceNotFoundException(String.format("uid{%s} not found", uid));
@@ -59,7 +59,7 @@ public class MemberController {
     }
 
     @DeleteMapping("/member/{uid}")
-    public ResponseEntity<Void> deleteByUID(@PathVariable String uid) {
+    public ResponseEntity<Void> deleteByUid(@PathVariable String uid) {
 
         Optional<MemberEntity> member = memberRepository.findById(uid);
 
@@ -71,7 +71,7 @@ public class MemberController {
     }
 
     @GetMapping("/member/team/{tid}")
-    public ResponseEntity<List<Member>> findTeamListByUid(@PathVariable String tid) {
+    public ResponseEntity<List<Member>> findMemberListByTid(@PathVariable String tid) {
         List<MemberEntity> memberEntityList = memberRepository.findByMemberTeamIdTid(tid);
 
         if (memberEntityList == null)

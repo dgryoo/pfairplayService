@@ -1,15 +1,15 @@
 package com.example.pfairplayservice.jpa.id;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
+@Builder
 @Data
 @Embeddable
 @NoArgsConstructor
+@AllArgsConstructor
 public class MemberTeamId implements Serializable {
 
 

@@ -91,6 +91,15 @@ select memberteam0_.tid as tid1_1_, memberteam0_.uid as uid2_1_ from member_team
      @GeneratedValue(generator = "member-uid", strategy = GenerationType.AUTO)
      @GenericGenerator(name = "member-uid", strategy = "uuid")
      와 같은 어노테이션이 있기때문에 임의로 builder에서 uid를 지정해주었을 경우 에러발생.
+   
+## constructor MemberTeamId in class com.example.pfairplayservice.jpa.id.MemberTeamId cannot be applied to given types;
+ - 기본생성자를 만들어주지않아서 발생
+
+## JdbcSQLException
+
+ - 내용 : Schema "TEST" not found; SQL statement: SELECT * FROM test.member m WHERE m.uid in (SELECT mt.uid FROM test.member_team_list mt where mt.tid = ?) [90079-197]
+ - 서술 : 
+ - 해결방안 : 
      
      
    
