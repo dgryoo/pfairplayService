@@ -8,6 +8,7 @@ import com.example.pfairplayservice.common.filter.FilterManager;
 import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.repository.MemberRepository;
 import com.example.pfairplayservice.model.Member;
+import com.example.pfairplayservice.model.Position;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,13 +47,24 @@ public class MemberController {
     }
 
     @PutMapping("/member/{uid}")
-    public ResponseEntity<Void> updatePasswordByUid(@PathVariable String uid, @RequestParam String password) {
+    public ResponseEntity<Void> updatePasswordByUid(@PathVariable String uid, @RequestBody Member updateMember) {
         Optional<MemberEntity> member = memberRepository.findById(uid);
         if (!member.isPresent()) {
             throw new SourceNotFoundException(String.format("uid{%s} not found", uid));
         }
-        member.get().setPassword(password);
-        memberRepository.save(member.get());
+
+        if (member.get().getPassword() != updateMember.getPassword())
+            memberRepository.updatePasswordByUid(uid, updateMember.getPassword());
+        if (member.get().getAddress() != updateMember.getAddress())
+            memberRepository.updateAddressByUid(uid, updateMember.getAddress());
+        if (member.get().getPhoneNumber() != updateMember.getAddress())
+            memberRepository.updatePhoneNumberByUid(uid, updateMember.getPhoneNumber());
+        if (member.get().getPreferPosition() != Position.to(updateMember.getPreferPosition()))
+            memberRepository.updatePreferPositionByUid(uid, Position.to(updateMember.getPreferPosition()));
+        if (member.get().getLevel() != updateMember.getLevel())
+            memberRepository.updateLevelByUid(uid, updateMember.getLevel());
+        if (member.get().getPhoneNumberDisclosureOption() != updateMember.getPhoneNumberDisclosureOption())
+            memberRepository.updatePhoneNumberDisclosureOptionByUid(uid, updateMember.getPhoneNumberDisclosureOption());
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
