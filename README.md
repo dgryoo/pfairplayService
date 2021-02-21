@@ -19,7 +19,7 @@
 |field|type|detail|
 |---|---|---|
 |name|String|이름|
-|birthday|Date|생년월일|
+|birthday|Integer|생년월일|
 |address|String|주소 (법정동 단위까지만)|
 |phoneNumber|String|핸드폰번호|
 |preferPosition|String|선호포지션 <br> 1. ST <br> 2. CAM <br> 3. CM <br> 4. CDM <br> 5. WF <br> 6. WB <br> 7. CB <br> 8. GK|
@@ -48,7 +48,7 @@
 |id|String|Y|-|계정 id|- 길이 10 이하 <br> - 특수문자 사용불가|
 |password|String|Y|-|계정 password|- 길이 10 이하 <br> - 특수문자 사용불가|
 |name|String|Y|-|이름|- 길이 10 이하 <br> - 특수문자 사용불가|
-|birthday|Date|Y|-|생년월일|- 숫자 <br> - 길이 8|
+|birthday|Integer|Y|-|생년월일|- 숫자 <br> - 길이 8|
 |address|String|Y|-|주소|- 도시 시군구 구 읍면동 리 순서대로 <br> - 특수문자, 숫자 사용불가|
 |phoneNumber|String|Y|-|핸드폰번호|- 숫자 <br> -길이 11|
 |preferPosition|String|N|-|선호포지션 <br> 1. ST <br> 2. CAM <br> 3. CM <br> 4. CDM <br> 5. WF <br> 6. WB <br> 7. CB <br> 8. GK|- 숫자|
