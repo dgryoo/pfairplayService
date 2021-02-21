@@ -15,7 +15,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
 //    @Query(value = "SELECT * FROM test.member m WHERE m.uid in (SELECT mt.uid FROM test.member_team_list mt where mt.tid = :tid)", nativeQuery = true)
     @Query(value = "SELECT * FROM member m WHERE m.uid in (SELECT mt.uid FROM member_team_list mt where mt.tid = :tid)", nativeQuery = true)
     List<MemberEntity> findByMemberTeamIdTid(@Param("tid") String tid);
-    @Query(value = "SELECT m FROM member m where m.id = :memberId", nativeQuery = true)
+    @Query(value = "SELECT * FROM member m where m.id = :memberId", nativeQuery = true)
     Optional<MemberEntity> findByMemberId(@Param("memberId") String memberId);
 
 }
