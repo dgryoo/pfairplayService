@@ -34,7 +34,7 @@ public class Member {
 
     private String name;
 
-    private Date birthday;
+    private Integer birthday;
 
     private String address;
 
