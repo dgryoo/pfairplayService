@@ -1,7 +1,7 @@
 package com.example.pfairplayservice.controller;
 
 
-import com.example.pfairplayservice.common.exception.LengthOverException;
+import com.example.pfairplayservice.common.exception.MyExceptionHandler;
 import com.example.pfairplayservice.common.exception.RequiredParamNotFoundException;
 import com.example.pfairplayservice.common.exception.SourceNotFoundException;
 import com.example.pfairplayservice.common.filter.FilterManager;
@@ -43,13 +43,9 @@ public class MemberController {
 
     @PostMapping("/member")
     public ResponseEntity<Void> createMember(@RequestBody Member saveMember) {
-        // TODO : ExceptionChecker로 한번에 관리 util package 생성 후 추가
-        if (saveMember.getId().length() > 10) throw new LengthOverException("id는 10자를 초과 할 수 없습니다.");
-        if (saveMember.getName() == null) throw new RequiredParamNotFoundException("이름을 정확히 입력해주세요");
-        if (saveMember.getBirthday() == null) throw new RequiredParamNotFoundException("생년월일을 정확히 입력해주세요");
-        if (saveMember.getAddress() == null) throw new RequiredParamNotFoundException("주소를 정확히 입력해주세요");
-        if (saveMember.getPhoneNumber() == null) throw new RequiredParamNotFoundException("이름을 정확히 입력해주세요");
-
+        MyExceptionHandler.MemberPostExceptionHandler(saveMember);
+        if (memberRepository.findByMemberId(saveMember.getId()) != null)
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         memberRepository.save(saveMember.toMemberEntity());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
