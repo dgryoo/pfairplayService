@@ -18,7 +18,6 @@
 
 |field|type|detail|
 |---|---|---|
-|registerdTeamNameList|List|등록된 teamName의 List를 반환합니다.|
 |name|String|이름|
 |birthday|Date|생년월일|
 |address|String|주소 (법정동 단위까지만)|
@@ -72,7 +71,7 @@
 |409|-|해당 id(추후 주민등록번호 or 핸드폰 or 카카오 Auth로 변경)로 계정이 이미 존재할 경우|-|
 |500|-|서버 오류로 인해 생성 실패|-|
 
-## 멤버 정보수정 (TODO #2, 3)
+## 멤버 정보수정 (TODO #3)
 
 ### API information
 
@@ -136,33 +135,32 @@
 |404|-|해당 uid의 멤버가 없는 경우|
 |500|-|서버 오류로 인해 삭제 실패|
 
-## 특정 멤버가 가입 된 팀 조회
+## 특정 팀의 멤버 조회
 
 ### API information
 
-|method|requestURL|format|
-|---|---|---|
-|GET|/member/team/{uid}|json|
+|method|requestURL|format|detail|
+|---|---|---|---|
+|GET|/team/member/{tid}|json|팀 정보 조회|
 
 ### path variable
 
 |requestVariableName|type|notnull|defaultValue|detail|constraint|
 |---|---|---|---|---|---|
-|uid|String|Y|-|멤버 식별자|
+|tid|String|Y|-|팀 식별자|
 
 ### response body
 
 |field|type|detail|
 |---|---|---|
-|teamList|List| - 팀이름 <br> - 대표자이름 <br> - 대표자핸드폰번호 <br> 포함된 멤버가 등록 된 팀 리스트를 반환합니다.|
+|memberList|List| - 이름<br> - 나이 <br> - 주소<br> - 핸드폰번호<br> - 선호포지션<br> - 레벨 <br> 이 포함된 팀에 등록 된 멤버 리스트를 반환합니다.|
 
 ### status code
 
 |statusCode|exceptionName|detail|
 |---|---|---|
 |200|-|조회 성공|
-|204|-|해당 유저가 등록한 팀이 없음|
-|404|-|해당 uid의 멤버가 없는 경우|
+|404|-|해당 tid의 팀이 없는 경우|
 |500|-|서버오류로 인해 조회 실패|
 
 ## 특정 팀 정보 조회
@@ -292,33 +290,35 @@
 |404|-|해당 tid의 팀이 없는 경우|
 |500|-|서버 오류로 인해 삭제 실패|
 
-## 특정 팀의 멤버 조회
+## 특정 멤버가 가입 된 팀 조회
 
 ### API information
 
-|method|requestURL|format|detail|
-|---|---|---|---|
-|GET|/team/member/{tid}|json|팀 정보 조회|
+|method|requestURL|format|
+|---|---|---|
+|GET|/member/team/{uid}|json|
 
 ### path variable
 
 |requestVariableName|type|notnull|defaultValue|detail|constraint|
 |---|---|---|---|---|---|
-|tid|String|Y|-|팀 식별자|
+|uid|String|Y|-|멤버 식별자|
 
 ### response body
 
 |field|type|detail|
 |---|---|---|
-|memberList|List| - 이름<br> - 나이 <br> - 주소<br> - 핸드폰번호<br> - 선호포지션<br> - 레벨 <br> 이 포함된 팀에 등록 된 멤버 리스트를 반환합니다.|
+|teamList|List| - 팀이름 <br> - 대표자이름 <br> - 대표자핸드폰번호 <br> 포함된 멤버가 등록 된 팀 리스트를 반환합니다.|
 
 ### status code
 
 |statusCode|exceptionName|detail|
 |---|---|---|
 |200|-|조회 성공|
-|404|-|해당 tid의 팀이 없는 경우|
+|204|-|해당 유저가 등록한 팀이 없음|
+|404|-|해당 uid의 멤버가 없는 경우|
 |500|-|서버오류로 인해 조회 실패|
+
 
 ## 팀 구해요 게시판 조회
 
