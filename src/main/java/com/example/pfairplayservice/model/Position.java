@@ -31,4 +31,8 @@ public enum Position {
         }
         return null;
     }
+
+    public static Integer to(Position position) {
+        return position.position;
+    }
 }
