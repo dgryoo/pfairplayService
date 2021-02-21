@@ -44,8 +44,8 @@ public class MemberController {
     @PostMapping("/member")
     public ResponseEntity<Void> createMember(@RequestBody Member saveMember) {
         MyExceptionHandler.MemberPostExceptionHandler(saveMember);
-        if (memberRepository.findByMemberId(saveMember.getId()) != null)
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        Optional<MemberEntity> member = memberRepository.findByMemberId(saveMember.getId());
+        if (member.isPresent()) return ResponseEntity.status(HttpStatus.CONFLICT).build();
         memberRepository.save(saveMember.toMemberEntity());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
