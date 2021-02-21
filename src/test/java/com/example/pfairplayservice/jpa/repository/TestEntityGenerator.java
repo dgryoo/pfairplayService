@@ -19,7 +19,7 @@ public class TestEntityGenerator {
                 .id(randomIdString)
                 .password("password")
                 .address("address")
-                .birthday(new Date())
+                .birthday(11111111)
                 .joinDate(new Date())
                 .level(1)
                 .preferPosition(1)
