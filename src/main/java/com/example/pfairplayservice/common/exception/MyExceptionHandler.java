@@ -49,8 +49,8 @@ public class MyExceptionHandler {
 
         // phoneNumber
         if (member.getPhoneNumber().length() != 11 )
-            throw new PatternSyntaxNotMatchedException("id는 6 ~ 10 자리 사이여야 합니다.");
-        if (!Pattern.matches("^[0-9]{6,10}", member.getPhoneNumber()))
+            throw new PatternSyntaxNotMatchedException("핸드폰번호는 11자리 입니다.");
+        if (!Pattern.matches("^[0-9]{11}", member.getPhoneNumber()))
             throw new PatternSyntaxNotMatchedException("핸드폰번호는 숫자만 입력할 수 있습니다.");
     }
 
