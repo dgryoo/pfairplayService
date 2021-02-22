@@ -11,7 +11,14 @@ import com.example.pfairplayservice.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +43,7 @@ public class MemberController {
 
     @PostMapping("/member")
     public ResponseEntity<Void> createMember(@RequestBody Member saveMember) {
+        // TODO : ExceptionChecker로 한번에 관리 util package 생성 후 추가
         if (saveMember.getId().length() > 10) throw new LengthOverException("id는 10자를 초과 할 수 없습니다.");
         if (saveMember.getName() == null) throw new RequiredParamNotFoundException("이름을 정확히 입력해주세요");
         if (saveMember.getBirthday() == null) throw new RequiredParamNotFoundException("생년월일을 정확히 입력해주세요");

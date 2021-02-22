@@ -1,21 +1,21 @@
-# Knowledge
-
-
-
-## ETC
+### Knowledge
 
  - 4 3 2 1 -> big endian
   
    1 2 3 4 -> little endian
 
  - RFC(Request for Comments) HTTP, TCP/IP 등 문서를 참고해야할 때 찾아보자
+ 
+ - circulation reference 주의 
 
 
-## Shortcut
+### Shortcut
 
  - Ctrl + Shift + A -> Action
+ 
+### Problem
 
-## JPA IdentifierGenerationException
+## JPA IdentifierGenerationException (solved)
 
  - JPA에서  Repository.save()가 실행되기 전에 identifier는 먼저 생성 되어야 한다. mysql에서 sequence로 1씩 늘어나게 해놨는데 java에서 처리해야하나??
   원래는 1 2 3 ... 와 같이 sequence로 하려고 했음
@@ -36,11 +36,11 @@
 
   //@JsonIgnore() // JsonIgnoreProperties은 오타로 인해 런타임 에러가 날 수 있음 type system에 의해 보장됨
   
-## team-post NullPointerException
+## team-post NullPointerException (solved)
 
  - 에러코드 Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause
 
-## 'Embedded Id' attribute type should not be 'String'
+## 'Embedded Id' attribute type should not be 'String' (solved)
 
  - composite primary key 를 위해 String uid, String tid에 @EmbeddedId 어노테이션을 사용했더니 다음과 같은 에러가 떳다.
   두개의 id 모두 uuid를 사용하고 있는 상황. IdClass를 두개다 만들어 주어야 하는건가?? 
@@ -53,7 +53,7 @@
   그러나 @GeneratedValue를 삭제하면 알 수 없다.
   키가 암호화 되지 않는다 @GenericGenerator(name = "member-uid", strategy = "uuid") 어노테이션으로 암호화 중이다.
   
-## .ConverterNotFoundException
+## .ConverterNotFoundException (solved)
  
  - 기대했던 값은 tid 만 조회하는 것인데 jpql은 전부다 조회하는것으로 나옴.
 select memberteam0_.tid as tid1_1_, memberteam0_.uid as uid2_1_ from member_team_list memberteam0_ where memberteam0_.uid=?
@@ -68,12 +68,12 @@ select memberteam0_.tid as tid1_1_, memberteam0_.uid as uid2_1_ from member_team
  @Query 사용
 
 
-## ConversionFailedException
+## ConversionFailedException (solved)
  @Query(value = "SELECT * FROM test.team t WHERE t.tid in (SELECT mt.tid FROM test.member_team_list mt where mt.uid = 'member1')", nativeQuery = true)
  ConversionFailedException: Failed to convert from type [java.lang.Object[]] to type [com.example.pfairplayservice.jpa.model.TeamEntity] for value '{team1, myground, 2020-01-01 09:00:00.0, 2020-01-01 09:00:00.0, testname1, member1}'; nested exception is org.springframework.core.convert.ConverterNotFoundException: No converter found capable of converting from type [java.lang.String] to type [com.example.pfairplayservice.jpa.model.TeamEntity]] with root cause
  데이터는 받아와지는데 TeamEntity로 Conversion이 안됨.
  
-## RetrieveTeamListByUid, RetrieveMemberListByTid
+## RetrieveTeamListByUid, RetrieveMemberListByTid (solved)
 
  - Member, Team 각각 uid, tid로 복합키 MemberTeamId를 만들었다. 처음에는 MemberTeamEntity를 만들고 MemberTeamRepository를 만들어 그안에서
    각각 List<TeamEntity> findByMemberTeamIdUid(@Param("uid") String uid), List<MemberEntity> findByMemberTeamIdTid(@Param("tid") String tid) 메소드를 만들었다.
@@ -81,7 +81,7 @@ select memberteam0_.tid as tid1_1_, memberteam0_.uid as uid2_1_ from member_team
    MemberTeamEntity, MemberTeamEntity를 상속을 받은 클래스만을 다룰 수 있다.
    해결방법 : MemberTeamListRepository에서 해당 메소드들을 만드는 것이 아닌 MemberRepositroy, TeamRepository에 각각 해당 Entity를 다루는 메소드 들을 만들어 주었다.
    
-## Test case 작성시 에러
+## Test case 작성시 에러 (solved)
 
  - create문에서 계속 에러가 나는것은 버전호환때문으로 추정 (버전을 낮추니 가능)
  
@@ -92,14 +92,36 @@ select memberteam0_.tid as tid1_1_, memberteam0_.uid as uid2_1_ from member_team
      @GenericGenerator(name = "member-uid", strategy = "uuid")
      와 같은 어노테이션이 있기때문에 임의로 builder에서 uid를 지정해주었을 경우 에러발생.
    
-## constructor MemberTeamId in class com.example.pfairplayservice.jpa.id.MemberTeamId cannot be applied to given types;
+## constructor MemberTeamId in class com.example.pfairplayservice.jpa.id.MemberTeamId cannot be applied to given types; (solved)
  - 기본생성자를 만들어주지않아서 발생
 
-## JdbcSQLException
+## JdbcSQLException (solved)
 
  - 내용 : Schema "TEST" not found; SQL statement: SELECT * FROM test.member m WHERE m.uid in (SELECT mt.uid FROM test.member_team_list mt where mt.tid = ?) [90079-197]
- - 서술 : 
  - 해결방안 : 
+ 
+## 생년월일 나이 표현 (before) #1
+
+- 내용 : 멤버를 등록할때 생년월일을 받게되는데 멤버 조회시에 생년월일, 나이를 모두 보여주고싶음 생년으로 나이를 뽑을 수 있는데 이거는 back/front 누가 해야하는지?
+        back이 해야한다면 Member에 age 컬럼을 추가하여 return 해야할듯함 
+
+## 회원 정보수정 SpecialCharacterNotAllowException, LengthOverException, PatternSyntaxException (before) #2
+ - 내용 : 3가지 케이스를 에러처리 해야하는데 patternSyntaxException으로 통일 할지 아니면 3가지로 나눌지
+ - 해결방안 : patternSyntaxException으로 통일, 재사용성에 초점을 두고 정규표현식으로 표현, 메세지로 각 케이스에 대한 표현을 해주자.
+ 
+## 회원 정보수정 API method (before) #3
+
+ - 내용 : 정보수정을 할떄에 password, 주소, 포지션 등 을 수정할 수 있도록 할것인데 이러한 것들을 어떻게 처리할 것인지
+        방법 1. requestbody로 전부 받은다음 각각의 속성에 대해 모두 처리해주는 api 생성
+            장점 : repository에서 하나의 메소드만 생성해도 된다.
+            단점 : 변경되지 않은 속성도 덮어쓰여짐
+        방법 2. 각각의 속성에 대해 각각의 메소드를 만든다.
+            장점 : 변경된 속성만 업데이트함
+            단점 : 메소드를 여러번 호출해야함
+        Q : 정보를 수정할때에 MemberEntity를 사용 할 것인지, 아니면 변경된 정보만 담을 수 있는 Entity를 추가적으로 생성해야하는지? 
+        
+            
+
      
      
    
