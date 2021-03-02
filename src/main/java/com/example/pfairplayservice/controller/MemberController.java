@@ -1,7 +1,7 @@
 package com.example.pfairplayservice.controller;
 
 
-import com.example.pfairplayservice.common.exception.MyExceptionHandler;
+import com.example.pfairplayservice.common.exception.EntityExceptionHandler;
 import com.example.pfairplayservice.common.exception.RequiredParamNotFoundException;
 import com.example.pfairplayservice.common.exception.SourceNotFoundException;
 import com.example.pfairplayservice.common.filter.FilterManager;
@@ -43,7 +43,7 @@ public class MemberController {
 
     @PostMapping("/member")
     public ResponseEntity<Void> createMember(@RequestBody Member saveMember) {
-        MyExceptionHandler.MemberPostExceptionHandler(saveMember);
+        EntityExceptionHandler.MemberPostExceptionHandler(saveMember);
         Optional<MemberEntity> member = memberRepository.findByMemberId(saveMember.getId());
         if (member.isPresent()) return ResponseEntity.status(HttpStatus.CONFLICT).build();
         memberRepository.save(saveMember.toMemberEntity());
