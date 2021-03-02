@@ -1,13 +1,9 @@
 package com.example.pfairplayservice.common.exception;
 
-import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.model.Member;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 import java.util.regex.Pattern;
 
-public class MyExceptionHandler {
+public class EntityExceptionHandler {
 
     public static void MemberPostExceptionHandler(Member member) {
 
@@ -37,18 +33,12 @@ public class MyExceptionHandler {
         if (!Pattern.matches("^[가-힣]{2,10}", member.getName()))
             throw new PatternSyntaxNotMatchedException("이름은 한글만 입력 가능 합니다.");
 
-        // birtday
-        if (member.getBirthday() < 10000000 || member.getBirthday() > 99999999)
-            throw new PatternSyntaxNotMatchedException("생년월일은 8 자리입니다.");
-        if (!Pattern.matches("^[0-9]{8}", member.getBirthday().toString()))
-            throw new PatternSyntaxNotMatchedException("생년월일은 숫자만 입력할 수 있습니다.");
-
         // address
         if (!Pattern.matches("^[가-힣]{2,20}", member.getAddress()))
             throw new PatternSyntaxNotMatchedException("주소는 한글만 입력 가능 합니다.");
 
         // phoneNumber
-        if (member.getPhoneNumber().length() != 11 )
+        if (member.getPhoneNumber().length() != 11)
             throw new PatternSyntaxNotMatchedException("핸드폰번호는 11자리 입니다.");
         if (!Pattern.matches("^[0-9]{11}", member.getPhoneNumber()))
             throw new PatternSyntaxNotMatchedException("핸드폰번호는 숫자만 입력할 수 있습니다.");
