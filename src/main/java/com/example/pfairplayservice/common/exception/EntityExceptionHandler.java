@@ -17,7 +17,7 @@ public class MyExceptionHandler {
         if (member.getName() == null) throw new RequiredParamNotFoundException("이름을 입력해주세요.");
         if (member.getBirthday() == null) throw new RequiredParamNotFoundException("생년월일을 입력해주세요.");
         if (member.getAddress() == null) throw new RequiredParamNotFoundException("주소를 입력해주세요.");
-        if (member.getPhoneNumber() == null) throw new RequiredParamNotFoundException("핸드펀번호를 입력해주세요.");
+        if (member.getPhoneNumber() == null) throw new RequiredParamNotFoundException("핸드폰번호를 입력해주세요.");
 
         // id
         if (member.getId().length() < 6 || member.getId().length() > 10)

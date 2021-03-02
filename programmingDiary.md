@@ -6,7 +6,13 @@
 
  - RFC(Request for Comments) HTTP, TCP/IP 등 문서를 참고해야할 때 찾아보자
  
- - circulation reference 주의 
+ - circulation reference 주의
+ 
+## 타입안정성(Date를 year, month, day String format으로 받아서 재조합 할 때)
+ 
+  - 버그가 발생할 확률이 높음, 타입 안정성
+  - 여러가지 작업을 한다고 좋은 것이 아님. API는 그 역할에 맞게 최대한 안전하게
+  - 어떠한 작업을 했을때 무엇을 잃는지 생각해야함
 
 
 ### Shortcut
@@ -119,6 +125,19 @@ select memberteam0_.tid as tid1_1_, memberteam0_.uid as uid2_1_ from member_team
             장점 : 변경된 속성만 업데이트함
             단점 : 메소드를 여러번 호출해야함
         Q : 정보를 수정할때에 MemberEntity를 사용 할 것인지, 아니면 변경된 정보만 담을 수 있는 Entity를 추가적으로 생성해야하는지? 
+
+
+ 
+## Json Date format (before) #4
+ - reference : https://en.wikipedia.org/wiki/ISO_8601
+ 
+## Date Type (before) #5
+
+ - 내용 : LocalDateTime을 날짜형태로 통합했더니 다음과 같은 Exception 발생
+  -> @Temporal should only be set on a java.util.Date or java.util.Calendar property
+ - 방법 1 : Date or Calendar Type으로 날짜 자료형을 맞추되 다른 타입과 매핑을 통해 사용 (굳이 필요한가? 확인필요)
+ 
+ 
         
             
 
