@@ -10,11 +10,15 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
-import java.util.List;
-import java.util.regex.PatternSyntaxException;
 
 @Builder
 @Data
@@ -42,8 +46,9 @@ public class MemberEntity {
     @Length(min = 2, max = 10)
     private String name;
 
-    @Column(nullable = false, length = 8)
-    private Integer birthday;
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date birthday;
 
     @Column(nullable = false)
     private String address;
@@ -58,17 +63,18 @@ public class MemberEntity {
     @ColumnDefault("1")
     private Integer level;
 
-
     @Column(nullable = false, length = 1)
     @ColumnDefault("1")
     private Integer phoneNumberDisclosureOption;
 
-    @CreationTimestamp
     @Column(nullable = false)
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private Date joinDate;
 
-    @UpdateTimestamp
     @Column(nullable = false)
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private Date recentLoginDate;
 
 }
