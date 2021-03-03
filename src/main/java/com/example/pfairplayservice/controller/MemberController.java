@@ -8,11 +8,18 @@ import com.example.pfairplayservice.common.filter.FilterManager;
 import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.repository.MemberRepository;
 import com.example.pfairplayservice.model.Member;
-import com.example.pfairplayservice.model.Position;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -59,8 +66,8 @@ public class MemberController {
             memberRepository.updateAddressByUid(uid, updateMember.getAddress());
         if (member.get().getPhoneNumber() != updateMember.getAddress())
             memberRepository.updatePhoneNumberByUid(uid, updateMember.getPhoneNumber());
-        if (member.get().getPreferPosition() != Position.to(updateMember.getPreferPosition()))
-            memberRepository.updatePreferPositionByUid(uid, Position.to(updateMember.getPreferPosition()));
+        if (member.get().getPreferPosition() !=updateMember.getPreferPosition().getPosition())
+            memberRepository.updatePreferPositionByUid(uid, updateMember.getPreferPosition().getPosition());
         if (member.get().getLevel() != updateMember.getLevel())
             memberRepository.updateLevelByUid(uid, updateMember.getLevel());
         if (member.get().getPhoneNumberDisclosureOption() != updateMember.getPhoneNumberDisclosureOption())
