@@ -47,7 +47,7 @@ public class MemberEntity {
     private String name;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date birthday;
 
     @Column(nullable = false)
@@ -68,13 +68,11 @@ public class MemberEntity {
     private Integer phoneNumberDisclosureOption;
 
     @Column(nullable = false)
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date joinDate;
 
     @Column(nullable = false)
-    @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date recentLoginDate;
 
 }
