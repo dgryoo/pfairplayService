@@ -22,6 +22,7 @@ public class Member {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
+
     @Id
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String uid;
@@ -53,6 +54,7 @@ public class Member {
     private Date recentLoginDate;
 
     public static Member from(MemberEntity memberEntity) {
+
 
         return Member.builder()
                 .uid(memberEntity.getUid())
