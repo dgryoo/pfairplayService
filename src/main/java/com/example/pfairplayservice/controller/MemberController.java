@@ -7,7 +7,8 @@ import com.example.pfairplayservice.common.exception.SourceNotFoundException;
 import com.example.pfairplayservice.common.filter.FilterManager;
 import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.repository.MemberRepository;
-import com.example.pfairplayservice.model.Member;
+import com.example.pfairplayservice.model.modifier.MemberModifier;
+import com.example.pfairplayservice.model.origin.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,24 +55,24 @@ public class MemberController {
     }
 
     @PutMapping("/member/{uid}")
-    public ResponseEntity<Void> updatePasswordByUid(@PathVariable String uid, @RequestBody Member updateMember) {
-        Optional<MemberEntity> member = memberRepository.findById(uid);
-        if (!member.isPresent()) {
+    public ResponseEntity<Void> updateByUid(@PathVariable String uid, @RequestBody MemberModifier memberModifier) {
+        Optional<MemberEntity> memberEntity = memberRepository.findById(uid);
+        if (!memberEntity.isPresent()) {
             throw new SourceNotFoundException(String.format("uid{%s} not found", uid));
         }
 
-        if (member.get().getPassword() != updateMember.getPassword())
-            memberRepository.updatePasswordByUid(uid, updateMember.getPassword());
-        if (member.get().getAddress() != updateMember.getAddress())
-            memberRepository.updateAddressByUid(uid, updateMember.getAddress());
-        if (member.get().getPhoneNumber() != updateMember.getAddress())
-            memberRepository.updatePhoneNumberByUid(uid, updateMember.getPhoneNumber());
-        if (member.get().getPreferPosition() !=updateMember.getPreferPosition().getPosition())
-            memberRepository.updatePreferPositionByUid(uid, updateMember.getPreferPosition().getPosition());
-        if (member.get().getLevel() != updateMember.getLevel())
-            memberRepository.updateLevelByUid(uid, updateMember.getLevel());
-        if (member.get().getPhoneNumberDisclosureOption() != updateMember.getPhoneNumberDisclosureOption())
-            memberRepository.updatePhoneNumberDisclosureOptionByUid(uid, updateMember.getPhoneNumberDisclosureOption());
+        EntityExceptionHandler.MemberPutExceptionHandler(memberModifier);
+
+        if (memberEntity.get().getAddress() != memberModifier.getAddress())
+            memberRepository.updateAddressByUid(uid, memberModifier.getAddress());
+        if (memberEntity.get().getPhoneNumber() != memberModifier.getAddress())
+            memberRepository.updatePhoneNumberByUid(uid, memberModifier.getPhoneNumber());
+        if (memberEntity.get().getPreferPosition() != memberModifier.getPreferPosition().getPosition())
+            memberRepository.updatePreferPositionByUid(uid, memberModifier.getPreferPosition().getPosition());
+        if (memberEntity.get().getLevel() != memberModifier.getLevel())
+            memberRepository.updateLevelByUid(uid, memberModifier.getLevel());
+        if (memberEntity.get().getPhoneNumberDisclosureOption() != memberModifier.getPhoneNumberDisclosureOption().getDisclosureOption())
+            memberRepository.updatePhoneNumberDisclosureOptionByUid(uid, memberModifier.getPhoneNumberDisclosureOption().getDisclosureOption());
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }

@@ -1,4 +1,4 @@
-package com.example.pfairplayservice.model;
+package com.example.pfairplayservice.model.origin;
 
 import com.example.pfairplayservice.jpa.model.TeamEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;

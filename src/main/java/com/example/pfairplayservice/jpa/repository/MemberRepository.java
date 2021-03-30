@@ -1,7 +1,6 @@
 package com.example.pfairplayservice.jpa.repository;
 
 import com.example.pfairplayservice.jpa.model.MemberEntity;
-import com.example.pfairplayservice.model.Position;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
