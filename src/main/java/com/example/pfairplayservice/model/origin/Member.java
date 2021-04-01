@@ -39,11 +39,11 @@ public class Member {
 
     private String phoneNumber;
 
-    private Position preferPosition;
+    private int preferPosition;
 
-    private Integer level;
+    private int level;
 
-    private DisclosureOption phoneNumberDisclosureOption;
+    private int phoneNumberDisclosureOption;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Date joinDate;
@@ -63,9 +63,9 @@ public class Member {
                 .birthday(memberEntity.getBirthday())
                 .address(memberEntity.getAddress())
                 .phoneNumber(memberEntity.getPhoneNumber())
-                .preferPosition(Position.from(memberEntity.getPreferPosition()))
+                .preferPosition(memberEntity.getPreferPosition())
                 .level(memberEntity.getLevel())
-                .phoneNumberDisclosureOption(DisclosureOption.from(memberEntity.getPhoneNumberDisclosureOption()))
+                .phoneNumberDisclosureOption(memberEntity.getPhoneNumberDisclosureOption())
                 .joinDate(memberEntity.getJoinDate())
                 .recentLoginDate(memberEntity.getRecentLoginDate())
                 .build();
@@ -81,9 +81,9 @@ public class Member {
                 .birthday(getBirthday())
                 .address(getAddress())
                 .phoneNumber(getPhoneNumber())
-                .preferPosition(getPreferPosition().getPosition())
+                .preferPosition(getPreferPosition())
                 .level(getLevel())
-                .phoneNumberDisclosureOption(getPhoneNumberDisclosureOption().getDisclosureOption())
+                .phoneNumberDisclosureOption(getPhoneNumberDisclosureOption())
                 .joinDate(getJoinDate())
                 .recentLoginDate(getRecentLoginDate())
                 .build();

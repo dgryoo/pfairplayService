@@ -90,9 +90,9 @@
 |---|---|---|---|---|---|
 |address|String|Y|-|주소 (법정동 단위까지만)|
 |phoneNumber|String|Y|-|핸드폰번호|
-|preferPosition|integer|Y|-|선호포지션 <br> 1. ST <br> 2. CAM <br> 3. CM <br> 4. CDM <br> 5. WF <br> 6. WB <br> 7. CB <br> 8. GK|
-|level|integer|Y|1|실력 <br> 1. 상 <br> 2. 중상<br> 3. 중<br> 4. 중하<br> 5. 하|
-|phoneNumberDisclosureOption|integer|Y|1|핸드폰번호 공개 범위<br> 1 : 전체공개<br> 2 : 팀원에게만 공개<br> 3 : 공개안함|
+|preferPosition|integer|N|0|선호포지션 <br> 1. ST <br> 2. CAM <br> 3. CM <br> 4. CDM <br> 5. WF <br> 6. WB <br> 7. CB <br> 8. GK|
+|level|integer|Y|-|실력 <br> 1. 상 <br> 2. 중상<br> 3. 중<br> 4. 중하<br> 5. 하|
+|phoneNumberDisclosureOption|integer|Y|-|핸드폰번호 공개 범위<br> 1 : 전체공개<br> 2 : 팀원에게만 공개<br> 3 : 공개안함|
 
 ### response body
 

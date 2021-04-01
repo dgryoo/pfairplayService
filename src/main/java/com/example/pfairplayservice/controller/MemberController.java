@@ -67,12 +67,12 @@ public class MemberController {
             memberRepository.updateAddressByUid(uid, memberModifier.getAddress());
         if (memberEntity.get().getPhoneNumber() != memberModifier.getAddress())
             memberRepository.updatePhoneNumberByUid(uid, memberModifier.getPhoneNumber());
-        if (memberEntity.get().getPreferPosition() != memberModifier.getPreferPosition().getPosition())
-            memberRepository.updatePreferPositionByUid(uid, memberModifier.getPreferPosition().getPosition());
+        if (memberEntity.get().getPreferPosition() != memberModifier.getPreferPosition())
+            memberRepository.updatePreferPositionByUid(uid, memberModifier.getPreferPosition());
         if (memberEntity.get().getLevel() != memberModifier.getLevel())
             memberRepository.updateLevelByUid(uid, memberModifier.getLevel());
-        if (memberEntity.get().getPhoneNumberDisclosureOption() != memberModifier.getPhoneNumberDisclosureOption().getDisclosureOption())
-            memberRepository.updatePhoneNumberDisclosureOptionByUid(uid, memberModifier.getPhoneNumberDisclosureOption().getDisclosureOption());
+        if (memberEntity.get().getPhoneNumberDisclosureOption() != memberModifier.getPhoneNumberDisclosureOption())
+            memberRepository.updatePhoneNumberDisclosureOptionByUid(uid, memberModifier.getPhoneNumberDisclosureOption());
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }

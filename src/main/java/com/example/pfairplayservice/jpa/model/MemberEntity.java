@@ -57,15 +57,15 @@ public class MemberEntity {
     private String phoneNumber;
 
     @Column(length = 1)
-    private Integer preferPosition;
+    private int preferPosition;
 
     @Column(length = 1)
     @ColumnDefault("1")
-    private Integer level;
+    private int level;
 
     @Column(nullable = false, length = 1)
     @ColumnDefault("1")
-    private Integer phoneNumberDisclosureOption;
+    private int phoneNumberDisclosureOption;
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)

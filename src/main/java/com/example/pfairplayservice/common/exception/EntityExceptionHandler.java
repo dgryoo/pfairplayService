@@ -55,22 +55,19 @@ public class EntityExceptionHandler {
             throw new PatternSyntaxNotMatchedException("핸드폰번호는 11 자리 숫자만 입력할 수 있습니다.");
 
         // preferPosition check
-        if (memberModifier.getPreferPosition() == null)
-            throw new RequiredParamNotFoundException("선호포지션을 입력해주세요.");
-        else if (!Pattern.matches("^[0-7]", memberModifier.getPreferPosition().getPosition().toString()))
+        if (memberModifier.getPreferPosition() < 0 && memberModifier.getPreferPosition() > 7)
             throw new PatternSyntaxNotMatchedException("선호포지션은 0~7 사이 숫자 입니다.");
 
         // level check
-        if (memberModifier.getLevel() == null)
+        if (memberModifier.getLevel() == 0)
             throw new RequiredParamNotFoundException("레벨을 입력해주세요.");
-        else if (!Pattern.matches("^[1-5]", memberModifier.getLevel().toString()))
+        else if (memberModifier.getLevel() < 1 && memberModifier.getLevel() > 5)
             throw new PatternSyntaxNotMatchedException("레벨은 1~5 사이 숫자 입니다.");
 
         // phoneNumberDisclosureOption check
-        if (memberModifier.getPhoneNumberDisclosureOption() == null)
+        if (memberModifier.getPhoneNumberDisclosureOption() == 0)
             throw new RequiredParamNotFoundException("핸드폰번호 공개범위를 입력해주세요.");
-        else if (!Pattern.matches("^[1-3]", memberModifier.getPhoneNumberDisclosureOption().getDisclosureOption().toString()))
+        else if (memberModifier.getPhoneNumberDisclosureOption() < 1 && memberModifier.getPhoneNumberDisclosureOption() > 3)
             throw new PatternSyntaxNotMatchedException("핸드폰번호 공개범위는 1~3 사이 숫자 입니다.");
-
     }
 }
