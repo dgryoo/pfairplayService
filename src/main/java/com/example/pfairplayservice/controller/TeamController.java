@@ -1,6 +1,5 @@
 package com.example.pfairplayservice.controller;
 
-import com.example.pfairplayservice.common.exception.EntityExceptionHandler;
 import com.example.pfairplayservice.common.exception.SourceNotFoundException;
 import com.example.pfairplayservice.common.filter.FilterManager;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,15 +33,15 @@ public class TeamController {
     }
 
     @PostMapping("/team")
-    public ResponseEntity<Void> createMember(@RequestBody Team saveTeam) {
-        EntityExceptionHandler.teamPostExceptionHandler(saveTeam);
-        Iterator<TeamEntity> teamEntityIterator = teamRepository.findByTeamName(saveTeam.getTeamName()).iterator();
-        while(teamEntityIterator.hasNext()) {
-            if(saveTeam.getTeamLeadMember().getUid().equals(teamEntityIterator.next().getTeamLeadMember().getUid())) {
+    public ResponseEntity<Void> createTeam(@RequestBody Team team) {
+
+        List<TeamEntity> teamEntityList = teamRepository.findByTeamName(team.getTeamName());
+        for (TeamEntity teamEntity : teamEntityList) {
+            if (team.getTeamLeadMember().getUid().equals(teamEntity.getTeamLeadMember().getUid())) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).build();
             }
         }
-        teamRepository.save(saveTeam.toTeamEntity());
+        teamRepository.save(team.toTeamEntity());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
