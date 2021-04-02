@@ -1,5 +1,6 @@
 package com.example.pfairplayservice.model.origin;
 
+import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -51,7 +52,7 @@ public class Team {
         return TeamEntity.builder()
                 .tid(getTid())
                 .teamName(getTeamName())
-                .teamLeadMember(getTeamLeadMember().toMemberEntity())
+                .teamLeadMember(MemberEntity.builder().uid(getTeamLeadMember().getUid()).build())
                 .activityAreaAddress(getActivityAreaAddress())
                 .registrationDate(getRegistrationDate())
                 .foundDate(getFoundDate())

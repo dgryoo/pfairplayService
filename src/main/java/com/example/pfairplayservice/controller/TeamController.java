@@ -1,5 +1,6 @@
 package com.example.pfairplayservice.controller;
 
+import com.example.pfairplayservice.common.exception.EntityExceptionHandler;
 import com.example.pfairplayservice.common.exception.SourceNotFoundException;
 import com.example.pfairplayservice.common.filter.FilterManager;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
@@ -8,10 +9,9 @@ import com.example.pfairplayservice.model.origin.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,6 +32,19 @@ public class TeamController {
         team.get().setTeamLeadMember(FilterManager.teamLeadMemberFilter(team.get().getTeamLeadMember()));
 
         return ResponseEntity.status(HttpStatus.OK).body(Team.from(team.get()));
+    }
+
+    @PostMapping("/team")
+    public ResponseEntity<Void> createMember(@RequestBody Team saveTeam) {
+        EntityExceptionHandler.teamPostExceptionHandler(saveTeam);
+        Iterator<TeamEntity> teamEntityIterator = teamRepository.findByTeamName(saveTeam.getTeamName()).iterator();
+        while(teamEntityIterator.hasNext()) {
+            if(saveTeam.getTeamLeadMember().getUid().equals(teamEntityIterator.next().getTeamLeadMember().getUid())) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            }
+        }
+        teamRepository.save(saveTeam.toTeamEntity());
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/team/member/{uid}")
