@@ -1,8 +1,10 @@
 package com.example.pfairplayservice.controller;
 
 import com.example.pfairplayservice.common.exception.EntityFieldValueChecker;
+import com.example.pfairplayservice.common.exception.RequiredParamNotFoundException;
 import com.example.pfairplayservice.common.exception.SourceNotFoundException;
 import com.example.pfairplayservice.common.filter.FilterManager;
+import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
 import com.example.pfairplayservice.jpa.repository.TeamRepository;
 import com.example.pfairplayservice.model.modifier.TeamModifier;
@@ -55,7 +57,7 @@ public class TeamController {
         EntityFieldValueChecker.checkTeamPutFieldValue(teamModifier);
 
         Optional<TeamEntity> teamEntity = teamRepository.findById(tid);
-        if(!teamEntity.isPresent()) {
+        if (!teamEntity.isPresent()) {
             throw new SourceNotFoundException(String.format("tid{%s} not found", tid));
         }
 
@@ -69,6 +71,18 @@ public class TeamController {
 
         return ResponseEntity.status(HttpStatus.OK).build();
 
+    }
+
+    @DeleteMapping("/member/{tid}")
+    public ResponseEntity<Void> deleteByTid(@PathVariable String tid) {
+
+        Optional<TeamEntity> teamEntity = teamRepository.findById(tid);
+
+        if (!teamEntity.isPresent()) {
+            throw new RequiredParamNotFoundException(String.format("tid{%s} not found", tid));
+        }
+        teamRepository.deleteById(tid);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/team/member/{uid}")
