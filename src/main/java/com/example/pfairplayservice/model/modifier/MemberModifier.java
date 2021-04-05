@@ -1,5 +1,7 @@
 package com.example.pfairplayservice.model.modifier;
 
+import com.example.pfairplayservice.model.origin.DisClosureOption;
+import com.example.pfairplayservice.model.origin.Position;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,10 +17,10 @@ public class MemberModifier {
 
     private String phoneNumber;
 
-    private int preferPosition;
+    private Position preferPosition;
 
     private int level;
 
-    private int phoneNumberDisclosureOption;
+    private DisClosureOption phoneNumberDisclosureOption;
 
 }
