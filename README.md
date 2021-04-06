@@ -22,7 +22,7 @@
 |birthday|Integer|생년월일|
 |address|String|주소 (법정동 단위까지만)|
 |phoneNumber|String|핸드폰번호|
-|preferPosition|String|선호포지션 <br> 1. ST <br> 2. CAM <br> 3. CM <br> 4. CDM <br> 5. WF <br> 6. WB <br> 7. CB <br> 8. GK|
+|preferPosition|integer|선호포지션 <br> 1. ST <br> 2. CAM <br> 3. CM <br> 4. CDM <br> 5. WF <br> 6. WB <br> 7. CB <br> 8. GK|
 |level|Integer|실력 <br> 1. 상 <br> 2. 중상<br> 3. 중<br> 4. 중하<br> 5. 하|
 |phoneNumberDisclosureOption|Integer|핸드폰번호 공개 범위<br> 1 : 전체공개<br> 2 : 팀원에게만 공개<br> 3 : 공개안함|
 
@@ -51,9 +51,9 @@
 |birthday|Integer|Y|-|생년월일|- 숫자 <br> - 길이 8|
 |address|String|Y|-|주소|- 도시 시군구 구 읍면동 리 순서대로 <br> - 특수문자, 숫자 사용불가|
 |phoneNumber|String|Y|-|핸드폰번호|- 숫자 <br> -길이 11|
-|preferPosition|String|N|-|선호포지션 <br> 1. ST <br> 2. CAM <br> 3. CM <br> 4. CDM <br> 5. WF <br> 6. WB <br> 7. CB <br> 8. GK|- 숫자|
+|preferPosition|integer|N|-|선호포지션 <br> 1. ST <br> 2. CAM <br> 3. CM <br> 4. CDM <br> 5. WF <br> 6. WB <br> 7. CB <br> 8. GK|- 숫자|
 |level|Integer|N|1|실력 <br> 5. 상 <br> 4. 중상<br> 3. 중<br> 2. 중하<br> 1. 하|- 숫자|
-|phoneNumberDisclosureOption|int|N|1|핸드폰번호 공개 범위<br> 1 : 전체공개<br> 2 : 팀원에게만 공개<br> 3 : 공개안함|- 숫자|
+|phoneNumberDisclosureOption|integer|N|1|핸드폰번호 공개 범위<br> 1 : 전체공개<br> 2 : 팀원에게만 공개<br> 3 : 공개안함|- 숫자|
 
 ### response body
 
@@ -90,9 +90,9 @@
 |---|---|---|---|---|---|
 |address|String|Y|-|주소 (법정동 단위까지만)|
 |phoneNumber|String|Y|-|핸드폰번호|
-|preferPosition|String|N|-|선호포지션 <br> 1. ST <br> 2. CAM <br> 3. CM <br> 4. CDM <br> 5. WF <br> 6. WB <br> 7. CB <br> 8. GK|
-|level|String|Y|1|실력 <br> 1. 상 <br> 2. 중상<br> 3. 중<br> 4. 중하<br> 5. 하|
-|phoneNumberDisclosureOption|int|Y|1|핸드폰번호 공개 범위<br> 1 : 전체공개<br> 2 : 팀원에게만 공개<br> 3 : 공개안함|
+|preferPosition|integer|N|0|선호포지션 <br> 1. ST <br> 2. CAM <br> 3. CM <br> 4. CDM <br> 5. WF <br> 6. WB <br> 7. CB <br> 8. GK|
+|level|integer|Y|-|실력 <br> 1. 상 <br> 2. 중상<br> 3. 중<br> 4. 중하<br> 5. 하|
+|phoneNumberDisclosureOption|integer|Y|-|핸드폰번호 공개 범위<br> 1 : 전체공개<br> 2 : 팀원에게만 공개<br> 3 : 공개안함|
 
 ### response body
 

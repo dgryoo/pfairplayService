@@ -7,11 +7,20 @@ import com.example.pfairplayservice.common.exception.SourceNotFoundException;
 import com.example.pfairplayservice.common.filter.FilterManager;
 import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.repository.MemberRepository;
-import com.example.pfairplayservice.model.Member;
+import com.example.pfairplayservice.model.modifier.MemberModifier;
+import com.example.pfairplayservice.model.origin.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -46,13 +55,24 @@ public class MemberController {
     }
 
     @PutMapping("/member/{uid}")
-    public ResponseEntity<Void> updatePasswordByUid(@PathVariable String uid, @RequestParam String password) {
-        Optional<MemberEntity> member = memberRepository.findById(uid);
-        if (!member.isPresent()) {
+    public ResponseEntity<Void> updateByUid(@PathVariable String uid, @RequestBody MemberModifier memberModifier) {
+        Optional<MemberEntity> memberEntity = memberRepository.findById(uid);
+        if (!memberEntity.isPresent()) {
             throw new SourceNotFoundException(String.format("uid{%s} not found", uid));
         }
-        member.get().setPassword(password);
-        memberRepository.save(member.get());
+
+        EntityExceptionHandler.MemberPutExceptionHandler(memberModifier);
+
+        if (memberEntity.get().getAddress() != memberModifier.getAddress())
+            memberRepository.updateAddressByUid(uid, memberModifier.getAddress());
+        if (memberEntity.get().getPhoneNumber() != memberModifier.getAddress())
+            memberRepository.updatePhoneNumberByUid(uid, memberModifier.getPhoneNumber());
+        if (memberEntity.get().getPreferPosition() != memberModifier.getPreferPosition())
+            memberRepository.updatePreferPositionByUid(uid, memberModifier.getPreferPosition());
+        if (memberEntity.get().getLevel() != memberModifier.getLevel())
+            memberRepository.updateLevelByUid(uid, memberModifier.getLevel());
+        if (memberEntity.get().getPhoneNumberDisclosureOption() != memberModifier.getPhoneNumberDisclosureOption())
+            memberRepository.updatePhoneNumberDisclosureOptionByUid(uid, memberModifier.getPhoneNumberDisclosureOption());
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }

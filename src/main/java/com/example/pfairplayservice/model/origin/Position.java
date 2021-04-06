@@ -1,13 +1,12 @@
-package com.example.pfairplayservice.model;
+package com.example.pfairplayservice.model.origin;
 
 public enum Position {
-    ST(1),
-    CAM(2),
-    CM(3),
-    WF(4),
-    WB(5),
-    CB(6),
-    GK(7);
+
+    NONE(0),
+    FW(1),
+    MF(2),
+    DF(3),
+    GK(4);
 
 
     private int position;
@@ -20,10 +19,8 @@ public enum Position {
         return position;
     }
 
-    public static Position from(Integer position) {
-        if(position == null) {
-            return null;
-        }
+    public static Position from(int position) {
+
         for (Position c : Position.values()) {
             if (c.getPosition() == position) {
                 return c;
@@ -31,4 +28,5 @@ public enum Position {
         }
         return null;
     }
+
 }

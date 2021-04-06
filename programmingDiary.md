@@ -14,7 +14,6 @@
   - 여러가지 작업을 한다고 좋은 것이 아님. API는 그 역할에 맞게 최대한 안전하게
   - 어떠한 작업을 했을때 무엇을 잃는지 생각해야함
 
-
 ### Shortcut
 
  - Ctrl + Shift + A -> Action
@@ -126,8 +125,6 @@ select memberteam0_.tid as tid1_1_, memberteam0_.uid as uid2_1_ from member_team
             단점 : 메소드를 여러번 호출해야함
         Q : 정보를 수정할때에 MemberEntity를 사용 할 것인지, 아니면 변경된 정보만 담을 수 있는 Entity를 추가적으로 생성해야하는지? 
 
-
- 
 ## Json Date format (before) #4
  - reference : https://en.wikipedia.org/wiki/ISO_8601
  
@@ -137,7 +134,12 @@ select memberteam0_.tid as tid1_1_, memberteam0_.uid as uid2_1_ from member_team
   -> @Temporal should only be set on a java.util.Date or java.util.Calendar property
  - 방법 1 : Date or Calendar Type으로 날짜 자료형을 맞추되 다른 타입과 매핑을 통해 사용 (굳이 필요한가? 확인필요)
  
- 
+## member-put. Can not issue data manipulation statements with executeQuery().
+ - 내용 : 정부수정을 할때 다음과 같은 Error 발생
+ - 해결방안 : DML을 할때에는 @Modify, @Transactional 어노테이션을 사용해 줘야함, 이러한 어노테이션이 없으면 기본으로 executeQuery()를 사용하게
+            되는데 따로 결과값이 없어 오류가 발생함 DML은 void 함수
+ - 추가정보 : 해당 어노테이션에는 @Transactional이 포함되어 있다고 하는데, 제외하고 실행하니 해당 어노테이션이 필요하다는 에러가 남
+
         
             
 
