@@ -8,9 +8,7 @@ import com.example.pfairplayservice.model.origin.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +30,19 @@ public class TeamController {
         team.get().setTeamLeadMember(FilterManager.teamLeadMemberFilter(team.get().getTeamLeadMember()));
 
         return ResponseEntity.status(HttpStatus.OK).body(Team.from(team.get()));
+    }
+
+    @PostMapping("/team")
+    public ResponseEntity<Void> createTeam(@RequestBody Team team) {
+
+        List<TeamEntity> teamEntityList = teamRepository.findByTeamName(team.getTeamName());
+        for (TeamEntity teamEntity : teamEntityList) {
+            if (team.getTeamLeadMember().getUid().equals(teamEntity.getTeamLeadMember().getUid())) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            }
+        }
+        teamRepository.save(team.toTeamEntity());
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/team/member/{uid}")
