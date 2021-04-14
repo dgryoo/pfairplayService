@@ -1,7 +1,7 @@
 package com.example.pfairplayservice.controller;
 
 
-import com.example.pfairplayservice.common.exception.EntityExceptionHandler;
+import com.example.pfairplayservice.common.exception.EntityFieldValueChecker;
 import com.example.pfairplayservice.common.exception.RequiredParamNotFoundException;
 import com.example.pfairplayservice.common.exception.SourceNotFoundException;
 import com.example.pfairplayservice.common.filter.FilterManager;
@@ -36,13 +36,13 @@ public class MemberController {
     }
 
     @PostMapping("/member")
-    public ResponseEntity<Void> createMember(@RequestBody Member saveMember) {
-        EntityExceptionHandler.MemberPostExceptionHandler(saveMember);
-        Optional<MemberEntity> member = memberRepository.findByMemberId(saveMember.getId());
-        if (member.isPresent()) {
+    public ResponseEntity<Void> createMember(@RequestBody Member member) {
+        EntityFieldValueChecker.checkMemberPostFieldValue(member);
+        Optional<MemberEntity> memberEntity = memberRepository.findByMemberId(member.getId());
+        if (memberEntity.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-        memberRepository.save(saveMember.toMemberEntity());
+        memberRepository.save(member.toMemberEntity());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -53,7 +53,7 @@ public class MemberController {
             throw new SourceNotFoundException(String.format("uid{%s} not found", uid));
         }
 
-        EntityExceptionHandler.MemberPutExceptionHandler(memberModifier);
+        EntityFieldValueChecker.checkMemberPutFieldValue(memberModifier);
 
         if (memberEntity.get().getAddress() != memberModifier.getAddress())
             memberRepository.updateAddressByUid(uid, memberModifier.getAddress());

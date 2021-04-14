@@ -2,15 +2,16 @@ package com.example.pfairplayservice.common.exception;
 
 
 import com.example.pfairplayservice.model.modifier.MemberModifier;
+import com.example.pfairplayservice.model.modifier.TeamModifier;
 import com.example.pfairplayservice.model.origin.Member;
 import com.example.pfairplayservice.model.origin.Team;
 import io.micrometer.core.instrument.util.StringUtils;
 
 import java.util.regex.Pattern;
 
-public class EntityExceptionHandler {
+public class EntityFieldValueChecker {
 
-    public static void MemberPostExceptionHandler(Member member) {
+    public static void checkMemberPostFieldValue(Member member) {
 
         // not null, empty value check
         if (StringUtils.isEmpty(member.getId())) throw new RequiredParamNotFoundException("id를 입력해주세요.");
@@ -42,7 +43,7 @@ public class EntityExceptionHandler {
             throw new PatternSyntaxNotMatchedException("핸드폰번호는 11 자리 숫자만 입력할 수 있습니다.");
     }
 
-    public static void MemberPutExceptionHandler(MemberModifier memberModifier) {
+    public static void checkMemberPutFieldValue(MemberModifier memberModifier) {
 
         // address check
         if (StringUtils.isEmpty(memberModifier.getAddress()))
@@ -75,20 +76,43 @@ public class EntityExceptionHandler {
             throw new PatternSyntaxNotMatchedException("핸드폰번호 공개범위는 0~2 사이 숫자 입니다.");
     }
 
-    public static void teamPostExceptionHandler(Team team) {
-
-        // null, empty string check
-        if (StringUtils.isEmpty(team.getTeamName())) throw new RequiredParamNotFoundException("팀이름을 입력해주세요.");
-        if (StringUtils.isEmpty(team.getActivityAreaAddress())) throw new RequiredParamNotFoundException("활동지역을 입력해주세요.");
-        if (StringUtils.isEmpty(team.getRegistrationDate().toString())) throw new RequiredParamNotFoundException("둥록일자를 입력해주세요.");
+    public static void checkTeamPostFieldValue(Team team) {
 
         // teamName
-        if (!Pattern.matches("^[A-Za-z0-9가-힣]{2,10}", team.getTeamName()))
+        if (StringUtils.isEmpty(team.getTeamName()))
+            throw new RequiredParamNotFoundException("팀이름을 입력해주세요.");
+        else if (!Pattern.matches("^[A-Za-z0-9가-힣]{2,10}", team.getTeamName()))
             throw new PatternSyntaxNotMatchedException("이름은 2 ~ 10 자리 특수문자를 제외하고 입력 가능 합니다.");
 
         // address
-        if (!Pattern.matches("^[가-힣]{2,20}", team.getActivityAreaAddress()))
+        if (StringUtils.isEmpty(team.getActivityAreaAddress()))
+            throw new RequiredParamNotFoundException("활동지역을 입력해주세요.");
+        else if (!Pattern.matches("^[가-힣]{2,20}", team.getActivityAreaAddress()))
             throw new PatternSyntaxNotMatchedException("활동지역은 2 ~ 20 자리 한글만 입력 가능 합니다.");
+
+        // registrationDate()
+        if (StringUtils.isEmpty(team.getFoundDate().toString()))
+            throw new RequiredParamNotFoundException("둥록일자를 입력해주세요.");
+
+    }
+
+    public static void checkTeamPutFieldValue(TeamModifier teamModifier) {
+
+        // teamName
+        if (StringUtils.isEmpty(teamModifier.getTeamName()))
+            throw new RequiredParamNotFoundException("팀이름을 입력해주세요.");
+        else if (!Pattern.matches("^[A-Za-z0-9가-힣]{2,10}", teamModifier.getTeamName()))
+            throw new PatternSyntaxNotMatchedException("이름은 2 ~ 10 자리 특수문자를 제외하고 입력 가능 합니다.");
+
+        // address
+        if (StringUtils.isEmpty(teamModifier.getActivityAreaAddress()))
+            throw new RequiredParamNotFoundException("활동지역을 입력해주세요.");
+        else if (!Pattern.matches("^[가-힣]{2,20}", teamModifier.getActivityAreaAddress()))
+            throw new PatternSyntaxNotMatchedException("활동지역은 2 ~ 20 자리 한글만 입력 가능 합니다.");
+
+        // registrationDate()
+        if (StringUtils.isEmpty(teamModifier.getFoundDate().toString()))
+            throw new RequiredParamNotFoundException("둥록일자를 입력해주세요.");
 
     }
 

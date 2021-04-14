@@ -1,9 +1,11 @@
 package com.example.pfairplayservice.controller;
 
+import com.example.pfairplayservice.common.exception.EntityFieldValueChecker;
 import com.example.pfairplayservice.common.exception.SourceNotFoundException;
 import com.example.pfairplayservice.common.filter.FilterManager;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
 import com.example.pfairplayservice.jpa.repository.TeamRepository;
+import com.example.pfairplayservice.model.modifier.TeamModifier;
 import com.example.pfairplayservice.model.origin.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +37,8 @@ public class TeamController {
     @PostMapping("/team")
     public ResponseEntity<Void> createTeam(@RequestBody Team team) {
 
+        EntityFieldValueChecker.checkTeamPostFieldValue(team);
+
         List<TeamEntity> teamEntityList = teamRepository.findByTeamName(team.getTeamName());
         for (TeamEntity teamEntity : teamEntityList) {
             if (team.getTeamLeadMember().getUid().equals(teamEntity.getTeamLeadMember().getUid())) {
@@ -43,6 +47,28 @@ public class TeamController {
         }
         teamRepository.save(team.toTeamEntity());
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PutMapping("/team/{tid}")
+    public ResponseEntity<Void> updateTeamByTid(@PathVariable String tid, @RequestBody TeamModifier teamModifier) {
+
+        EntityFieldValueChecker.checkTeamPutFieldValue(teamModifier);
+
+        Optional<TeamEntity> teamEntity = teamRepository.findById(tid);
+        if(!teamEntity.isPresent()) {
+            throw new SourceNotFoundException(String.format("tid{%s} not found", tid));
+        }
+
+        if (teamEntity.get().getTeamName() != teamModifier.getTeamName())
+            teamRepository.updateTeamNameByTid(tid, teamModifier.getTeamName());
+        if (teamEntity.get().getActivityAreaAddress() != teamModifier.getTeamName())
+            teamRepository.updateActivityAreaAddressByTid(tid, teamModifier.getActivityAreaAddress());
+        if (teamEntity.get().getFoundDate() != teamModifier.getFoundDate())
+            teamRepository.updateFoundDateByTid(tid, teamModifier.getFoundDate());
+
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+
     }
 
     @GetMapping("/team/member/{uid}")
