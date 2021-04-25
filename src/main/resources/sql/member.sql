@@ -1,15 +1,14 @@
-CREATE TABLE MEMBER (
-uid varchar(255) NOT NULL ,
-name char(10) not null,
-id varchar(10) not null,
-password varchar(30) not null,
-birthday Date not null,
-address varchar(155) not null,
-phone_number varchar(155) not null,
-prefer_position int(11) ,
-level int(11),
-phone_number_disclosure_option int(11) default 1,
-join_date Date NOT NULL DEFAULT (CURRENT_DATE),
-recent_login_date Date NOT NULL DEFAULT (CURRENT_DATE),
-PRIMARY KEY(uid)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+create table member (
+                        uid varchar(255) primary key,
+                        id varchar(10) not null,
+                        password varchar(10) not null,
+                        name varchar(10) not null,
+                        birthday date not null,
+                        address varchar(255) not null,
+                        phone_number varchar(11) not null,
+                        prefer_position int not null,
+                        level int not null,
+                        phone_number_disclosure_option int not null,
+                        join_date date not null,
+                        recent_login_date date not null
+) engine=InnoDB default charset=utf8;
