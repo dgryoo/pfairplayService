@@ -1,6 +1,7 @@
 package com.example.pfairplayservice.jpa.model;
 
 
+import com.example.pfairplayservice.model.origin.Position;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +28,9 @@ public abstract class ArticleEntity {
     @Column(nullable = false)
     @Length(min = 1, max = 255)
     private String detail;
+
+    @Column
+    private int needPosition;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
