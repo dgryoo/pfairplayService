@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "member_team_list")
+@Table(name = "member_team")
 public class MemberTeamEntity {
 
     @EmbeddedId
