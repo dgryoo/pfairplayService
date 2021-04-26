@@ -272,11 +272,17 @@
 |---|---|---|---|
 |DELETE|/team/{tid}|json|팀 삭제|
 
-### request body
+### path variable
 
 |requestVariableName|type|notnull|defaultValue|detail|constraint|
 |---|---|---|---|---|---|
 |tid|String|Y|-|팀 식별자|
+
+### request param
+
+|requestVariableName|type|notnull|defaultValue|detail|constraint|
+|---|---|---|---|---|---|
+|uid|String|Y|-|멤버 식별자 <br> 팀의 리더인지 확인을 위함|
 
 ### response body
 
@@ -286,7 +292,8 @@
 
 |statusCode|exceptionName|detail|
 |---|---|---|
-|200|-|멤버 삭제 성공|
+|200|-|팀 삭제 성공|
+|401|-|팀의 리더가 아닌 다른 멤버가 팀을 삭제하려 하는 경우|
 |404|-|해당 tid의 팀이 없는 경우|
 |500|-|서버 오류로 인해 삭제 실패|
 
