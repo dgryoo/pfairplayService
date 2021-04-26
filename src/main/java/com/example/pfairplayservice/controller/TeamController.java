@@ -55,7 +55,7 @@ public class TeamController {
         EntityFieldValueChecker.checkTeamPutFieldValue(teamModifier);
 
         Optional<TeamEntity> teamEntity = teamRepository.findById(tid);
-        if(!teamEntity.isPresent()) {
+        if (!teamEntity.isPresent()) {
             throw new SourceNotFoundException(String.format("tid{%s} not found", tid));
         }
 
@@ -71,6 +71,24 @@ public class TeamController {
 
     }
 
+    @DeleteMapping("/team/{tid}")
+    public ResponseEntity<Void> deleteByTid(@PathVariable String tid, @RequestParam String uid) {
+        Optional<TeamEntity> teamEntity = teamRepository.findById(tid);
+
+        if (!teamEntity.isPresent()) {
+            throw new SourceNotFoundException(String.format("tid{%s} not found", tid));
+        }
+
+        if (!isTeamLeader(teamEntity.get(), uid)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        teamRepository.deleteById(tid);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
     @GetMapping("/team/member/{uid}")
     public ResponseEntity<List<Team>> findTeamListByUid(@PathVariable String uid) {
         List<TeamEntity> teamEntityList = teamRepository.findByMemberTeamIdUid(uid);
@@ -81,6 +99,11 @@ public class TeamController {
         List<Team> teamList = teamEntityList.stream().map(FilterManager::teamMemberFilter).map(Team::from).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(teamList);
+    }
+
+    private boolean isTeamLeader(TeamEntity teamEntity, String uid) {
+        if (teamEntity.getTeamLeadMember().getUid() == uid) return true;
+        return false;
     }
 
 }
