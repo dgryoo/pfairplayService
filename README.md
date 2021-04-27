@@ -457,7 +457,7 @@
 |uid|String|Y|-|계정 id|- 255자 이하|
 |subject|String|Y|-|글제목|- 20자 이하|
 |detail|String|Y|-|글내용|- 255자 이하|
-|needPosition|int|N|0|필요포지션| 0.NONE <br> 1. FW <br> 2. MF <br> 3. DF <br> 4. GK|
+|needPosition|int|Y|-|필요포지션| 0.NONE <br> 1. FW <br> 2. MF <br> 3. DF <br> 4. GK|
 
 ### response body
 
