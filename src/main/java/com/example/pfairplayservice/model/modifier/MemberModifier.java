@@ -1,7 +1,7 @@
 package com.example.pfairplayservice.model.modifier;
 
-import com.example.pfairplayservice.model.origin.DisClosureOption;
-import com.example.pfairplayservice.model.origin.Position;
+import com.example.pfairplayservice.model.enumfield.DisClosureOption;
+import com.example.pfairplayservice.model.enumfield.Position;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

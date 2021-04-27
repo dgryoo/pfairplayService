@@ -1,4 +1,4 @@
-package com.example.pfairplayservice.model.origin;
+package com.example.pfairplayservice.model.enumfield;
 
 public enum Position {
 

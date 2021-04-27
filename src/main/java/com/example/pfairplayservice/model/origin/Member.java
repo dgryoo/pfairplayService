@@ -1,6 +1,8 @@
 package com.example.pfairplayservice.model.origin;
 
 import com.example.pfairplayservice.jpa.model.MemberEntity;
+import com.example.pfairplayservice.model.enumfield.DisClosureOption;
+import com.example.pfairplayservice.model.enumfield.Position;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
