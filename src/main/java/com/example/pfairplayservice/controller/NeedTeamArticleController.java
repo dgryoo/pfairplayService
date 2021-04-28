@@ -6,7 +6,6 @@ import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.model.NeedTeamArticleEntity;
 import com.example.pfairplayservice.jpa.repository.MemberRepository;
 import com.example.pfairplayservice.jpa.repository.NeedTeamArticleRepository;
-import com.example.pfairplayservice.model.origin.Member;
 import com.example.pfairplayservice.model.origin.NeedTeamArticle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,6 +48,28 @@ public class NeedTeamArticleController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(NeedTeamArticle.fromNeedTeamArticleEntity(needTeamArticleEntity.get()));
+    }
+
+    @DeleteMapping("/needTeamArticle/{articleNo}")
+    public ResponseEntity<Void> deleteByArticleNo(@PathVariable int articleNo, @RequestParam String uid) {
+        Optional<NeedTeamArticleEntity> needTeamArticleEntity = needTeamArticleRepository.findById(articleNo);
+
+        if (!needTeamArticleEntity.isPresent()) {
+            throw new SourceNotFoundException(String.format("ArticleNo{%s} not found", articleNo));
+        }
+
+        if (!isWriter(needTeamArticleEntity.get(), uid)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        needTeamArticleRepository.deleteById(articleNo);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    private boolean isWriter(NeedTeamArticleEntity needTeamArticleEntity, String uid) {
+        if (needTeamArticleEntity.getWriteMember().getUid().equals(uid)) return true;
+        return false;
     }
 
 }
