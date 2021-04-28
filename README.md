@@ -401,7 +401,7 @@
 
 |field|type|detail|
 |---|---|---|
-|needTeamArticles|List|article <br>- 글 식별자 int <br> - 제목 String<br> - 작성자 String<br> - 작성일 Date<br> - 조회수 int<br> 정보를 가진 객체의 List를 반환 합니다.|
+|summarizedNeedTeamArticles|List|article <br>- 글 식별자 int <br> - 제목 String<br> - 작성자 String<br> - 작성일 Date<br> - 조회수 int<br> - 상태 int <br> 정보를 가진 객체의 List를 반환 합니다.|
 
 ### status code
 

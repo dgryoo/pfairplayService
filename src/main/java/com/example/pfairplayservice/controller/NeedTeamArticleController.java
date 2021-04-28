@@ -8,12 +8,15 @@ import com.example.pfairplayservice.jpa.repository.MemberRepository;
 import com.example.pfairplayservice.jpa.repository.NeedTeamArticleRepository;
 import com.example.pfairplayservice.model.modifier.NeedTeamArticleModifier;
 import com.example.pfairplayservice.model.origin.NeedTeamArticle;
+import com.example.pfairplayservice.model.summarized.SummarizedNeedTeamArticle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class NeedTeamArticleController {
@@ -37,6 +40,22 @@ public class NeedTeamArticleController {
         needTeamArticleRepository.save(needTeamArticle.toNeedTeamArticleEntity(memberEntity.get()));
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+
+    }
+
+    @GetMapping("/needTeamArticle")
+    public ResponseEntity<List<SummarizedNeedTeamArticle>> findAll() {
+        List<NeedTeamArticleEntity> needTeamArticleEntityList = needTeamArticleRepository.findAll();
+
+        if (needTeamArticleEntityList == null)
+            new SourceNotFoundException("article not found registered in NeedTeamArticle)");
+
+        List<SummarizedNeedTeamArticle> summarizedNeedTeamArticleList =
+                needTeamArticleEntityList
+                        .stream()
+                        .map(needTeamArticleEntity -> SummarizedNeedTeamArticle.fromNeedTeamArticleEntity(needTeamArticleEntity))
+                        .collect(Collectors.toList());
+        return ResponseEntity.status(HttpStatus.OK).body(summarizedNeedTeamArticleList);
 
     }
 
