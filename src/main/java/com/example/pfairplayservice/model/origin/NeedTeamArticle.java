@@ -19,7 +19,7 @@ public class NeedTeamArticle {
 
     private int articleNo;
 
-    private String writeMemberUid;
+    private Member writeMember;
 
     private String subject;
 
@@ -49,6 +49,21 @@ public class NeedTeamArticle {
                 .status(Status.ONGOING.getStatus())
                 .build();
 
+    }
+
+    public static NeedTeamArticle fromNeedTeamArticleEntity(NeedTeamArticleEntity needTeamArticleEntity) {
+
+        return NeedTeamArticle.builder()
+                .articleNo(needTeamArticleEntity.getArticleNo())
+                .writeMember(Member.from(needTeamArticleEntity.getWriteMember()))
+                .subject(needTeamArticleEntity.getSubject())
+                .detail(needTeamArticleEntity.getDetail())
+                .needPosition(Position.from(needTeamArticleEntity.getNeedPosition()))
+                .writeDate(needTeamArticleEntity.getWriteDate())
+                .modifiedDate(needTeamArticleEntity.getModifiedDate())
+                .viewCount(needTeamArticleEntity.getViewCount())
+                .status(Status.from(needTeamArticleEntity.getStatus()))
+                .build();
     }
 
 
