@@ -434,8 +434,10 @@
 |detail|String|글 내용|
 |needPosition|int|필요 포지션 <br> 0.NONE <br> 1. FW <br> 2. MF <br> 3. DF <br> 4. GK|
 |writeDate|Date|작성일|
+|modifiedDate|Date|수정일|
 |viewCount|int|조회수|
-|memberInfo|Member|- 이름 String<br> - 나이 int<br> - 주소 String<br> - 핸드폰번호(설정에 따라 적용) String <br> - 실력 int<br> - 핸드폰번호노출범위 int <br>정보를 포함한 객체를 반환합니다.|
+|status|int|상태 <br> 0. Ongoing <br> 1. Complete <br> 2. Hide|
+|memberInfo|Member|- 이름 String<br> - 나이 int<br> - 주소 String<br> - 핸드폰번호(설정에 따라 적용) String <br> - 선호포지션 <br> - 실력 int<br> - 핸드폰번호노출범위 int <br>정보를 포함한 객체를 반환합니다.|
 
 
 ### status code
