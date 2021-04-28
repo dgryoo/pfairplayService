@@ -456,7 +456,7 @@
 ### request body
 |requestVariableName|type|notnull|defaultValue|detail|constraint|
 |---|---|---|---|---|---|
-|uid|String|Y|-|계정 id|- 255자 이하|
+|writeMember|Member|Y|-|uid를 포함 한 멤버 객체|-|
 |subject|String|Y|-|글제목|- 20자 이하|
 |detail|String|Y|-|글내용|- 255자 이하|
 |needPosition|int|Y|-|필요포지션| 0.NONE <br> 1. FW <br> 2. MF <br> 3. DF <br> 4. GK|
@@ -492,9 +492,10 @@
 ### request body
 |requestVariableName|type|notnull|defaultValue|detail|constraint|
 |---|---|---|---|---|---|
-|subject|String|Y|-|글제목|- 20자 이하|
-|detail|String|Y|-|글내용|- 255자 이하|
-|needPosition|int|N|0|필요포지션|0.NONE <br> 1. FW <br> 2. MF <br> 3. DF <br> 4. GK|
+|writeMember|Member|Y|-|uid를 포함 한 멤버 객체|-|
+|subject|String|Y|-|글제목|- 2 ~ 20자|
+|detail|String|Y|-|글내용|- 1 ~ 255자|
+|needPosition|int|Y|-|필요포지션|0.NONE <br> 1. FW <br> 2. MF <br> 3. DF <br> 4. GK|
 
 
 ### response body

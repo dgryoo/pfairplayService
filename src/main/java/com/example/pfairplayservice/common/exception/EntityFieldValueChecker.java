@@ -2,6 +2,7 @@ package com.example.pfairplayservice.common.exception;
 
 
 import com.example.pfairplayservice.model.modifier.MemberModifier;
+import com.example.pfairplayservice.model.modifier.NeedTeamArticleModifier;
 import com.example.pfairplayservice.model.modifier.TeamModifier;
 import com.example.pfairplayservice.model.origin.Member;
 import com.example.pfairplayservice.model.origin.NeedTeamArticle;
@@ -139,6 +140,32 @@ public class EntityFieldValueChecker {
         if (needTeamArticle.getNeedPosition() == null)
             throw new RequiredParamNotFoundException("필요포지션을 입력해주세요.");
         else if (needTeamArticle.getNeedPosition().getPosition() <= 0 && needTeamArticle.getNeedPosition().getPosition() >= 4)
+            throw new PatternSyntaxNotMatchedException("필요포지션은 0~4 사이 숫자 입니다.");
+
+    }
+
+    public static void checkNeedTeamArticlePutFieldValue(NeedTeamArticleModifier needTeamArticleModifier) {
+
+        // writeMemberUid
+        if (StringUtils.isEmpty(needTeamArticleModifier.getWriteMember().getUid()))
+            throw new RequiredParamNotFoundException("uid를 입력해주세요");
+
+        // subject
+        if (StringUtils.isEmpty(needTeamArticleModifier.getSubject()))
+            throw new RequiredParamNotFoundException("제목을 입력해주세요");
+        else if (!Pattern.matches("^[A-Za-z0-9가-힣]{2,20}", needTeamArticleModifier.getSubject()))
+            throw new PatternSyntaxNotMatchedException("제목은 2 ~ 20 자리 특수문자를 제외하고 입력 가능 합니다.");
+
+        // detail
+        if (StringUtils.isEmpty(needTeamArticleModifier.getSubject()))
+            throw new RequiredParamNotFoundException("내용을 입력해주세요");
+        else if (needTeamArticleModifier.getDetail().length() < 1 && needTeamArticleModifier.getDetail().length() > 255)
+            throw new PatternSyntaxNotMatchedException("내용은 1 ~ 255 자리 입력 가능 합니다.");
+
+        // needPosition
+        if (needTeamArticleModifier.getNeedPosition() == null)
+            throw new RequiredParamNotFoundException("필요포지션을 입력해주세요.");
+        else if (needTeamArticleModifier.getNeedPosition().getPosition() <= 0 && needTeamArticleModifier.getNeedPosition().getPosition() >= 4)
             throw new PatternSyntaxNotMatchedException("필요포지션은 0~4 사이 숫자 입니다.");
 
     }
