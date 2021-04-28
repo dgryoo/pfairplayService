@@ -120,7 +120,7 @@ public class EntityFieldValueChecker {
     public static void checkNeedTeamArticlePostFieldValue(NeedTeamArticle needTeamArticle) {
 
         // writeMemberUid
-        if (StringUtils.isEmpty(needTeamArticle.getWriteMemberUid()))
+        if (StringUtils.isEmpty(needTeamArticle.getWriteMember().getUid()))
             throw new RequiredParamNotFoundException("uid를 입력해주세요");
 
         // subject
@@ -132,7 +132,7 @@ public class EntityFieldValueChecker {
         // detail
         if (StringUtils.isEmpty(needTeamArticle.getSubject()))
             throw new RequiredParamNotFoundException("내용을 입력해주세요");
-        else if (needTeamArticle.getDetail().length() >= 1 && needTeamArticle.getDetail().length() <= 255)
+        else if (needTeamArticle.getDetail().length() < 1 && needTeamArticle.getDetail().length() > 255)
             throw new PatternSyntaxNotMatchedException("내용은 1 ~ 255 자리 입력 가능 합니다.");
 
         // needPosition
