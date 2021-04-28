@@ -6,6 +6,7 @@ import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.model.NeedTeamArticleEntity;
 import com.example.pfairplayservice.jpa.repository.MemberRepository;
 import com.example.pfairplayservice.jpa.repository.NeedTeamArticleRepository;
+import com.example.pfairplayservice.model.modifier.NeedTeamArticleModifier;
 import com.example.pfairplayservice.model.origin.NeedTeamArticle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -67,9 +68,37 @@ public class NeedTeamArticleController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @PutMapping("/needTeamArticle/{articleNo}")
+    public ResponseEntity<Void> updateByArticleNo(@PathVariable int articleNo, @RequestBody NeedTeamArticleModifier needTeamArticleModifier) {
+
+        Optional<NeedTeamArticleEntity> needTeamArticleEntity = needTeamArticleRepository.findById(articleNo);
+
+        if (!needTeamArticleEntity.isPresent()) {
+            throw new SourceNotFoundException(String.format("ArticleNo{%s} not found", articleNo));
+        }
+
+        EntityFieldValueChecker.checkNeedTeamArticlePutFieldValue(needTeamArticleModifier);
+
+        if (!needTeamArticleModifier.getWriteMember().getUid().equals(needTeamArticleEntity.get().getWriteMember().getUid())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        if (!needTeamArticleEntity.get().getSubject().equals(needTeamArticleModifier.getSubject()))
+            needTeamArticleRepository.updateSubjectByArticleNo(articleNo, needTeamArticleModifier.getSubject());
+        if (!needTeamArticleEntity.get().getDetail().equals(needTeamArticleModifier.getDetail()))
+            needTeamArticleRepository.updateDetailByArticleNo(articleNo, needTeamArticleModifier.getDetail());
+        if (needTeamArticleEntity.get().getNeedPosition() != needTeamArticleModifier.getNeedPosition().getPosition())
+            needTeamArticleRepository.updateNeedPositionByArticleNo(articleNo, needTeamArticleModifier.getNeedPosition().getPosition());
+        needTeamArticleRepository.updateModifiedDateByArticleNo(articleNo);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+
+    }
+
     private boolean isWriter(NeedTeamArticleEntity needTeamArticleEntity, String uid) {
         if (needTeamArticleEntity.getWriteMember().getUid().equals(uid)) return true;
         return false;
-    }
 
+    }
 }
