@@ -23,7 +23,7 @@ public class TestEntityGenerator {
                 .joinDate(new Date())
                 .level(1)
                 .preferPosition(1)
-                .phoneNumber("010-0000-0000")
+                .phoneNumber("01000000000")
                 .recentLoginDate(new Date())
                 .phoneNumberDisclosureOption(1)
                 .name("name")
