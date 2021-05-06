@@ -29,7 +29,7 @@ public class MemberController {
         Optional<MemberEntity> member = memberRepository.findById(uid);
 
         if (!member.isPresent()) {
-            throw new SourceNotFoundException(String.format("UID{%s} not found", uid));
+            throw new SourceNotFoundException(String.format("uid{%s} not found", uid));
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(Member.from(member.get()));
@@ -75,7 +75,7 @@ public class MemberController {
         Optional<MemberEntity> member = memberRepository.findById(uid);
 
         if (!member.isPresent()) {
-            throw new RequiredParamNotFoundException(String.format("uid{%s} not found", uid));
+            throw new SourceNotFoundException(String.format("uid{%s} not found", uid));
         }
         memberRepository.deleteById(uid);
         return ResponseEntity.status(HttpStatus.OK).build();

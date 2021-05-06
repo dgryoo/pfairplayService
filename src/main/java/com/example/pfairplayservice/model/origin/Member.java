@@ -24,10 +24,8 @@ public class Member {
         this.phoneNumber = phoneNumber;
     }
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String uid;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String id;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
