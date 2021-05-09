@@ -24,10 +24,8 @@ public class Member {
         this.phoneNumber = phoneNumber;
     }
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String uid;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String id;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -47,11 +45,8 @@ public class Member {
 
     private DisClosureOption phoneNumberDisclosureOption;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Date joinDate;
 
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Date recentLoginDate;
 
     public static Member from(MemberEntity memberEntity) {
@@ -86,8 +81,8 @@ public class Member {
                 .preferPosition(getPreferPosition().getPosition())
                 .level(getLevel())
                 .phoneNumberDisclosureOption(getPhoneNumberDisclosureOption().getDisclosureOption())
-                .joinDate(getJoinDate())
-                .recentLoginDate(getRecentLoginDate())
+                .joinDate(new Date())
+                .recentLoginDate(new Date())
                 .build();
     }
 

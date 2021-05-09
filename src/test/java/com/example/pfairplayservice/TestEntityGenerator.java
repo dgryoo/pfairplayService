@@ -1,9 +1,12 @@
-package com.example.pfairplayservice.jpa.repository;
+package com.example.pfairplayservice;
 
 import com.example.pfairplayservice.jpa.id.MemberTeamId;
 import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.model.MemberTeamEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
+import com.example.pfairplayservice.model.enumfield.DisClosureOption;
+import com.example.pfairplayservice.model.enumfield.Position;
+import com.example.pfairplayservice.model.origin.Member;
 import org.assertj.core.internal.bytebuddy.utility.RandomString;
 
 import java.util.Date;
@@ -23,7 +26,7 @@ public class TestEntityGenerator {
                 .joinDate(new Date())
                 .level(1)
                 .preferPosition(1)
-                .phoneNumber("010-0000-0000")
+                .phoneNumber("01000000000")
                 .recentLoginDate(new Date())
                 .phoneNumberDisclosureOption(1)
                 .name("name")
@@ -55,6 +58,24 @@ public class TestEntityGenerator {
         return MemberTeamEntity
                 .builder()
                 .memberTeamId(memberTeamId)
+                .build();
+    }
+
+    public static Member generateMember() {
+
+        String randomIdString = RandomString.make(6);
+
+        return Member
+                .builder()
+                .id(randomIdString)
+                .password("password")
+                .name("이름테스트")
+                .birthday(new Date())
+                .address("주소테스트")
+                .phoneNumber("01054376283")
+                .preferPosition(Position.NONE)
+                .level(0)
+                .phoneNumberDisclosureOption(DisClosureOption.ALL)
                 .build();
     }
 
