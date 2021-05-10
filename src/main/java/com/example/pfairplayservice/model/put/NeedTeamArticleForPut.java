@@ -1,4 +1,4 @@
-package com.example.pfairplayservice.model.modifier;
+package com.example.pfairplayservice.model.put;
 
 import com.example.pfairplayservice.model.enumfield.Position;
 import lombok.AllArgsConstructor;
@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NeedTeamArticleModifier {
+public class NeedTeamArticleForPut {
 
-    private Member writeMember;
+    private String writeMemberUid;
 
     private String subject;
 

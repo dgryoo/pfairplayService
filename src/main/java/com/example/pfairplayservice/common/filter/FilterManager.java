@@ -14,7 +14,6 @@ public class FilterManager {
 
     }
 
-
     public static MemberEntity teamMemberFilter(MemberEntity memberEntity) {
 
         return MemberEntity.builder()
@@ -23,6 +22,19 @@ public class FilterManager {
                 .address(memberEntity.getAddress())
                 .preferPosition(memberEntity.getPreferPosition())
                 .level(memberEntity.getLevel())
+                .build();
+    }
+
+    public static MemberEntity articleMemberFilter(MemberEntity memberEntity) {
+
+        return MemberEntity.builder()
+                .name(memberEntity.getName())
+                .birthday(memberEntity.getBirthday())
+                .address(memberEntity.getAddress())
+                .phoneNumber(memberEntity.getPhoneNumber())
+                .preferPosition(memberEntity.getPreferPosition())
+                .level(memberEntity.getLevel())
+                .phoneNumberDisclosureOption(memberEntity.getPhoneNumberDisclosureOption())
                 .build();
     }
 
