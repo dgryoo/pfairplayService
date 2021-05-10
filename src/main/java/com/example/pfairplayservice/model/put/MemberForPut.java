@@ -1,4 +1,4 @@
-package com.example.pfairplayservice.model.modifier;
+package com.example.pfairplayservice.model.put;
 
 import com.example.pfairplayservice.model.enumfield.DisClosureOption;
 import com.example.pfairplayservice.model.enumfield.Position;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberModifier {
+public class MemberForPut {
 
     private String address;
 

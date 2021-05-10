@@ -1,10 +1,9 @@
-package com.example.pfairplayservice.model.origin;
+package com.example.pfairplayservice.model.get;
 
 import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.model.enumfield.DisClosureOption;
 import com.example.pfairplayservice.model.enumfield.Position;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,21 +16,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Member {
+public class MemberForGet {
 
-    public Member(String name, String phoneNumber) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-    }
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String uid;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String id;
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
 
     private String name;
 
@@ -47,20 +36,16 @@ public class Member {
 
     private DisClosureOption phoneNumberDisclosureOption;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Date joinDate;
 
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Date recentLoginDate;
 
-    public static Member from(MemberEntity memberEntity) {
+    public static MemberForGet from(MemberEntity memberEntity) {
 
 
-        return Member.builder()
+        return MemberForGet.builder()
                 .uid(memberEntity.getUid())
                 .id(memberEntity.getId())
-                .password(memberEntity.getPassword())
                 .name(memberEntity.getName())
                 .birthday(memberEntity.getBirthday())
                 .address(memberEntity.getAddress())
@@ -70,24 +55,6 @@ public class Member {
                 .phoneNumberDisclosureOption(DisClosureOption.from(memberEntity.getPhoneNumberDisclosureOption()))
                 .joinDate(memberEntity.getJoinDate())
                 .recentLoginDate(memberEntity.getRecentLoginDate())
-                .build();
-    }
-
-    public MemberEntity toMemberEntity() {
-
-        return MemberEntity.builder()
-                .uid(getUid())
-                .id(getId())
-                .password(getPassword())
-                .name(getName())
-                .birthday(getBirthday())
-                .address(getAddress())
-                .phoneNumber(getPhoneNumber())
-                .preferPosition(getPreferPosition().getPosition())
-                .level(getLevel())
-                .phoneNumberDisclosureOption(getPhoneNumberDisclosureOption().getDisclosureOption())
-                .joinDate(getJoinDate())
-                .recentLoginDate(getRecentLoginDate())
                 .build();
     }
 
