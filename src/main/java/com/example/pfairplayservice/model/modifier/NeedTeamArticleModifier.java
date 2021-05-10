@@ -1,7 +1,6 @@
 package com.example.pfairplayservice.model.modifier;
 
 import com.example.pfairplayservice.model.enumfield.Position;
-import com.example.pfairplayservice.model.origin.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
