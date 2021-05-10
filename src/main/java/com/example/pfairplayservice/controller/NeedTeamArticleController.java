@@ -2,12 +2,14 @@ package com.example.pfairplayservice.controller;
 
 import com.example.pfairplayservice.common.exception.EntityFieldValueChecker;
 import com.example.pfairplayservice.common.exception.SourceNotFoundException;
+import com.example.pfairplayservice.common.filter.FilterManager;
 import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.model.NeedTeamArticleEntity;
 import com.example.pfairplayservice.jpa.repository.MemberRepository;
 import com.example.pfairplayservice.jpa.repository.NeedTeamArticleRepository;
-import com.example.pfairplayservice.model.modifier.NeedTeamArticleModifier;
-import com.example.pfairplayservice.model.origin.NeedTeamArticle;
+import com.example.pfairplayservice.model.get.NeedTeamArticleForGet;
+import com.example.pfairplayservice.model.post.NeedTeamArticleForPost;
+import com.example.pfairplayservice.model.put.NeedTeamArticleForPut;
 import com.example.pfairplayservice.model.summarized.SummarizedNeedTeamArticle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,13 +30,13 @@ public class NeedTeamArticleController {
     private MemberRepository memberRepository;
 
     @PostMapping("/needTeamArticle")
-    public ResponseEntity<Void> createNeedTeamArticle(@RequestBody NeedTeamArticle needTeamArticle) {
+    public ResponseEntity<Void> createNeedTeamArticle(@RequestBody NeedTeamArticleForPost needTeamArticle) {
         EntityFieldValueChecker.checkNeedTeamArticlePostFieldValue(needTeamArticle);
 
-        Optional<MemberEntity> memberEntity = memberRepository.findById(needTeamArticle.getWriteMember().getUid());
+        Optional<MemberEntity> memberEntity = memberRepository.findById(needTeamArticle.getWriteMemberUid());
 
         if (!memberEntity.isPresent()) {
-            throw new SourceNotFoundException(String.format("UID{%s} not found", needTeamArticle.getWriteMember().getUid()));
+            throw new SourceNotFoundException(String.format("UID{%s} not found", needTeamArticle.getWriteMemberUid()));
         }
 
         needTeamArticleRepository.save(needTeamArticle.toNeedTeamArticleEntity(memberEntity.get()));
@@ -47,27 +49,30 @@ public class NeedTeamArticleController {
     public ResponseEntity<List<SummarizedNeedTeamArticle>> findAll() {
         List<NeedTeamArticleEntity> needTeamArticleEntityList = needTeamArticleRepository.findAll();
 
-        if (needTeamArticleEntityList == null)
-            new SourceNotFoundException("article not found registered in NeedTeamArticle)");
+        if (needTeamArticleEntityList.size() == 0) {
+            throw new SourceNotFoundException("article not found registered in NeedTeamArticle)");
+        }
 
         List<SummarizedNeedTeamArticle> summarizedNeedTeamArticleList =
                 needTeamArticleEntityList
                         .stream()
-                        .map(needTeamArticleEntity -> SummarizedNeedTeamArticle.fromNeedTeamArticleEntity(needTeamArticleEntity))
+                        .map(SummarizedNeedTeamArticle::fromNeedTeamArticleEntity)
                         .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(summarizedNeedTeamArticleList);
 
     }
 
     @GetMapping("/needTeamArticle/{articleNo}")
-    public ResponseEntity<NeedTeamArticle> findByArticleNo(@PathVariable int articleNo) {
+    public ResponseEntity<NeedTeamArticleForGet> findByArticleNo(@PathVariable int articleNo) {
         Optional<NeedTeamArticleEntity> needTeamArticleEntity = needTeamArticleRepository.findById(articleNo);
 
         if (!needTeamArticleEntity.isPresent()) {
             throw new SourceNotFoundException(String.format("ArticleNo{%s} not found", articleNo));
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(NeedTeamArticle.fromNeedTeamArticleEntity(needTeamArticleEntity.get()));
+        needTeamArticleEntity.get().setWriteMember(FilterManager.articleMemberFilter(needTeamArticleEntity.get().getWriteMember()));
+
+        return ResponseEntity.status(HttpStatus.OK).body(NeedTeamArticleForGet.from(needTeamArticleEntity.get()));
     }
 
     @DeleteMapping("/needTeamArticle/{articleNo}")
@@ -88,7 +93,7 @@ public class NeedTeamArticleController {
     }
 
     @PutMapping("/needTeamArticle/{articleNo}")
-    public ResponseEntity<Void> updateByArticleNo(@PathVariable int articleNo, @RequestBody NeedTeamArticleModifier needTeamArticleModifier) {
+    public ResponseEntity<Void> updateByArticleNo(@PathVariable int articleNo, @RequestBody NeedTeamArticleForPut needTeamArticleModifier) {
 
         Optional<NeedTeamArticleEntity> needTeamArticleEntity = needTeamArticleRepository.findById(articleNo);
 
@@ -98,7 +103,7 @@ public class NeedTeamArticleController {
 
         EntityFieldValueChecker.checkNeedTeamArticlePutFieldValue(needTeamArticleModifier);
 
-        if (!needTeamArticleModifier.getWriteMember().getUid().equals(needTeamArticleEntity.get().getWriteMember().getUid())) {
+        if (!needTeamArticleModifier.getWriteMemberUid().equals(needTeamArticleEntity.get().getWriteMember().getUid())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
