@@ -1,6 +1,5 @@
-package com.example.pfairplayservice.model.origin;
+package com.example.pfairplayservice.model.get;
 
-import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.model.NeedTeamArticleEntity;
 import com.example.pfairplayservice.model.enumfield.Position;
 import com.example.pfairplayservice.model.enumfield.Status;
@@ -15,11 +14,11 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NeedTeamArticle {
+public class NeedTeamArticleForGet {
 
     private int articleNo;
 
-    private Member writeMember;
+    private MemberForGet writeMember;
 
     private String subject;
 
@@ -35,27 +34,11 @@ public class NeedTeamArticle {
 
     private Status status;
 
-    public NeedTeamArticleEntity toNeedTeamArticleEntity(MemberEntity writeMember) {
+    public static NeedTeamArticleForGet from(NeedTeamArticleEntity needTeamArticleEntity) {
 
-        return NeedTeamArticleEntity.builder()
-                .articleNo(articleNo)
-                .writeMember(writeMember)
-                .subject(subject)
-                .detail(detail)
-                .needPosition(needPosition.getPosition())
-                .writeDate(writeDate)
-                .modifiedDate(modifiedDate)
-                .viewCount(viewCount)
-                .status(Status.ONGOING.getStatus())
-                .build();
-
-    }
-
-    public static NeedTeamArticle fromNeedTeamArticleEntity(NeedTeamArticleEntity needTeamArticleEntity) {
-
-        return NeedTeamArticle.builder()
+        return NeedTeamArticleForGet.builder()
                 .articleNo(needTeamArticleEntity.getArticleNo())
-                .writeMember(Member.from(needTeamArticleEntity.getWriteMember()))
+                .writeMember(MemberForGet.from(needTeamArticleEntity.getWriteMember()))
                 .subject(needTeamArticleEntity.getSubject())
                 .detail(needTeamArticleEntity.getDetail())
                 .needPosition(Position.from(needTeamArticleEntity.getNeedPosition()))
