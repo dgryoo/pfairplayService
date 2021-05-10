@@ -18,13 +18,17 @@
 
 |field|type|detail|
 |---|---|---|
+|uid|String|유저식별자|
+|id|String|유저 id|
 |name|String|이름|
-|birthday|Integer|생년월일|
+|birthday|Date|생년월일|
 |address|String|주소 (법정동 단위까지만)|
 |phoneNumber|String|핸드폰번호|
-|preferPosition|int|선호포지션 <br> 0.NONE <br> 1. FW <br> 2. MF <br> 3. DF <br> 4. GK|
-|level|Integer|실력 <br> 1. 상 <br> 2. 중상<br> 3. 중<br> 4. 중하<br> 5. 하|
-|phoneNumberDisclosureOption|Integer|핸드폰번호 공개 범위<br> 1 : 전체공개<br> 2 : 팀원에게만 공개<br> 3 : 공개안함|
+|preferPosition|String|선호포지션 <br> 0.NONE <br> 1. FW <br> 2. MF <br> 3. DF <br> 4. GK|
+|level|int|실력 <br> 1 ~ 5 <br> 숫자가 클수록 높은 level <br> 0. 확인되지않음|
+|phoneNumberDisclosureOption|String|핸드폰번호 공개 범위 <br> 0. ALL <br> 1.TEAM <br> 2.NOBODY|
+|joinDate|Date|가입일|
+|recentLoginDate|Date|최근 로그인일|
 
 ### status code
 
@@ -48,12 +52,12 @@
 |id|String|Y|-|계정 id|- 길이 10 이하 <br> - 특수문자 사용불가|
 |password|String|Y|-|계정 password|- 길이 10 이하 <br> - 특수문자 사용불가|
 |name|String|Y|-|이름|- 길이 10 이하 <br> - 특수문자 사용불가|
-|birthday|Integer|Y|-|생년월일|- 숫자 <br> - 길이 8|
+|birthday|Date|Y|-|생년월일|- 숫자 <br> - 길이 8|
 |address|String|Y|-|주소|- 도시 시군구 구 읍면동 리 순서대로 <br> - 특수문자, 숫자 사용불가|
 |phoneNumber|String|Y|-|핸드폰번호|- 숫자 <br> -길이 11|
-|preferPosition|int|N|-|선호포지션 <br> 0.NONE <br> 1. FW <br> 2. MF <br> 3. DF <br> 4. GK|- 숫자|
-|level|Integer|N|1|실력 <br> 5. 상 <br> 4. 중상<br> 3. 중<br> 2. 중하<br> 1. 하|- 숫자|
-|phoneNumberDisclosureOption|integer|N|1|핸드폰번호 공개 범위<br> 1 : 전체공개<br> 2 : 팀원에게만 공개<br> 3 : 공개안함|- 숫자|
+|preferPosition|int|N|0|선호포지션 <br> 0.NONE <br> 1. FW <br> 2. MF <br> 3. DF <br> 4. GK|- 숫자|
+|level|int|N|0|실력 <br> 5. 상 <br> 4. 중상<br> 3. 중<br> 2. 중하<br> 1. 하|- 숫자|
+|phoneNumberDisclosureOption|int|N|0|핸드폰번호 공개 범위 <br> 0. ALL <br> 1.TEAM <br> 2.NOBODY|- 숫자|
 
 ### response body
 
@@ -91,8 +95,8 @@
 |address|String|Y|-|주소 (법정동 단위까지만)|
 |phoneNumber|String|Y|-|핸드폰번호|
 |preferPosition|int|N|0|선호포지션 <br> 0.NONE <br> 1. FW <br> 2. MF <br> 3. DF <br> 4. GK|
-|level|integer|Y|-|실력 <br> 1. 상 <br> 2. 중상<br> 3. 중<br> 4. 중하<br> 5. 하|
-|phoneNumberDisclosureOption|integer|Y|-|핸드폰번호 공개 범위<br> 1 : 전체공개<br> 2 : 팀원에게만 공개<br> 3 : 공개안함|
+|level|int|Y|-|실력 <br> 1 ~ 5 <br> 숫자가 클수록 높은 level <br> 0. 확인되지않음|
+|phoneNumberDisclosureOption|int|Y|-|핸드폰번호 공개 범위 <br> 0. ALL <br> 1.TEAM <br> 2.NOBODY|
 
 ### response body
 
