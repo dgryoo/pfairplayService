@@ -185,10 +185,12 @@
 
 |field|type|detail|
 |---|---|---|
+|tid|String|팀 식별자|
 |teamName|String|이름|
 |activityAreaAddress|String|주 활동지역 주소 (구 단위까지)|
 |foundDate|Date|팀 창단일|
-|uid|String|대표멤버의 정보 <br> - 이름 <br> - 핸드폰번호|
+|registrationDate|Date|팀 등록일|
+|teamLeadMember|MemberForGet|대표멤버의 정보 <br> - 이름 <br> - 핸드폰번호|
 
 ### status code
 
@@ -211,8 +213,9 @@
 |requestVariableName|type|notnull|defaultValue|detail|constraint|
 |---|---|---|---|---|---|
 |teamName|String|Y|-|이름|- 길이 10 이하 <br> - 특수문자, 숫자 사용불가|
+|teamLeadMemberUid|String|Y|-|대표멤버 식별자|-|
 |activityAreaAddress|String|Y|-|주 활동지역 주소 (구 단위까지)|- 도시 시군구 구 읍면동 리 순서대로 <br> - 특수문자, 숫자 사용불가|
-|foundDate|Date|N|-|팀 창단일|- 숫자 <br> - 길이 8|
+|foundDate|Date|N|-|팀 창단일|-|
 
 
 ### response body

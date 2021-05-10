@@ -4,9 +4,9 @@ package com.example.pfairplayservice.common.exception;
 import com.example.pfairplayservice.model.enumfield.DisClosureOption;
 import com.example.pfairplayservice.model.enumfield.Position;
 import com.example.pfairplayservice.model.modifier.NeedTeamArticleModifier;
-import com.example.pfairplayservice.model.modifier.TeamModifier;
+import com.example.pfairplayservice.model.post.TeamForPost;
+import com.example.pfairplayservice.model.put.TeamForPut;
 import com.example.pfairplayservice.model.origin.NeedTeamArticle;
-import com.example.pfairplayservice.model.origin.Team;
 import com.example.pfairplayservice.model.post.MemberForPost;
 import com.example.pfairplayservice.model.put.MemberForPut;
 import io.micrometer.core.instrument.util.StringUtils;
@@ -94,27 +94,27 @@ public class EntityFieldValueChecker {
             throw new PatternSyntaxNotMatchedException("핸드폰번호 공개범위는 0~2 사이 숫자 입니다.");
     }
 
-    public static void checkTeamPostFieldValue(Team team) {
+    public static void checkTeamPostFieldValue(TeamForPost teamForPost) {
 
         // teamName
-        if (StringUtils.isEmpty(team.getTeamName()))
+        if (StringUtils.isEmpty(teamForPost.getTeamName()))
             throw new RequiredParamNotFoundException("팀이름을 입력해주세요.");
-        else if (!Pattern.matches("^[A-Za-z0-9가-힣]{2,10}", team.getTeamName()))
+        else if (!Pattern.matches("^[A-Za-z0-9가-힣]{2,10}", teamForPost.getTeamName()))
             throw new PatternSyntaxNotMatchedException("이름은 2 ~ 10 자리 특수문자를 제외하고 입력 가능 합니다.");
 
         // address
-        if (StringUtils.isEmpty(team.getActivityAreaAddress()))
+        if (StringUtils.isEmpty(teamForPost.getActivityAreaAddress()))
             throw new RequiredParamNotFoundException("활동지역을 입력해주세요.");
-        else if (!Pattern.matches("^[가-힣]{2,20}", team.getActivityAreaAddress()))
+        else if (!Pattern.matches("^[가-힣]{2,20}", teamForPost.getActivityAreaAddress()))
             throw new PatternSyntaxNotMatchedException("활동지역은 2 ~ 20 자리 한글만 입력 가능 합니다.");
 
         // registrationDate()
-        if (StringUtils.isEmpty(team.getFoundDate().toString()))
+        if (StringUtils.isEmpty(teamForPost.getFoundDate().toString()))
             throw new RequiredParamNotFoundException("둥록일자를 입력해주세요.");
 
     }
 
-    public static void checkTeamPutFieldValue(TeamModifier teamModifier) {
+    public static void checkTeamPutFieldValue(TeamForPut teamModifier) {
 
         // teamName
         if (StringUtils.isEmpty(teamModifier.getTeamName()))

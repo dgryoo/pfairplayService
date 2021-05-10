@@ -1,4 +1,4 @@
-package com.example.pfairplayservice.model.modifier;
+package com.example.pfairplayservice.model.put;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TeamModifier {
+public class TeamForPut {
 
     private String teamName;
 
