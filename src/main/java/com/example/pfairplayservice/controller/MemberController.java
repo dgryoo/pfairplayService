@@ -87,7 +87,7 @@ public class MemberController {
         List<MemberEntity> memberEntityList = memberRepository.findByMemberTeamIdTid(tid);
 
         if (memberEntityList == null)
-            new SourceNotFoundException(String.format("member not found registered in tid{%s})", tid));
+            throw new SourceNotFoundException(String.format("member not found registered in tid{%s})", tid));
 
         List<MemberForGet> memberList = memberEntityList.stream().map(FilterManager::teamMemberFilter).map(MemberForGet::from).collect(Collectors.toList());
 

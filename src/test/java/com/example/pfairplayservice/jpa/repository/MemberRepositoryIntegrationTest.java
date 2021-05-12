@@ -1,6 +1,7 @@
 package com.example.pfairplayservice.jpa.repository;
 
 
+import com.example.pfairplayservice.util.TestEntityGenerator;
 import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.model.MemberTeamEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;

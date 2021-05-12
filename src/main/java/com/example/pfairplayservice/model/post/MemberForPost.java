@@ -34,10 +34,6 @@ public class MemberForPost {
 
     private DisClosureOption phoneNumberDisclosureOption;
 
-    private Date joinDate;
-
-    private Date recentLoginDate;
-
     public MemberEntity toMemberEntity() {
 
         return MemberEntity.builder()
