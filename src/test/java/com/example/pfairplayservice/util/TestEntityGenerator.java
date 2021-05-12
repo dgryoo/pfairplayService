@@ -3,12 +3,15 @@ package com.example.pfairplayservice.util;
 import com.example.pfairplayservice.jpa.id.MemberTeamId;
 import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.model.MemberTeamEntity;
+import com.example.pfairplayservice.jpa.model.NeedTeamArticleEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
 import com.example.pfairplayservice.model.enumfield.DisClosureOption;
 import com.example.pfairplayservice.model.enumfield.Position;
 import com.example.pfairplayservice.model.post.MemberForPost;
+import com.example.pfairplayservice.model.post.NeedTeamArticleForPost;
 import com.example.pfairplayservice.model.post.TeamForPost;
 import com.example.pfairplayservice.model.put.MemberForPut;
+import com.example.pfairplayservice.model.put.NeedTeamArticleForPut;
 import com.example.pfairplayservice.model.put.TeamForPut;
 import org.assertj.core.internal.bytebuddy.utility.RandomString;
 
@@ -119,4 +122,37 @@ public class TestEntityGenerator {
                 .build();
     }
 
+    public static NeedTeamArticleEntity generateNeedTeamArticleEntity(MemberEntity memberEntity) {
+
+        return NeedTeamArticleEntity.builder()
+                .writeMember(memberEntity)
+                .subject("givenSubject")
+                .detail("givenDetail")
+                .needPosition(0)
+                .writeDate(new Date())
+                .modifiedDate(new Date())
+                .viewCount(0)
+                .status(0)
+                .build();
+    }
+
+    public static NeedTeamArticleForPost generateNeedTeamArticleForPost(String uid) {
+
+        return NeedTeamArticleForPost.builder()
+                .writeMemberUid(uid)
+                .subject("givenSubject")
+                .detail("givenDetail")
+                .needPosition(Position.NONE)
+                .build();
+    }
+
+    public static NeedTeamArticleForPut generateNeedTeamArticleForPut(String uid) {
+
+        return NeedTeamArticleForPut.builder()
+                .writeMemberUid(uid)
+                .subject("givenSubject")
+                .detail("givenDetail")
+                .needPosition(Position.NONE)
+                .build();
+    }
 }
