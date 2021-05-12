@@ -139,7 +139,7 @@ public class MemberApiTest {
     }
 
     @Test
-    @DisplayName("succeed delete /member/{uid}")
+    @DisplayName("succeed put /member/{uid}")
     public void succeedToPutMember() {
 
         // given
@@ -223,7 +223,7 @@ public class MemberApiTest {
     }
 
     @Test
-    @DisplayName("succeed delete /member/{tid}")
+    @DisplayName("succeed get /member/{tid}")
     public void succeedToGetMemberListByTid() {
 
         // given
