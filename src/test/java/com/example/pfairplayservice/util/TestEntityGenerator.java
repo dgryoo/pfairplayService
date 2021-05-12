@@ -112,4 +112,11 @@ public class TestEntityGenerator {
                 .build();
     }
 
+    public static MemberTeamId generateMemberTeamId(String uid, String tid) {
+        return MemberTeamId.builder()
+                .uid(uid)
+                .tid(tid)
+                .build();
+    }
+
 }
