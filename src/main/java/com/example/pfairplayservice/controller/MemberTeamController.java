@@ -31,23 +31,27 @@ public class MemberTeamController {
     private MemberRepository memberRepository;
 
     @PostMapping("/memberTeam")
-    public ResponseEntity<Void> createMemberTeam(@RequestBody MemberTeamEntity memberTeam) {
-        Optional<TeamEntity> teamEntity = teamRepository.findById(memberTeam.getMemberTeamId().getTid());
+    public ResponseEntity<Void> createMemberTeam(@RequestBody MemberTeamId memberTeamId) {
+        Optional<TeamEntity> teamEntity = teamRepository.findById(memberTeamId.getTid());
         if (!teamEntity.isPresent()) {
-            throw new SourceNotFoundException(String.format("TID{%s} not found", memberTeam.getMemberTeamId().getTid()));
+            throw new SourceNotFoundException(String.format("TID{%s} not found", memberTeamId.getTid()));
         }
 
-        Optional<MemberEntity> memberEntity = memberRepository.findById(memberTeam.getMemberTeamId().getUid());
+        Optional<MemberEntity> memberEntity = memberRepository.findById(memberTeamId.getUid());
         if (!memberEntity.isPresent()) {
-            throw new SourceNotFoundException(String.format("UID{%s} not found", memberTeam.getMemberTeamId().getUid()));
+            throw new SourceNotFoundException(String.format("UID{%s} not found", memberTeamId.getUid()));
         }
 
-        Optional<MemberTeamEntity> memberTeamEntity = memberTeamRepository.findById(memberTeam.getMemberTeamId());
+        Optional<MemberTeamEntity> memberTeamEntity = memberTeamRepository.findById(memberTeamId);
         if (memberTeamEntity.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
-        memberTeamRepository.save(memberTeam);
+        MemberTeamEntity willSaveMemberTeamEntity = MemberTeamEntity.builder()
+                .memberTeamId(memberTeamId)
+                .build();
+
+        memberTeamRepository.save(willSaveMemberTeamEntity);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
