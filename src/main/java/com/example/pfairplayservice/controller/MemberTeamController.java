@@ -1,6 +1,7 @@
 package com.example.pfairplayservice.controller;
 
 import com.example.pfairplayservice.common.exception.SourceNotFoundException;
+import com.example.pfairplayservice.jpa.id.MemberTeamId;
 import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.model.MemberTeamEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
@@ -52,24 +53,24 @@ public class MemberTeamController {
     }
 
     @DeleteMapping("/memberTeam")
-    public ResponseEntity<Void> deleteMemberTeam(@RequestBody MemberTeamEntity memberTeam) {
+    public ResponseEntity<Void> deleteMemberTeam(@RequestBody MemberTeamId memberTeamId) {
 
-        Optional<TeamEntity> teamEntity = teamRepository.findById(memberTeam.getMemberTeamId().getTid());
+        Optional<TeamEntity> teamEntity = teamRepository.findById(memberTeamId.getTid());
         if (!teamEntity.isPresent()) {
-            throw new SourceNotFoundException(String.format("TID{%s} not found", memberTeam.getMemberTeamId().getTid()));
+            throw new SourceNotFoundException(String.format("TID{%s} not found", memberTeamId.getTid()));
         }
 
-        Optional<MemberEntity> memberEntity = memberRepository.findById(memberTeam.getMemberTeamId().getUid());
+        Optional<MemberEntity> memberEntity = memberRepository.findById(memberTeamId.getUid());
         if (!memberEntity.isPresent()) {
-            throw new SourceNotFoundException(String.format("UID{%s} not found", memberTeam.getMemberTeamId().getUid()));
+            throw new SourceNotFoundException(String.format("UID{%s} not found", memberTeamId.getUid()));
         }
 
-        Optional<MemberTeamEntity> memberTeamEntity = memberTeamRepository.findById(memberTeam.getMemberTeamId());
+        Optional<MemberTeamEntity> memberTeamEntity = memberTeamRepository.findById(memberTeamId);
         if (!memberTeamEntity.isPresent()) {
             throw new SourceNotFoundException("해당 팀의 멤버는 존재하지 않습니다.");
         }
 
-        memberTeamRepository.delete(memberTeam);
+        memberTeamRepository.deleteById(memberTeamId);
 
         return ResponseEntity.status(HttpStatus.OK).build();
 
