@@ -7,7 +7,9 @@ import com.example.pfairplayservice.jpa.model.TeamEntity;
 import com.example.pfairplayservice.model.enumfield.DisClosureOption;
 import com.example.pfairplayservice.model.enumfield.Position;
 import com.example.pfairplayservice.model.post.MemberForPost;
+import com.example.pfairplayservice.model.post.TeamForPost;
 import com.example.pfairplayservice.model.put.MemberForPut;
+import com.example.pfairplayservice.model.put.TeamForPut;
 import org.assertj.core.internal.bytebuddy.utility.RandomString;
 
 import java.util.Date;
@@ -88,6 +90,25 @@ public class TestEntityGenerator {
                 .preferPosition(Position.FW)
                 .level(1)
                 .phoneNumberDisclosureOption(DisClosureOption.NOBODY)
+                .build();
+    }
+
+    public static TeamForPost generateTeamForPut(String memberUid) {
+
+        return TeamForPost.builder()
+                .teamName("부여받은팀이름")
+                .teamLeadMemberUid(memberUid)
+                .activityAreaAddress("부여받은주소")
+                .foundDate(new Date())
+                .build();
+    }
+
+    public static TeamForPut generateTeamForPut() {
+
+        return TeamForPut.builder()
+                .teamName("부여받은팀이름")
+                .activityAreaAddress("부여받은주소")
+                .foundDate(new Date())
                 .build();
     }
 
