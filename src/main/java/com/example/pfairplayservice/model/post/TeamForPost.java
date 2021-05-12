@@ -1,5 +1,6 @@
 package com.example.pfairplayservice.model.post;
 
+import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,10 +24,11 @@ public class TeamForPost {
 
     private Date foundDate;
 
-    public TeamEntity toTeamEntity() {
+    public TeamEntity toTeamEntity(MemberEntity memberEntity) {
 
         return TeamEntity.builder()
                 .teamName(getTeamName())
+                .teamLeadMember(memberEntity)
                 .activityAreaAddress(getActivityAreaAddress())
                 .registrationDate(new Date())
                 .foundDate(getFoundDate())

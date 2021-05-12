@@ -3,7 +3,9 @@ package com.example.pfairplayservice.controller;
 import com.example.pfairplayservice.common.exception.EntityFieldValueChecker;
 import com.example.pfairplayservice.common.exception.SourceNotFoundException;
 import com.example.pfairplayservice.common.filter.FilterManager;
+import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
+import com.example.pfairplayservice.jpa.repository.MemberRepository;
 import com.example.pfairplayservice.jpa.repository.TeamRepository;
 import com.example.pfairplayservice.model.get.TeamForGet;
 import com.example.pfairplayservice.model.post.TeamForPost;
@@ -23,6 +25,9 @@ public class TeamController {
     @Autowired
     private TeamRepository teamRepository;
 
+    @Autowired
+    private MemberRepository memberRepository;
+
     @GetMapping("/team/{tid}")
     public ResponseEntity<TeamForGet> findByTid(@PathVariable String tid) {
         Optional<TeamEntity> teamEntity = teamRepository.findById(tid);
@@ -40,13 +45,19 @@ public class TeamController {
 
         EntityFieldValueChecker.checkTeamPostFieldValue(teamForPost);
 
+        Optional<MemberEntity> memberEntity = memberRepository.findById(teamForPost.getTeamLeadMemberUid());
+        if (!memberEntity.isPresent()) {
+            throw new SourceNotFoundException(String.format("uid{%s} not found", teamForPost.getTeamLeadMemberUid()));
+        }
+
         List<TeamEntity> teamEntityList = teamRepository.findByTeamName(teamForPost.getTeamName());
         for (TeamEntity teamEntity : teamEntityList) {
             if (teamForPost.getTeamLeadMemberUid().equals(teamEntity.getTeamLeadMember().getUid())) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).build();
             }
         }
-        teamRepository.save(teamForPost.toTeamEntity());
+
+        teamRepository.save(teamForPost.toTeamEntity(memberEntity.get()));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -82,7 +93,7 @@ public class TeamController {
 
         if (!isTeamLeader(teamEntity.get(), uid)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+        } 
 
         teamRepository.deleteById(tid);
 
@@ -103,7 +114,7 @@ public class TeamController {
     }
 
     private boolean isTeamLeader(TeamEntity teamEntity, String uid) {
-        if (teamEntity.getTeamLeadMember().getUid() == uid) return true;
+        if (teamEntity.getTeamLeadMember().getUid().equals(uid)) return true;
         return false;
     }
 
