@@ -106,7 +106,7 @@ public class TeamController {
         List<TeamEntity> teamEntityList = teamRepository.findByMemberTeamIdUid(uid);
 
         if (teamEntityList == null)
-            new SourceNotFoundException(String.format("team not found uid{%s} registered)", uid));
+            throw new SourceNotFoundException(String.format("team not found uid{%s} registered)", uid));
 
         List<TeamForGet> teamList = teamEntityList.stream().map(FilterManager::teamMemberFilter).map(TeamForGet::from).collect(Collectors.toList());
 
