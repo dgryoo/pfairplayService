@@ -49,7 +49,4 @@ public class TeamEntity {
     @Temporal(TemporalType.DATE)
     private Date foundDate;
 
-    // TODO 매치 생성 후 적용
-    // private List<Match> matchList;
-
 }

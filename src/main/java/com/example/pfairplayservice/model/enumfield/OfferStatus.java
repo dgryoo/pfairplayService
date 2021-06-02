@@ -12,9 +12,13 @@ public enum OfferStatus {
         this.status = status;
     }
 
+    private int getStatus() {
+        return status;
+    }
+
     public static OfferStatus from(int status) {
         for (OfferStatus os : OfferStatus.values()) {
-            if(os.status == status) {
+            if (os.status == status) {
                 return os;
             }
         }

@@ -3,9 +3,8 @@ package com.example.pfairplayservice.common.exception;
 
 import com.example.pfairplayservice.model.enumfield.DisClosureOption;
 import com.example.pfairplayservice.model.enumfield.Position;
-import com.example.pfairplayservice.model.post.MemberForPost;
-import com.example.pfairplayservice.model.post.NeedTeamArticleForPost;
-import com.example.pfairplayservice.model.post.TeamForPost;
+import com.example.pfairplayservice.model.post.*;
+import com.example.pfairplayservice.model.put.MatchForPut;
 import com.example.pfairplayservice.model.put.MemberForPut;
 import com.example.pfairplayservice.model.put.NeedTeamArticleForPut;
 import com.example.pfairplayservice.model.put.TeamForPut;
@@ -186,4 +185,57 @@ public class EntityFieldValueChecker {
 
     }
 
+    public static void checkMatchPostFieldValue(MatchForPost matchForPost) {
+
+        // groundNumber
+        if (matchForPost.getPlayGround().getGroundNumber() < 0 && matchForPost.getPlayGround().getGroundNumber() > 3)
+            throw new PatternSyntaxNotMatchedException("매치경기장은 0~3 사이 숫자입니다.");
+
+        // ownerTeamTid
+        if (matchForPost.getOwnerTeamTid().isEmpty())
+            throw new RequiredParamNotFoundException("owner의 Tid를 입력해주세요");
+
+        // startDate
+        if (StringUtils.isEmpty(matchForPost.getStartDate().toString()))
+            throw new RequiredParamNotFoundException("시작일을 입력해주세요.");
+
+        // endDate
+        if (StringUtils.isEmpty(matchForPost.getEndDate().toString()))
+            throw new RequiredParamNotFoundException("종료일을 입력해주세요.");
+
+    }
+
+    public static void checkMatchPutFieldValue(MatchForPut matchForPut) {
+
+        // groundNumber
+        if (matchForPut.getPlayGround().getGroundNumber() < 0 && matchForPut.getPlayGround().getGroundNumber() > 3)
+            throw new PatternSyntaxNotMatchedException("매치경기장은 0~3 사이 숫자입니다.");
+
+        // startDate
+        if (StringUtils.isEmpty(matchForPut.getStartDate().toString()))
+            throw new RequiredParamNotFoundException("시작일을 입력해주세요.");
+
+        if (StringUtils.isEmpty(matchForPut.getEndDate().toString()))
+            throw new RequiredParamNotFoundException("종료일을 입력해주세요.");
+
+    }
+
+    public static void checkOfferPostFieldValue(OfferForPost offerForPost) {
+
+        // targetMatchNo
+        if (offerForPost.getTargetMatchNo() == 0) {
+            throw new RequiredParamNotFoundException("매치가 선택되지 않았습니다.");
+        }
+
+        // sandTeamTid
+        if (offerForPost.getSandTeamTid().isEmpty()) {
+            throw new RequiredParamNotFoundException("보내는 팀이 선택되지 않았습니다.");
+        }
+
+        // receiveTeamTid
+        if (offerForPost.getReceiveTeamTid().isEmpty()) {
+            throw new RequiredParamNotFoundException("보내는 팀이 선택되지 않았습니다.");
+        }
+
+    }
 }

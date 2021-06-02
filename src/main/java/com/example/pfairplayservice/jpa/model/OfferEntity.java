@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Builder
@@ -17,20 +19,28 @@ public class OfferEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int oid;
+    private int offerNo;
 
     @OneToOne
     @Column(nullable = false)
-    private MatchEntity matchEntity;
+    private MatchEntity targetMatch;
 
     @OneToOne
     @Column(nullable = false)
-    private TeamEntity sander;
+    private TeamEntity sandTeam;
 
     @OneToOne
     @Column(nullable = false)
-    private TeamEntity receiver;
+    private TeamEntity receiveTeam;
 
+    @Column
+    private String message;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date offerDate;
+
+    @Column(nullable = false)
     private int offerStatus;
 
 }

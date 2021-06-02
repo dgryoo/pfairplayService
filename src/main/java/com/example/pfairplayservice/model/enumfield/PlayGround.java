@@ -13,9 +13,13 @@ public enum PlayGround {
         this.groundNumber = groundNumber;
     }
 
+    public int getGroundNumber() {
+        return groundNumber;
+    }
+
     public static PlayGround from(int groundNumber) {
         for (PlayGround pg : PlayGround.values()) {
-            if(pg.groundNumber == groundNumber) {
+            if (pg.groundNumber == groundNumber) {
                 return pg;
             }
         }
