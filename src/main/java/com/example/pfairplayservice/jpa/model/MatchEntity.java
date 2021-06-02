@@ -29,7 +29,6 @@ public class MatchEntity {
     private int price;
 
     @OneToOne
-    @Column(nullable = false)
     private TeamEntity ownerTeam;
 
     @OneToOne

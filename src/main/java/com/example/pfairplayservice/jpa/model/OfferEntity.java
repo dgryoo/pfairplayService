@@ -22,15 +22,12 @@ public class OfferEntity {
     private int offerNo;
 
     @OneToOne
-    @Column(nullable = false)
     private MatchEntity targetMatch;
 
     @OneToOne
-    @Column(nullable = false)
     private TeamEntity sandTeam;
 
     @OneToOne
-    @Column(nullable = false)
     private TeamEntity receiveTeam;
 
     @Column

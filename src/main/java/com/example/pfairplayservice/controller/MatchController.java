@@ -36,7 +36,8 @@ public class MatchController {
         // 동시간대 Match가 있는지 확인
         List<MatchEntity> matchEntityList = matchRepository.findAllByTid(matchForPost.getOwnerTeamTid());
 
-        checkOverlapMatchTime(matchForPost.getStartDate(), matchForPost.getEndDate(), matchEntityList);
+        if (matchEntityList != null)
+            checkOverlapMatchTime(matchForPost.getStartDate(), matchForPost.getEndDate(), matchEntityList);
 
         // RequestBody의 field값 확인
         EntityFieldValueChecker.checkMatchPostFieldValue(matchForPost);
@@ -114,6 +115,9 @@ public class MatchController {
 
         if (!matchEntity.isPresent())
             throw new SourceNotFoundException(String.format("MatchNo : {%s}의 Match가 없습니다.", matchNo));
+
+        // 해당 matchNo의 Match를 삭제
+        matchRepository.deleteById(matchNo);
 
         // return ResponseEntity
         return ResponseEntity.status(HttpStatus.OK).build();

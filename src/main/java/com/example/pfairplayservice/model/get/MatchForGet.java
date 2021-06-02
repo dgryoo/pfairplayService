@@ -1,24 +1,21 @@
 package com.example.pfairplayservice.model.get;
 
 import com.example.pfairplayservice.jpa.model.MatchEntity;
-import com.example.pfairplayservice.jpa.model.TeamEntity;
 import com.example.pfairplayservice.model.enumfield.PlayGround;
 import com.example.pfairplayservice.model.enumfield.Status;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
 import java.util.Date;
-import java.util.Optional;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MatchForGet {
 
     private int matchNo;
@@ -27,9 +24,9 @@ public class MatchForGet {
 
     private int price;
 
-    private String ownerTeamTid;
+    private TeamForGet ownerTeam;
 
-    private String guestTeamTid;
+    private TeamForGet guestTeam;
 
     private Date startDate;
 
@@ -45,13 +42,26 @@ public class MatchForGet {
 
 
     public static MatchForGet from(MatchEntity matchEntity) {
-
+        if(matchEntity.getGuestTeam() == null) {
+            return MatchForGet.builder()
+                    .matchNo(matchEntity.getMatchNo())
+                    .playGround(PlayGround.from(matchEntity.getGroundNumber()))
+                    .price(matchEntity.getPrice())
+                    .ownerTeam(TeamForGet.from(matchEntity.getOwnerTeam()))
+                    .startDate(matchEntity.getStartDate())
+                    .endDate(matchEntity.getEndDate())
+                    .registrationDate(matchEntity.getRegistrationDate())
+                    .modifiedDate(matchEntity.getModifiedDate())
+                    .viewCount(matchEntity.getViewCount())
+                    .status(Status.from(matchEntity.getStatus()))
+                    .build();
+        }
         return MatchForGet.builder()
                 .matchNo(matchEntity.getMatchNo())
                 .playGround(PlayGround.from(matchEntity.getGroundNumber()))
                 .price(matchEntity.getPrice())
-                .ownerTeamTid(matchEntity.getOwnerTeam().getTid())
-                .guestTeamTid(matchEntity.getGuestTeam().getTid())
+                .ownerTeam(TeamForGet.from(matchEntity.getOwnerTeam()))
+                .guestTeam(TeamForGet.from(matchEntity.getGuestTeam()))
                 .startDate(matchEntity.getStartDate())
                 .endDate(matchEntity.getEndDate())
                 .registrationDate(matchEntity.getRegistrationDate())

@@ -3,11 +3,13 @@ package com.example.pfairplayservice.model.post;
 import com.example.pfairplayservice.jpa.model.MatchEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
 import com.example.pfairplayservice.model.enumfield.PlayGround;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
+@Builder
 public class MatchForPost {
 
     private PlayGround playGround;
