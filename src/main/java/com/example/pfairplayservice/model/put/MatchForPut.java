@@ -1,14 +1,14 @@
 package com.example.pfairplayservice.model.put;
 
 import com.example.pfairplayservice.model.enumfield.PlayGround;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
-public class  MatchForPut {
+@Builder
+public class MatchForPut {
 
     private PlayGround playGround;
 
@@ -19,7 +19,6 @@ public class  MatchForPut {
     private Date endDate;
 
     private String message;
-
 
 
 }
