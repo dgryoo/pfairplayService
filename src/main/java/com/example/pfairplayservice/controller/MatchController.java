@@ -36,7 +36,8 @@ public class MatchController {
         // 동시간대 Match가 있는지 확인
         List<MatchEntity> matchEntityList = matchRepository.findAllByTid(matchForPost.getOwnerTeamTid());
 
-        checkOverlapMatchTime(matchForPost.getStartDate(), matchForPost.getEndDate(), matchEntityList);
+        if (matchEntityList != null)
+            checkOverlapMatchTime(matchForPost.getStartDate(), matchForPost.getEndDate(), matchEntityList);
 
         // RequestBody의 field값 확인
         EntityFieldValueChecker.checkMatchPostFieldValue(matchForPost);
