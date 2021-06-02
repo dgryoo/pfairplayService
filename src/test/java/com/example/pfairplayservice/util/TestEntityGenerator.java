@@ -1,15 +1,15 @@
 package com.example.pfairplayservice.util;
 
 import com.example.pfairplayservice.jpa.id.MemberTeamId;
-import com.example.pfairplayservice.jpa.model.MemberEntity;
-import com.example.pfairplayservice.jpa.model.MemberTeamEntity;
-import com.example.pfairplayservice.jpa.model.NeedTeamArticleEntity;
-import com.example.pfairplayservice.jpa.model.TeamEntity;
+import com.example.pfairplayservice.jpa.model.*;
 import com.example.pfairplayservice.model.enumfield.DisClosureOption;
+import com.example.pfairplayservice.model.enumfield.PlayGround;
 import com.example.pfairplayservice.model.enumfield.Position;
+import com.example.pfairplayservice.model.post.MatchForPost;
 import com.example.pfairplayservice.model.post.MemberForPost;
 import com.example.pfairplayservice.model.post.NeedTeamArticleForPost;
 import com.example.pfairplayservice.model.post.TeamForPost;
+import com.example.pfairplayservice.model.put.MatchForPut;
 import com.example.pfairplayservice.model.put.MemberForPut;
 import com.example.pfairplayservice.model.put.NeedTeamArticleForPut;
 import com.example.pfairplayservice.model.put.TeamForPut;
@@ -153,6 +153,44 @@ public class TestEntityGenerator {
                 .subject("givenSubject")
                 .detail("givenDetail")
                 .needPosition(Position.NONE)
+                .build();
+    }
+
+    public static MatchForPost generateMatchForPost(String tid) {
+
+        return MatchForPost.builder()
+                .playGround(PlayGround.옥녀봉)
+                .ownerTeamTid(tid)
+                .startDate(new Date())
+                .endDate(new Date())
+                .message("test message")
+                .build();
+    }
+
+    public static MatchEntity generateMatchEntity(TeamEntity givenTeamEntity) {
+
+        return MatchEntity.builder()
+                .groundNumber(0)
+                .price(5000)
+                .ownerTeam(givenTeamEntity)
+                .startDate(new Date())
+                .endDate(new Date())
+                .message("given message")
+                .registrationDate(new Date())
+                .viewCount(0)
+                .status(0)
+                .build();
+
+    }
+
+    public static MatchForPut generateMatchForPut() {
+
+        return MatchForPut.builder()
+                .playGround(PlayGround.을미기)
+                .price(7777)
+                .startDate(new Date())
+                .endDate(new Date())
+                .message("given message")
                 .build();
     }
 }
