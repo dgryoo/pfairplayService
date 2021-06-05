@@ -116,7 +116,7 @@ public class MatchApiTest {
 
         int givenMatchNo = giveMatchEntity.getMatchNo();
 
-        MatchForPut givenMatchForPut = TestEntityGenerator.generateMatchForPut();
+        MatchForPut givenMatchForPut = TestEntityGenerator.generateMatchForPut(giveMatchEntity.getOwnerTeam().getTid());
 
         HttpEntity<MatchForPut> givenHttpEntity = new HttpEntity<>(givenMatchForPut);
 

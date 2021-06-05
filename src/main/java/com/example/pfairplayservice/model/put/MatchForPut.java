@@ -10,6 +10,8 @@ import java.util.Date;
 @Builder
 public class MatchForPut {
 
+    private String ownerTeamTid;
+
     private PlayGround playGround;
 
     private int price;

@@ -183,9 +183,10 @@ public class TestEntityGenerator {
 
     }
 
-    public static MatchForPut generateMatchForPut() {
+    public static MatchForPut generateMatchForPut(String tid) {
 
         return MatchForPut.builder()
+                .ownerTeamTid(tid)
                 .playGround(PlayGround.을미기)
                 .price(7777)
                 .startDate(new Date())
