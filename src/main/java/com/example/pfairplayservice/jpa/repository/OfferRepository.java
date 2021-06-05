@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface OfferRepository extends JpaRepository<OfferEntity, Integer> {
 
-    @Query(value = "select * from offer o where o.match_no = :matchNo and o.sand_team = :sandTid and receive_team = :receiveTid", nativeQuery = true)
+    @Query(value = "select * from offer o where o.target_match_match_no = :matchNo and o.sand_team_tid = :sandTid and receive_team_tid = :receiveTid", nativeQuery = true)
     Optional<OfferEntity> findDuplicatedOfferByTidAndMid(@Param("matchNo") int matchNo, @Param("sandTid") String sandTid, @Param("receiveTid") String receiveTid);
 
     @Modifying

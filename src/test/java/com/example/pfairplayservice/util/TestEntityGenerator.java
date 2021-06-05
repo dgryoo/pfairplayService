@@ -5,10 +5,7 @@ import com.example.pfairplayservice.jpa.model.*;
 import com.example.pfairplayservice.model.enumfield.DisClosureOption;
 import com.example.pfairplayservice.model.enumfield.PlayGround;
 import com.example.pfairplayservice.model.enumfield.Position;
-import com.example.pfairplayservice.model.post.MatchForPost;
-import com.example.pfairplayservice.model.post.MemberForPost;
-import com.example.pfairplayservice.model.post.NeedTeamArticleForPost;
-import com.example.pfairplayservice.model.post.TeamForPost;
+import com.example.pfairplayservice.model.post.*;
 import com.example.pfairplayservice.model.put.MatchForPut;
 import com.example.pfairplayservice.model.put.MemberForPut;
 import com.example.pfairplayservice.model.put.NeedTeamArticleForPut;
@@ -192,6 +189,29 @@ public class TestEntityGenerator {
                 .startDate(new Date())
                 .endDate(new Date())
                 .message("given message")
+                .build();
+    }
+
+    public static OfferForPost generateOfferForPost(int targetMatchNo, String sandTeamTid, String receiveTeamTid) {
+
+        return OfferForPost.builder()
+                .targetMatchNo(targetMatchNo)
+                .sandTeamTid(sandTeamTid)
+                .receiveTeamTid(receiveTeamTid)
+                .message("given message")
+                .build();
+
+    }
+
+    public static OfferEntity generateOfferEntity(MatchEntity targetMatch, TeamEntity sandTeam, TeamEntity receiveTeam) {
+
+        return OfferEntity.builder()
+                .targetMatch(targetMatch)
+                .sandTeam(sandTeam)
+                .receiveTeam(receiveTeam)
+                .message("given message")
+                .offerDate(new Date())
+                .offerStatus(0)
                 .build();
     }
 }

@@ -3,12 +3,13 @@ package com.example.pfairplayservice.model.post;
 import com.example.pfairplayservice.jpa.model.MatchEntity;
 import com.example.pfairplayservice.jpa.model.OfferEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
-import com.example.pfairplayservice.model.enumfield.OfferStatus;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
+@Builder
 public class OfferForPost {
 
     private int targetMatchNo;

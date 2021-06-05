@@ -8,7 +8,6 @@ import com.example.pfairplayservice.jpa.repository.MemberRepository;
 import com.example.pfairplayservice.jpa.repository.TeamRepository;
 import com.example.pfairplayservice.model.get.MatchForGet;
 import com.example.pfairplayservice.model.post.MatchForPost;
-import com.example.pfairplayservice.model.post.MemberForPost;
 import com.example.pfairplayservice.model.put.MatchForPut;
 import com.example.pfairplayservice.util.TestEntityGenerator;
 import org.junit.jupiter.api.DisplayName;
@@ -45,7 +44,7 @@ public class MatchApiTest {
     private MemberRepository memberRepository;
 
     @Test
-    @DisplayName("succeed post /match")
+    @DisplayName("succeed to post /match")
     public void succeedToPostMatch() {
 
         // given
@@ -71,7 +70,7 @@ public class MatchApiTest {
     }
 
     @Test
-    @DisplayName("succeed get /match/{matchNo}")
+    @DisplayName("succeed to get /match/{matchNo}")
     public void succeedToGetMatch() {
         // given
         MemberEntity givenMemberEntity = TestEntityGenerator.generateMemberEntity();
@@ -102,7 +101,7 @@ public class MatchApiTest {
     }
 
     @Test
-    @DisplayName("succeed put /match/{matchNo}")
+    @DisplayName("succeed to put /match/{matchNo}")
     public void succeedToPutMatch() {
         // given
         MemberEntity givenMemberEntity = TestEntityGenerator.generateMemberEntity();
@@ -140,7 +139,7 @@ public class MatchApiTest {
     }
 
     @Test
-    @DisplayName("succeed delete /match/{matchNo}")
+    @DisplayName("succeed to delete /match/{matchNo}")
     public void succeedToDeleteMatch() {
         // given
         MemberEntity givenMemberEntity = TestEntityGenerator.generateMemberEntity();
@@ -176,7 +175,6 @@ public class MatchApiTest {
         teamRepository.delete(givenTeamEntity);
         memberRepository.delete(givenMemberEntity);
     }
-
 
 
 }
