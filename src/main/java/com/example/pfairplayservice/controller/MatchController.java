@@ -30,6 +30,9 @@ public class MatchController {
     private TeamRepository teamRepository;
 
 
+
+    // TODO : checkoverlapMatchTime과 같이 중복되어 사용되는 알고리즘들을 하나의 method로 만들기.
+
     @PostMapping("/match")
     public ResponseEntity<Void> createMatch(@RequestBody MatchForPost matchForPost) {
 
@@ -78,10 +81,14 @@ public class MatchController {
         if (!matchEntity.isPresent())
             throw new SourceNotFoundException(String.format("MatchNo : {%s}의 Match가 없습니다.", matchNo));
 
+        // Match를 수정할 권한이 있는 tid인지 확인
+        if (matchForPut.getOwnerTeamTid() != matchEntity.get().getOwnerTeam().getTid())
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
         // 동시간대 Match가 있는지 확인
         List<MatchEntity> matchEntityList = matchRepository.findAllByTid(matchEntity.get().getOwnerTeam().getTid());
-
-        checkOverlapMatchTime(matchForPut.getStartDate(), matchForPut.getEndDate(), matchEntityList);
+        if (matchEntityList != null)
+            checkOverlapMatchTime(matchForPut.getStartDate(), matchForPut.getEndDate(), matchEntityList);
 
         // RequestBody의 field값 확인
         EntityFieldValueChecker.checkMatchPutFieldValue(matchForPut);
@@ -108,13 +115,17 @@ public class MatchController {
     }
 
     @DeleteMapping("/match/{matchNo}")
-    public ResponseEntity<Void> deleteByMatchNo(@PathVariable int matchNo) {
+    public ResponseEntity<Void> deleteByMatchNo(@PathVariable int matchNo, String tid) {
 
         // 해당 matchNo의 Match가 있는지 확인
         Optional<MatchEntity> matchEntity = matchRepository.findById(matchNo);
 
         if (!matchEntity.isPresent())
             throw new SourceNotFoundException(String.format("MatchNo : {%s}의 Match가 없습니다.", matchNo));
+
+        // Match를 삭제할 권한이 있는 tid인지 확인
+        if(tid != matchEntity.get().getOwnerTeam().getTid())
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
         // 해당 matchNo의 Match를 삭제
         matchRepository.deleteById(matchNo);
@@ -150,7 +161,9 @@ public class MatchController {
 
         matchEntityList.stream().forEach(matchEntity -> {
             if ((startTime.compareTo(matchEntity.getStartDate()) == 1 && startTime.compareTo(matchEntity.getEndDate()) == -1)
-                    || (endTime.compareTo(matchEntity.getStartDate()) == 1 && endTime.compareTo(matchEntity.getEndDate()) == -1)) {
+                    || (endTime.compareTo(matchEntity.getStartDate()) == 1 && endTime.compareTo(matchEntity.getEndDate()) == -1)
+                    || (startTime.compareTo(matchEntity.getStartDate()) == 0)
+                    || endTime.compareTo(matchEntity.getEndDate()) == 0) {
                 throw new MatchTimeOverlapException("기존 매치 시간과 중복 됩니다.");
             }
 
