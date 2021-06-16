@@ -2,6 +2,7 @@ package com.example.pfairplayservice.api;
 
 import com.example.pfairplayservice.jpa.model.MatchEntity;
 import com.example.pfairplayservice.jpa.model.MemberEntity;
+import com.example.pfairplayservice.jpa.model.PlayGroundEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
 import com.example.pfairplayservice.jpa.repository.MatchRepository;
 import com.example.pfairplayservice.jpa.repository.MemberRepository;
@@ -79,7 +80,9 @@ public class MatchApiTest {
         TeamEntity givenTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
         teamRepository.save(givenTeamEntity);
 
-        MatchEntity giveMatchEntity = TestEntityGenerator.generateMatchEntity(givenTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity giveMatchEntity = TestEntityGenerator.generateMatchEntity(givenTeamEntity, givenPlayGroundEntity);
         matchRepository.save(giveMatchEntity);
 
         int givenMatchNo = giveMatchEntity.getMatchNo();
@@ -110,7 +113,9 @@ public class MatchApiTest {
         TeamEntity givenTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
         teamRepository.save(givenTeamEntity);
 
-        MatchEntity giveMatchEntity = TestEntityGenerator.generateMatchEntity(givenTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity giveMatchEntity = TestEntityGenerator.generateMatchEntity(givenTeamEntity, givenPlayGroundEntity);
         matchRepository.save(giveMatchEntity);
 
         int givenMatchNo = giveMatchEntity.getMatchNo();
@@ -148,7 +153,9 @@ public class MatchApiTest {
         TeamEntity givenTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
         teamRepository.save(givenTeamEntity);
 
-        MatchEntity giveMatchEntity = TestEntityGenerator.generateMatchEntity(givenTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity giveMatchEntity = TestEntityGenerator.generateMatchEntity(givenTeamEntity, givenPlayGroundEntity);
         matchRepository.save(giveMatchEntity);
 
         int givenMatchNo = giveMatchEntity.getMatchNo();

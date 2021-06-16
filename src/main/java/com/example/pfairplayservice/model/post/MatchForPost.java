@@ -1,8 +1,8 @@
 package com.example.pfairplayservice.model.post;
 
 import com.example.pfairplayservice.jpa.model.MatchEntity;
+import com.example.pfairplayservice.jpa.model.PlayGroundEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
-import com.example.pfairplayservice.model.enumfield.PlayGround;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import java.util.Date;
 @Builder
 public class MatchForPost {
 
-    private PlayGround playGround;
+    private int playGroundNo;
 
     private int price;
 
@@ -24,10 +24,10 @@ public class MatchForPost {
 
     private String message;
 
-    public MatchEntity toMatchEntity(TeamEntity ownerTeam) {
+    public MatchEntity toMatchEntity(TeamEntity ownerTeam, PlayGroundEntity playGroundEntity) {
 
         return MatchEntity.builder()
-                .groundNumber(playGround.getGroundNumber())
+                .playGround(playGroundEntity)
                 .price(price)
                 .ownerTeam(ownerTeam)
                 .startDate(startDate)

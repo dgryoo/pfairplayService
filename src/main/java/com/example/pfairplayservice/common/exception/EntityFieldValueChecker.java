@@ -187,9 +187,9 @@ public class EntityFieldValueChecker {
 
     public static void checkMatchPostFieldValue(MatchForPost matchForPost) {
 
-        // groundNumber
-        if (matchForPost.getPlayGround().getGroundNumber() < 0 && matchForPost.getPlayGround().getGroundNumber() > 3)
-            throw new PatternSyntaxNotMatchedException("매치경기장은 0~3 사이 숫자입니다.");
+        // groundNo
+        if (matchForPost.getPlayGroundNo() == 0)
+            throw new RequiredParamNotFoundException("groundNo를 입력해 주세요");
 
         // ownerTeamTid
         if (matchForPost.getOwnerTeamTid().isEmpty())
@@ -207,9 +207,9 @@ public class EntityFieldValueChecker {
 
     public static void checkMatchPutFieldValue(MatchForPut matchForPut) {
 
-        // groundNumber
-        if (matchForPut.getPlayGround().getGroundNumber() < 0 && matchForPut.getPlayGround().getGroundNumber() > 3)
-            throw new PatternSyntaxNotMatchedException("매치경기장은 0~3 사이 숫자입니다.");
+        // groundNo
+        if (matchForPut.getPlayGroundNo() == 0)
+            throw new RequiredParamNotFoundException("groundNo를 입력해 주세요");
 
         // startDate
         if (StringUtils.isEmpty(matchForPut.getStartDate().toString()))

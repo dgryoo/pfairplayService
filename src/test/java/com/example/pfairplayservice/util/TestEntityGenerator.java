@@ -3,7 +3,6 @@ package com.example.pfairplayservice.util;
 import com.example.pfairplayservice.jpa.id.MemberTeamId;
 import com.example.pfairplayservice.jpa.model.*;
 import com.example.pfairplayservice.model.enumfield.DisClosureOption;
-import com.example.pfairplayservice.model.enumfield.PlayGround;
 import com.example.pfairplayservice.model.enumfield.Position;
 import com.example.pfairplayservice.model.post.*;
 import com.example.pfairplayservice.model.put.MatchForPut;
@@ -156,7 +155,7 @@ public class TestEntityGenerator {
     public static MatchForPost generateMatchForPost(String tid) {
 
         return MatchForPost.builder()
-                .playGround(PlayGround.옥녀봉)
+                .playGroundNo(1)
                 .ownerTeamTid(tid)
                 .startDate(new Date())
                 .endDate(new Date())
@@ -164,10 +163,10 @@ public class TestEntityGenerator {
                 .build();
     }
 
-    public static MatchEntity generateMatchEntity(TeamEntity givenTeamEntity) {
+    public static MatchEntity generateMatchEntity(TeamEntity givenTeamEntity,  PlayGroundEntity playGroundEntity) {
 
         return MatchEntity.builder()
-                .groundNumber(0)
+                .playGround(playGroundEntity)
                 .price(5000)
                 .ownerTeam(givenTeamEntity)
                 .startDate(new Date())
@@ -184,7 +183,7 @@ public class TestEntityGenerator {
 
         return MatchForPut.builder()
                 .ownerTeamTid(tid)
-                .playGround(PlayGround.을미기)
+                .playGroundNo(1)
                 .price(7777)
                 .startDate(new Date())
                 .endDate(new Date())
@@ -212,6 +211,16 @@ public class TestEntityGenerator {
                 .message("given message")
                 .offerDate(new Date())
                 .offerStatus(0)
+                .build();
+    }
+
+    public static PlayGroundEntity generatePlayGroundEntity() {
+
+        return PlayGroundEntity.builder()
+                .playGroundNo(1)
+                .name("반포종합운동장")
+                .mainAddress("서울특별시 서초구")
+                .subAddress("반포2동 15-2")
                 .build();
     }
 }

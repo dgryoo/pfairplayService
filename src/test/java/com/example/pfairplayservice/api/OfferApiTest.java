@@ -1,9 +1,6 @@
 package com.example.pfairplayservice.api;
 
-import com.example.pfairplayservice.jpa.model.MatchEntity;
-import com.example.pfairplayservice.jpa.model.MemberEntity;
-import com.example.pfairplayservice.jpa.model.OfferEntity;
-import com.example.pfairplayservice.jpa.model.TeamEntity;
+import com.example.pfairplayservice.jpa.model.*;
 import com.example.pfairplayservice.jpa.repository.MatchRepository;
 import com.example.pfairplayservice.jpa.repository.MemberRepository;
 import com.example.pfairplayservice.jpa.repository.OfferRepository;
@@ -59,7 +56,9 @@ public class OfferApiTest {
         TeamEntity givenGuestTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
         teamRepository.save(givenGuestTeamEntity);
 
-        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity, givenPlayGroundEntity);
         matchRepository.save(givenMatchEntity);
 
         OfferForPost givenOfferForPost = TestEntityGenerator.generateOfferForPost(
@@ -96,7 +95,9 @@ public class OfferApiTest {
         TeamEntity givenGuestTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
         teamRepository.save(givenGuestTeamEntity);
 
-        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity, givenPlayGroundEntity);
         matchRepository.save(givenMatchEntity);
 
         OfferEntity givenDuplicatedOfferEntity = TestEntityGenerator.generateOfferEntity(givenMatchEntity, givenOwnerTeamEntity, givenGuestTeamEntity);
@@ -140,7 +141,9 @@ public class OfferApiTest {
         TeamEntity givenGuestTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
         teamRepository.save(givenGuestTeamEntity);
 
-        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity, givenPlayGroundEntity);
         matchRepository.save(givenMatchEntity);
 
         OfferEntity givenOfferEntity = TestEntityGenerator.generateOfferEntity(givenMatchEntity, givenOwnerTeamEntity, givenGuestTeamEntity);
@@ -178,7 +181,9 @@ public class OfferApiTest {
         TeamEntity givenGuestTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
         teamRepository.save(givenGuestTeamEntity);
 
-        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity, givenPlayGroundEntity);
         matchRepository.save(givenMatchEntity);
 
         OfferEntity givenOfferEntity = TestEntityGenerator.generateOfferEntity(givenMatchEntity, givenOwnerTeamEntity, givenGuestTeamEntity);
@@ -219,7 +224,9 @@ public class OfferApiTest {
         TeamEntity givenGuestTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
         teamRepository.save(givenGuestTeamEntity);
 
-        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity, givenPlayGroundEntity);
         matchRepository.save(givenMatchEntity);
 
         OfferEntity givenOfferEntity = TestEntityGenerator.generateOfferEntity(givenMatchEntity, givenOwnerTeamEntity, givenGuestTeamEntity);
@@ -263,7 +270,9 @@ public class OfferApiTest {
         TeamEntity givenGuestTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
         teamRepository.save(givenGuestTeamEntity);
 
-        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity, givenPlayGroundEntity);
         matchRepository.save(givenMatchEntity);
 
         OfferEntity givenOfferEntity = TestEntityGenerator.generateOfferEntity(givenMatchEntity, givenOwnerTeamEntity, givenGuestTeamEntity);
@@ -303,7 +312,9 @@ public class OfferApiTest {
         TeamEntity givenGuestTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
         teamRepository.save(givenGuestTeamEntity);
 
-        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity, givenPlayGroundEntity);
         matchRepository.save(givenMatchEntity);
 
         OfferEntity givenOfferEntity = TestEntityGenerator.generateOfferEntity(givenMatchEntity, givenOwnerTeamEntity, givenGuestTeamEntity);
@@ -347,7 +358,9 @@ public class OfferApiTest {
         TeamEntity givenGuestTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
         teamRepository.save(givenGuestTeamEntity);
 
-        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity, givenPlayGroundEntity);
         matchRepository.save(givenMatchEntity);
 
         OfferEntity givenOfferEntity = TestEntityGenerator.generateOfferEntity(givenMatchEntity, givenOwnerTeamEntity, givenGuestTeamEntity);
@@ -387,7 +400,9 @@ public class OfferApiTest {
         TeamEntity givenGuestTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
         teamRepository.save(givenGuestTeamEntity);
 
-        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenOwnerTeamEntity, givenPlayGroundEntity);
         matchRepository.save(givenMatchEntity);
 
         OfferEntity givenOfferEntity = TestEntityGenerator.generateOfferEntity(givenMatchEntity, givenOwnerTeamEntity, givenGuestTeamEntity);

@@ -3,10 +3,15 @@ package com.example.pfairplayservice.controller;
 import com.example.pfairplayservice.common.exception.EntityFieldValueChecker;
 import com.example.pfairplayservice.common.exception.MatchTimeOverlapException;
 import com.example.pfairplayservice.common.exception.SourceNotFoundException;
+import com.example.pfairplayservice.common.util.DateSelector;
+import com.example.pfairplayservice.common.util.MatchQueryBuilder;
 import com.example.pfairplayservice.jpa.model.MatchEntity;
+import com.example.pfairplayservice.jpa.model.PlayGroundEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
 import com.example.pfairplayservice.jpa.repository.MatchRepository;
+import com.example.pfairplayservice.jpa.repository.PlayGroundRepository;
 import com.example.pfairplayservice.jpa.repository.TeamRepository;
+import com.example.pfairplayservice.model.enumfield.Weekday;
 import com.example.pfairplayservice.model.get.MatchForGet;
 import com.example.pfairplayservice.model.post.MatchForPost;
 import com.example.pfairplayservice.model.put.MatchForPut;
@@ -15,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -29,9 +35,11 @@ public class MatchController {
     @Autowired
     private TeamRepository teamRepository;
 
+    @Autowired
+    private PlayGroundRepository playGroundRepository;
 
-
-    // TODO : checkoverlapMatchTime과 같이 중복되어 사용되는 알고리즘들을 하나의 method로 만들기.
+    @Autowired
+    private EntityManager entityManager;
 
     @PostMapping("/match")
     public ResponseEntity<Void> createMatch(@RequestBody MatchForPost matchForPost) {
@@ -50,8 +58,13 @@ public class MatchController {
         if (!teamEntity.isPresent())
             throw new SourceNotFoundException(String.format("tid{%s} not found", matchForPost.getOwnerTeamTid()));
 
+        // PlayGroundNo의 PlayGround가 존재하는지 확인
+        Optional<PlayGroundEntity> playGroundEntity = playGroundRepository.findById(matchForPost.getPlayGroundNo());
+        if (!playGroundEntity.isPresent())
+            throw new SourceNotFoundException(String.format("Play Ground No : {%s} not found", matchForPost.getPlayGroundNo()));
+
         // Match 생성
-        matchRepository.save(matchForPost.toMatchEntity(teamEntity.get()));
+        matchRepository.save(matchForPost.toMatchEntity(teamEntity.get(), playGroundEntity.get()));
 
         // return ResponseEntity
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -94,8 +107,8 @@ public class MatchController {
         EntityFieldValueChecker.checkMatchPutFieldValue(matchForPut);
 
         // 기존에서 변경된 값만 업데이트
-        if (matchEntity.get().getGroundNumber() != matchForPut.getPlayGround().getGroundNumber())
-            matchRepository.updateGroundNumberByMatchNo(matchNo, matchForPut.getPlayGround().getGroundNumber());
+        if (matchEntity.get().getPlayGround().getPlayGroundNo() != matchForPut.getPlayGroundNo())
+            matchRepository.updateGroundNoByMatchNo(matchNo, matchForPut.getPlayGroundNo());
 
         if (matchEntity.get().getPrice() != matchForPut.getPrice())
             matchRepository.updatePriceByMatchNo(matchNo, matchForPut.getPrice());
@@ -124,7 +137,7 @@ public class MatchController {
             throw new SourceNotFoundException(String.format("MatchNo : {%s}의 Match가 없습니다.", matchNo));
 
         // Match를 삭제할 권한이 있는 tid인지 확인
-        if(tid != matchEntity.get().getOwnerTeam().getTid())
+        if (tid != matchEntity.get().getOwnerTeam().getTid())
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
         // 해당 matchNo의 Match를 삭제
@@ -149,10 +162,80 @@ public class MatchController {
         List<MatchForGet> recommendMatchList = matchEntityList.stream()
                 .filter(matchEntity -> matchEntity.getOwnerTeam().getTeamLeadMember().getLevel()
                         == teamEntity.get().getTeamLeadMember().getLevel())
-                .map(matchEntity -> MatchForGet.from(matchEntity))
+                .map(MatchForGet::from)
                 .collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(recommendMatchList);
+    }
+
+    @GetMapping("/match/specificDate")
+    public ResponseEntity<List<MatchForGet>> findMatchListBySpecificDate(@RequestParam String state,
+                                                                         @RequestParam String city,
+                                                                         @RequestParam Date date,
+                                                                         @RequestParam int minStartTime,
+                                                                         @RequestParam int maxStartTime,
+                                                                         @RequestParam int minLevel,
+                                                                         @RequestParam int maxLevel,
+                                                                         @RequestParam int playGroundNo,
+                                                                         @RequestParam boolean isOnlyOngoing,
+                                                                         @RequestParam int offset) {
+
+        // build result Query
+        String resultQuery = MatchQueryBuilder.builder()
+                .date(date)
+                .mainAddress(state, city)
+                .time(minStartTime, maxStartTime)
+                .playGroundNo(playGroundNo)
+                .isOnlyOngoing(isOnlyOngoing)
+                .offset(offset)
+                .build();
+
+        // Get List<MatchEntity>
+        List<MatchEntity> matchEntityList = entityManager.createNativeQuery(resultQuery).getResultList();
+
+        // convert MatchEntityList to MatchForGetList
+        List<MatchForGet> matchForGetList = matchEntityList.stream().map(MatchForGet::from).collect(Collectors.toList());
+
+        // return ResponseEntity
+        return ResponseEntity.status(HttpStatus.OK).body(matchForGetList);
+
+    }
+
+    @GetMapping("/match/monthAndDayOfWeek")
+    public ResponseEntity<List<MatchForGet>> findByMonthAndDayOfWeek(@RequestParam int month,
+                                                                     @RequestParam String dayOfWeek,
+                                                                     @RequestParam String state,
+                                                                     @RequestParam String city,
+                                                                     @RequestParam int minStartTime,
+                                                                     @RequestParam int maxStartTime,
+                                                                     @RequestParam int minLevel,
+                                                                     @RequestParam int maxLevel,
+                                                                     @RequestParam int playGroundNo,
+                                                                     @RequestParam boolean isOnlyOngoing,
+                                                                     @RequestParam int offset) {
+        // Get Date List
+        List<String> dateList =
+                DateSelector.selectDateByMonthAndDayOfWeek(month, Weekday.valueOf(dayOfWeek).getWeekdayNum());
+
+        // build result Query
+        String resultQuery = MatchQueryBuilder.builder()
+                .dateList(dateList)
+                .mainAddress(state, city)
+                .time(minStartTime, maxStartTime)
+                .playGroundNo(playGroundNo)
+                .isOnlyOngoing(isOnlyOngoing)
+                .offset(offset)
+                .build();
+
+        // Get List<MatchEntity>
+        List<MatchEntity> matchEntityList = entityManager.createNativeQuery(resultQuery).getResultList();
+
+        // convert MatchEntityList to MatchForGetList
+        List<MatchForGet> matchForGetList = matchEntityList.stream().map(MatchForGet::from).collect(Collectors.toList());
+
+        // return ResponseEntity
+        return ResponseEntity.status(HttpStatus.OK).body(matchForGetList);
+
     }
 
 

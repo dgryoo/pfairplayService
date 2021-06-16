@@ -1,7 +1,6 @@
 package com.example.pfairplayservice.model.get;
 
 import com.example.pfairplayservice.jpa.model.MatchEntity;
-import com.example.pfairplayservice.model.enumfield.PlayGround;
 import com.example.pfairplayservice.model.enumfield.Status;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -20,7 +19,7 @@ public class MatchForGet {
 
     private int matchNo;
 
-    private PlayGround playGround;
+    private PlayGroundForGet playGround;
 
     private int price;
 
@@ -45,7 +44,7 @@ public class MatchForGet {
         if(matchEntity.getGuestTeam() == null) {
             return MatchForGet.builder()
                     .matchNo(matchEntity.getMatchNo())
-                    .playGround(PlayGround.from(matchEntity.getGroundNumber()))
+                    .playGround(PlayGroundForGet.from(matchEntity.getPlayGround()))
                     .price(matchEntity.getPrice())
                     .ownerTeam(TeamForGet.from(matchEntity.getOwnerTeam()))
                     .startDate(matchEntity.getStartDate())
@@ -58,7 +57,7 @@ public class MatchForGet {
         }
         return MatchForGet.builder()
                 .matchNo(matchEntity.getMatchNo())
-                .playGround(PlayGround.from(matchEntity.getGroundNumber()))
+                .playGround(PlayGroundForGet.from(matchEntity.getPlayGround()))
                 .price(matchEntity.getPrice())
                 .ownerTeam(TeamForGet.from(matchEntity.getOwnerTeam()))
                 .guestTeam(TeamForGet.from(matchEntity.getGuestTeam()))

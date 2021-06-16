@@ -3,6 +3,7 @@ create table need_member_article (
                                      tid varchar(255),
                                      subject varchar(20) not null,
                                      detail varchar(255) not null,
+                                     need_position int,
                                      write_date timestamp not null,
                                      modified_date timestamp not null,
                                      view_count int not null,

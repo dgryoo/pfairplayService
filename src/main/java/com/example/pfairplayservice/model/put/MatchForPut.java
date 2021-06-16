@@ -1,6 +1,5 @@
 package com.example.pfairplayservice.model.put;
 
-import com.example.pfairplayservice.model.enumfield.PlayGround;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,7 +11,7 @@ public class MatchForPut {
 
     private String ownerTeamTid;
 
-    private PlayGround playGround;
+    private int playGroundNo;
 
     private int price;
 

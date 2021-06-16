@@ -1,5 +1,6 @@
 package com.example.pfairplayservice.jpa.model;
 
+import jdk.jfr.Name;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,10 +24,11 @@ public class MatchEntity {
     private int matchNo;
 
     @Column(nullable = false)
-    private int groundNumber;
-
-    @Column(nullable = false)
     private int price;
+
+    @OneToOne
+    @JoinColumn(name = "play_ground_no")
+    private PlayGroundEntity playGround;
 
     @OneToOne
     private TeamEntity ownerTeam;
