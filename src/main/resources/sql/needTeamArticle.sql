@@ -3,6 +3,7 @@ create table need_team_article (
                                    write_member_uid varchar(255),
                                    subject varchar(20) not null,
                                    detail varchar(255) not null,
+                                   need_position int,
                                    write_date timestamp not null,
                                    modified_date timestamp not null,
                                    view_count int not null,
