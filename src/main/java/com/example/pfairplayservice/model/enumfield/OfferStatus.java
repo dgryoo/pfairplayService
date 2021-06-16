@@ -12,7 +12,7 @@ public enum OfferStatus {
         this.status = status;
     }
 
-    private int getStatus() {
+    public int getStatus() {
         return status;
     }
 
