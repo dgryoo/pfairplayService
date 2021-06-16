@@ -5,11 +5,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
+@Repository
 public interface MatchRepository extends JpaRepository<MatchEntity, Integer> {
 
     @Query(value = "SELECT * FROM soccer_match m  where m.owner_team_tid = :tid", nativeQuery = true)
@@ -17,8 +19,8 @@ public interface MatchRepository extends JpaRepository<MatchEntity, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE soccer_match m set m.ground_number = :groundNumber where m.match_no = :matchNo", nativeQuery = true)
-    void updateGroundNumberByMatchNo(@Param("matchNo") int matchNo, @Param("groundNumber") int groundNumber);
+    @Query(value = "UPDATE soccer_match m set m.play_ground_no = :groundNo where m.match_no = :matchNo", nativeQuery = true)
+    void updateGroundNoByMatchNo(@Param("matchNo") int matchNo, @Param("groundNo") int groundNumber);
 
     @Modifying
     @Transactional
@@ -49,4 +51,6 @@ public interface MatchRepository extends JpaRepository<MatchEntity, Integer> {
     @Transactional
     @Query(value = "UPDATE soccer_match m set m.guest_team_tid = :guestTeam where m.match_no = :matchNo", nativeQuery = true)
     void dealMatch(@Param("matchNo") int matchNo, @Param("guestTeam") String guestTeam);
+
+
 }
