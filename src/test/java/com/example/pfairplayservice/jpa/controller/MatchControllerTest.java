@@ -5,6 +5,7 @@ import com.example.pfairplayservice.common.exception.SourceNotFoundException;
 import com.example.pfairplayservice.controller.MatchController;
 import com.example.pfairplayservice.jpa.model.MatchEntity;
 import com.example.pfairplayservice.jpa.model.MemberEntity;
+import com.example.pfairplayservice.jpa.model.PlayGroundEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;
 import com.example.pfairplayservice.jpa.repository.MatchRepository;
 import com.example.pfairplayservice.jpa.repository.TeamRepository;
@@ -50,7 +51,9 @@ public class MatchControllerTest {
 
         TeamEntity givenTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
 
-        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenTeamEntity,givenPlayGroundEntity);
 
         int givenMatchNo = givenMatchEntity.getMatchNo();
         when(matchRepository.findById(givenMatchNo)).thenReturn(Optional.of(givenMatchEntity));
@@ -123,7 +126,9 @@ public class MatchControllerTest {
         TeamEntity givenTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
         givenTeamEntity.setTid("givenTid");
 
-        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenTeamEntity, givenPlayGroundEntity);
 
         MatchForPost givenMatchForPost = TestEntityGenerator.generateMatchForPost(givenTeamEntity.getTid());
 
@@ -179,7 +184,9 @@ public class MatchControllerTest {
         TeamEntity givenTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
         givenTeamEntity.setTid("givenTid");
 
-        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenTeamEntity, givenPlayGroundEntity);
         givenMatchEntity.setMatchNo(1);
 
         MatchForPut givenMatchForPut = TestEntityGenerator.generateMatchForPut(givenMatchEntity.getOwnerTeam().getTid());
@@ -211,7 +218,9 @@ public class MatchControllerTest {
         TeamEntity givenTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
         givenTeamEntity.setTid("givenTid");
 
-        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenTeamEntity, givenPlayGroundEntity);
         givenMatchEntity.setMatchNo(1);
 
         String unauthorizedTid = "unauthorized";
@@ -243,7 +252,9 @@ public class MatchControllerTest {
         TeamEntity givenTeamEntity = TestEntityGenerator.generateTeamEntity(givenMemberEntity);
         givenTeamEntity.setTid("givenTid");
 
-        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenTeamEntity);
+        PlayGroundEntity givenPlayGroundEntity = TestEntityGenerator.generatePlayGroundEntity();
+
+        MatchEntity givenMatchEntity = TestEntityGenerator.generateMatchEntity(givenTeamEntity, givenPlayGroundEntity);
         givenMatchEntity.setMatchNo(1);
 
         when(matchRepository.findById(givenMatchEntity.getMatchNo())).thenReturn(Optional.of(givenMatchEntity));
