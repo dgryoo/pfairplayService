@@ -1,5 +1,7 @@
 # PFairPlay Service
 
+# Member
+
 ## 특정 멤버 조회 (Member)
 
 ### API information
@@ -167,6 +169,10 @@
 |404|-|해당 tid의 팀이 없는 경우|
 |500|-|서버오류로 인해 조회 실패|
 
+# Member endPoint
+
+# Team
+
 ## 특정 팀 정보 조회 (Team)
 
 ### API information
@@ -333,6 +339,10 @@
 |404|-|해당 uid의 멤버가 없는 경우|
 |500|-|서버오류로 인해 조회 실패|
 
+# Team endPoint
+
+# MemberTeam
+
 ## 팀원등록 (MemberTeam)
 
 ### API information
@@ -391,6 +401,10 @@
 |400|RequiredParamNotFoundException|parameter가 null인 경우|
 |404|-|해당 팀이나 멤버가 없는 경우|
 |500|-|서버 오류로 인해 삭제 실패|
+
+# MemberTeam endPoint
+
+# NeedTeamArticle
 
 ## 팀 구해요 게시판 조회 (needTeamArticle)
 
@@ -545,9 +559,11 @@
 |404|-|해당 articleNo의 글이 없는 경우|
 |500|-|서버 오류로 인해 삭제 실패|
 
---------------------------------------------------------------------------
+# NeedTeamArticle endPoint
 
-## 팀 구해요 게시판 조회 (needMemberArticle)
+# NeeMemberArticle
+
+## 팀원 구해요 게시판 조회 (needMemberArticle)
 
 ### API information
 
@@ -573,7 +589,7 @@
 |204|-|해당 게시판에 글이 없음|
 |500|-|서버오류로 인해 조회 실패|
 
-## 팀 구해요 게시판 상세글 조회 (needMemberArticle)
+## 팀원 구해요 게시판 상세글 조회 (needMemberArticle)
 
 ### API information
 
@@ -607,7 +623,7 @@
 |404|-|해당 articleNo의 글이 없는 경우|
 |500|-|서버오류로 인해 조회 실패|
 
-## 팀 구해요 게시판 상세글 등록 (needMemberArticle)
+## 팀원 구해요 게시판 상세글 등록 (needMemberArticle)
 
 |method|requestURL|format|detail|
 |---|---|---|---|
@@ -635,7 +651,7 @@
 |400|RequiredParamNotFoundException|내용이 null인 경우|
 |500|-|서버 오류로 인해 생성 실패|-|
 
-## 팀 구해요 게시판 상세글 수정 (needMemberArticle)
+## 팀원 구해요 게시판 상세글 수정 (needMemberArticle)
 
 ### API information
 
@@ -671,7 +687,7 @@
 |404|-|해당 articleNo의 글이 없는 경우|
 |500|-|서버 오류로 인해 수정 실패|
 
-## 팀 구해요 게시판 상세글 삭제 (needMemberArticle)
+## 팀원 구해요 게시판 상세글 삭제 (needMemberArticle)
 
 ### API information
 
@@ -696,3 +712,201 @@
 |200|-|글 삭제 성공|
 |404|-|해당 articleNo의 글이 없는 경우|
 |500|-|서버 오류로 인해 삭제 실패|
+
+# NeeMemberArticle endPoint
+
+# Match
+
+## 매치 등록 (Match)
+
+### API information
+
+|method|requestURL|format|detail|
+|---|---|---|---|
+|POST|/match|-|매치 등록|
+
+### request body
+|requestVariableName|type|notnull|defaultValue|detail|constraint|
+|---|---|---|---|---|---|
+|playGroundNo|Integer|Y|-|경기장 번호|- 1이상|
+|price|Integer|Y|-|경기비용|- 0 이상|
+|ownerTeamTid|String|Y|-|주최팀 식별자|-|
+|startDate|Date|Y|-|경기시작시간|-|
+|endDate|Date|Y|-|경기종료시간|-|
+|message|String|Y|-|전할말|-|
+
+### response body
+
+- 응답 바디가 없습니다.
+
+### status code
+
+- To be updated
+
+## 매치 조회 (Match)
+
+### API information
+
+|method|requestURL|format|
+|---|---|---|
+|GET|/match/{matchNo}|json|
+
+### path variable
+
+|requestVariableName|type|notnull|defaultValue|detail|constraint|
+|---|---|---|---|---|---|
+|matchNo|Integer|Y|-|매치번호|- min : 1|
+
+### response body
+
+|field|type|detail|
+|---|---|---|
+|matchNo|Integer|매치번호|
+|playGround|PlayGroundForGet|- Integer playGroundNo 경기장번호 <br> - String name 경기장 이름 <br> 을 포함 |
+|price|Integer|가격|
+|ownerTeam|TeamForGet|- String tid 팀 식별자 <br> - String teamName 팀이름 <br> - int level 레벨 <br> 을 포함|
+|guestTeam|TeamForGet| String tid 팀 식별자 <br> - String teamName 팀이름 <br> - int level 레벨 <br> 을 포함 <br> Nullable|
+|startDate|Date|경기시작시간|
+|endDate|Date|경기종료시간|
+|registrationDate|Date|등록일|
+|modifiedDate|Date|수정일|
+|viewCount|Integer|조회수|
+|status|String|매치의 상태|
+
+### status code
+
+- To be updated
+
+## 매치 수정 (Match)
+
+### API information
+
+|method|requestURL|format|detail|
+|---|---|---|---|
+|PUT|/match/{matchNo}|json|매치 수정|
+
+### path variable
+
+|requestVariableName|type|notnull|defaultValue|detail|constraint|
+|---|---|---|---|---|---|
+|matchNo|Integer|Y|-|멤버 식별자|
+
+### request body
+|requestVariableName|type|notnull|defaultValue|detail|constraint|
+|---|---|---|---|---|---|
+|playGroundNo|Integer|Y|-|경기장 번호|- 1이상|
+|price|Integer|Y|-|경기비용|- 0 이상|
+|ownerTeamTid|String|Y|-|주최팀 식별자|-|
+|startDate|Date|Y|-|경기시작시간|-|
+|endDate|Date|Y|-|경기종료시간|-|
+|message|String|Y|-|전할말|-|
+
+### response body
+
+응답 바디가 없습니다.
+
+### status code
+
+- To be updated
+
+## 매치 삭제 (Match)
+
+### API information
+
+|method|requestURL|format|detail|
+|---|---|---|---|
+|DELETE|/match/{matchNo}|json|매치 삭제|
+
+### path variable
+
+|requestVariableName|type|notnull|defaultValue|detail|constraint|
+|---|---|---|---|---|---|
+|matchNo|integer|Y|-|매치번호|
+
+### response body
+
+응답 바디가 없습니다.
+
+### status code
+
+- To be updated
+
+## 날짜, 도시, 시군구, 시간, 레벨, 경기장 번호, 매치 상태 (Match)
+
+### API information
+
+|method|requestURL|format|
+|---|---|---|
+|GET|/match/specificDate|json|
+
+### request param
+|parameter|type|notnull|defaultValue|detail|constraint|
+|---|---|---|---|---|---|
+|date|Date|Y|-|특정날짜|-|
+|state|String|Y|-|도시|-|
+|city|String|N|-|시군구|-|
+|minStartTime|Integer|N|-|최소시작시간(hour)|-|
+|maxStartTime|Integer|N|-|최대시작시간(hour)|-|
+|minLevel|Integer|N|-|최소레벨|-|
+|maxLevel|Integer|N|-|최대레벨|-|
+|playGroundNo|Integer|N|-|경기장번호|-|
+|isOnlyOngoing|Boolean|N|-|상태옵션|-|
+|offset|Integer|Y|-|오프셋|-|
+
+### response body
+
+|field|type|detail|
+|---|---|---|
+|matchNo|Integer|매치번호|
+|playGround|PlayGroundForGet|- Integer playGroundNo 경기장번호 <br> - String name 경기장 이름 <br> 을 포함 |
+|ownerTeam|TeamForGet|- String tid 팀 식별자 <br> - String teamName 팀이름 <br> - int level 레벨 <br> 을 포함|
+|startDate|Date|경기시작시간|
+|endDate|Date|경기종료시간|
+|registrationDate|Date|등록일|
+|viewCount|Integer|조회수|
+|status|String|매치의 상태|
+
+### status code
+
+- To be updated
+
+## 월, 요일, 도시, 시군구, 시간, 레벨, 경기장 번호, 매치 상태 (Match)
+
+### API information
+
+|method|requestURL|format|
+|---|---|---|
+|GET|/match/conditions|json|
+|GET|/match/conditions/querydsl|json|
+
+### request param
+|parameter|type|notnull|defaultValue|detail|constraint|
+|---|---|---|---|---|---|
+|month|Integer|Y|-|특정 월|-|
+|dayOfWeek|String|Y|-|특정 요일|-|
+|state|String|Y|-|도시|-|
+|city|String|N|-|시군구|-|
+|minStartTime|Integer|N|-|최소시작시간(hour)|-|
+|maxStartTime|Integer|N|-|최대시작시간(hour)|-|
+|minLevel|Integer|N|-|최소레벨|-|
+|maxLevel|Integer|N|-|최대레벨|-|
+|playGroundNo|Integer|N|-|경기장번호|-|
+|isOnlyOngoing|Boolean|N|-|상태옵션|-|
+|offset|Integer|Y|-|오프셋|-|
+
+### response body
+
+|field|type|detail|
+|---|---|---|
+|matchNo|Integer|매치번호|
+|playGround|PlayGroundForGet|- Integer playGroundNo 경기장번호 <br> - String name 경기장 이름 <br> 을 포함 |
+|ownerTeam|TeamForGet|- String tid 팀 식별자 <br> - String teamName 팀이름 <br> - int level 레벨 <br> 을 포함|
+|startDate|Date|경기시작시간|
+|endDate|Date|경기종료시간|
+|registrationDate|Date|등록일|
+|viewCount|Integer|조회수|
+|status|String|매치의 상태|
+
+### status code
+
+- To be updated
