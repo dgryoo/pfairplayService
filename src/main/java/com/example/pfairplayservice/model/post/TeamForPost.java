@@ -20,6 +20,8 @@ public class TeamForPost {
 
     private String teamLeadMemberUid;
 
+    private int level;
+
     private String activityAreaAddress;
 
     private Date foundDate;
@@ -28,6 +30,7 @@ public class TeamForPost {
 
         return TeamEntity.builder()
                 .teamName(getTeamName())
+                .level(1)
                 .teamLeadMember(memberEntity)
                 .activityAreaAddress(getActivityAreaAddress())
                 .registrationDate(new Date())

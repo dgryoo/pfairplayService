@@ -1,15 +1,21 @@
 package com.example.pfairplayservice.model.get;
 
 import com.example.pfairplayservice.jpa.model.PlayGroundEntity;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PlayGroundForGet {
 
-    private int playGroundNo;
+    private Integer playGroundNo;
 
     private String name;
 
@@ -24,6 +30,17 @@ public class PlayGroundForGet {
                 .name(playGroundEntity.getName())
                 .mainAddress(playGroundEntity.getMainAddress())
                 .subAddress(playGroundEntity.getSubAddress())
+                .build();
+
+    }
+
+    public PlayGroundForGet summarizeThis() {
+
+        return PlayGroundForGet.builder()
+                .playGroundNo(playGroundNo)
+                .name(name)
+                .mainAddress(null)
+                .subAddress(null)
                 .build();
 
     }

@@ -1,6 +1,6 @@
 package com.example.pfairplayservice.model.enumfield;
 
-public enum Weekday {
+public enum DayOfWeek {
 
     일(1),
     월(2),
@@ -10,25 +10,32 @@ public enum Weekday {
     금(6),
     토(7);
 
-    private int weekdayNum;
+    private int dayOfWeekNo;
 
-    Weekday(int weekdayNum) {
-        this.weekdayNum = weekdayNum;
+    DayOfWeek(int dayOfWeekNo) {
+        this.dayOfWeekNo = dayOfWeekNo;
     }
 
-    public int getWeekdayNum() {
-        return weekdayNum;
+    public int getDayOfWeekNo() {
+        return dayOfWeekNo;
     }
 
-    public static Weekday from(int weekdayNum) {
-        for (Weekday wd : Weekday.values()) {
-            if (wd.weekdayNum == weekdayNum) {
-                return wd;
+    public static DayOfWeek from(int dayOfWeekNo) {
+        for (DayOfWeek dow : DayOfWeek.values()) {
+            if (dow.dayOfWeekNo == dayOfWeekNo) {
+                return dow;
             }
         }
         return null;
     }
 
-
+    public static DayOfWeek from(String value) {
+        for (DayOfWeek dow :DayOfWeek.values()) {
+           if(dow.name().equals(value)) {
+               return dow;
+           }
+        }
+        return null;
+    }
 
 }
