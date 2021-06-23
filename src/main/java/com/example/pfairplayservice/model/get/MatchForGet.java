@@ -17,11 +17,11 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MatchForGet {
 
-    private int matchNo;
+    private Integer matchNo;
 
     private PlayGroundForGet playGround;
 
-    private int price;
+    private Integer price;
 
     private TeamForGet ownerTeam;
 
@@ -35,18 +35,33 @@ public class MatchForGet {
 
     private Date modifiedDate;
 
-    private int viewCount;
+    private Integer viewCount;
 
     private Status status;
 
 
     public static MatchForGet from(MatchEntity matchEntity) {
-        if(matchEntity.getGuestTeam() == null) {
+        if (matchEntity.getGuestTeam() != null) {
             return MatchForGet.builder()
                     .matchNo(matchEntity.getMatchNo())
-                    .playGround(PlayGroundForGet.from(matchEntity.getPlayGround()))
+                    .playGround(PlayGroundForGet.from(matchEntity.getPlayGround()).summarizeThis())
                     .price(matchEntity.getPrice())
-                    .ownerTeam(TeamForGet.from(matchEntity.getOwnerTeam()))
+                    .ownerTeam(TeamForGet.from(matchEntity.getOwnerTeam()).summarizeThis())
+                    .guestTeam(TeamForGet.from(matchEntity.getGuestTeam()).summarizeThis())
+                    .startDate(matchEntity.getStartDate())
+                    .endDate(matchEntity.getEndDate())
+                    .registrationDate(matchEntity.getRegistrationDate())
+                    .modifiedDate(matchEntity.getModifiedDate())
+                    .viewCount(matchEntity.getViewCount())
+                    .status(Status.from(matchEntity.getStatus()))
+                    .build();
+        } else {
+            return MatchForGet.builder()
+                    .matchNo(matchEntity.getMatchNo())
+                    .playGround(PlayGroundForGet.from(matchEntity.getPlayGround()).summarizeThis())
+                    .price(matchEntity.getPrice())
+                    .ownerTeam(TeamForGet.from(matchEntity.getOwnerTeam()).summarizeThis())
+                    .guestTeam(null)
                     .startDate(matchEntity.getStartDate())
                     .endDate(matchEntity.getEndDate())
                     .registrationDate(matchEntity.getRegistrationDate())
@@ -55,19 +70,24 @@ public class MatchForGet {
                     .status(Status.from(matchEntity.getStatus()))
                     .build();
         }
-        return MatchForGet.builder()
-                .matchNo(matchEntity.getMatchNo())
-                .playGround(PlayGroundForGet.from(matchEntity.getPlayGround()))
-                .price(matchEntity.getPrice())
-                .ownerTeam(TeamForGet.from(matchEntity.getOwnerTeam()))
-                .guestTeam(TeamForGet.from(matchEntity.getGuestTeam()))
-                .startDate(matchEntity.getStartDate())
-                .endDate(matchEntity.getEndDate())
-                .registrationDate(matchEntity.getRegistrationDate())
-                .modifiedDate(matchEntity.getModifiedDate())
-                .viewCount(matchEntity.getViewCount())
-                .status(Status.from(matchEntity.getStatus()))
-                .build();
 
+
+    }
+
+    public MatchForGet summarizeThis() {
+
+        return MatchForGet.builder()
+                .matchNo(matchNo)
+                .playGround(playGround)
+                .price(null)
+                .ownerTeam(ownerTeam)
+                .guestTeam(null)
+                .startDate(startDate)
+                .endDate(endDate)
+                .registrationDate(registrationDate)
+                .modifiedDate(null)
+                .viewCount(viewCount)
+                .status(status)
+                .build();
     }
 }

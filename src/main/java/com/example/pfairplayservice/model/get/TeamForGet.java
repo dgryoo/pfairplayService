@@ -21,6 +21,8 @@ public class TeamForGet {
 
     private String teamName;
 
+    private Integer level;
+
     private MemberForGet teamLeadMember;
 
     private String activityAreaAddress;
@@ -30,14 +32,31 @@ public class TeamForGet {
     private Date foundDate;
 
     public static TeamForGet from(TeamEntity teamEntity) {
+        if (teamEntity != null) {
+            return TeamForGet.builder()
+                    .tid(teamEntity.getTid())
+                    .teamName(teamEntity.getTeamName())
+                    .level(teamEntity.getLevel())
+                    .teamLeadMember(MemberForGet.from(teamEntity.getTeamLeadMember()))
+                    .activityAreaAddress(teamEntity.getActivityAreaAddress())
+                    .registrationDate(teamEntity.getRegistrationDate())
+                    .foundDate(teamEntity.getFoundDate())
+                    .build();
+        }
 
+        return null;
+
+    }
+
+    public TeamForGet summarizeThis() {
         return TeamForGet.builder()
-                .tid(teamEntity.getTid())
-                .teamName(teamEntity.getTeamName())
-                .teamLeadMember(MemberForGet.from(teamEntity.getTeamLeadMember()))
-                .activityAreaAddress(teamEntity.getActivityAreaAddress())
-                .registrationDate(teamEntity.getRegistrationDate())
-                .foundDate(teamEntity.getFoundDate())
+                .tid(tid)
+                .teamName(teamName)
+                .level(level)
+                .teamLeadMember(null)
+                .activityAreaAddress(null)
+                .registrationDate(null)
+                .foundDate(null)
                 .build();
     }
 

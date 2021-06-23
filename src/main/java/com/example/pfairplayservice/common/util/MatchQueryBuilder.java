@@ -31,9 +31,14 @@ public class MatchQueryBuilder {
     }
 
     public MatchQueryBuilder mainAddress(String state, String city) {
-        String mainAddress = state + " " + city;
+        String mainAddress;
+        if (city != null) {
+            mainAddress = state + " " + city;
+        } else {
+            mainAddress = state;
+        }
 
-        query = query + "m.play_ground_no in (select pg.play_ground_no from play_ground pg where pg.main_address = '" + mainAddress + "') ";
+        query = query + "m.play_ground_no in (select pg.play_ground_no from play_ground pg where pg.main_address like '" + mainAddress + "%') ";
 
         return this;
     }
@@ -42,51 +47,62 @@ public class MatchQueryBuilder {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dateCondition = simpleDateFormat.format(date);
 
-        query = query + "and m.start_date = '" + dateCondition + "' ";
+        query = query + "and date_format(m.start_date, '%Y-%m-%d') = '" + dateCondition + "' ";
 
         return this;
     }
 
-    public MatchQueryBuilder time(int minStartTime, int maxStartTime) {
-        query = query + "and hour(m.start_date) >= " + minStartTime + " and hour(m.start_date) <= " + maxStartTime + " ";
+    public MatchQueryBuilder time(Integer minStartTime, Integer maxStartTime) {
+        if (minStartTime != null) {
+            query = query + "and hour(m.start_date) >= " + minStartTime + " ";
+        }
+
+        if (maxStartTime != null) {
+            query = query + "and hour(m.start_date) <= " + maxStartTime + " ";
+        }
 
         return this;
     }
 
-//    public MatchQueryBuilder level(int minLevel, int maxLevel) {
-//
-//        if (minLevel != 0 && maxLevel !=0 ) {
-//            query = query + "and m.owner_team_tid in (select t.tid from team t where t.level >= "
-//                    + minLevel + " and level <= " + maxLevel + ") ";
-//        }
-//
-//        return this;
-//    }
+    public MatchQueryBuilder level(Integer minLevel, Integer maxLevel) {
+        int minValue = 0;
+        int maxValue = 5;
+        if(minLevel != null) minValue = minLevel;
+        if(maxLevel != null) maxValue = maxLevel;
 
-    public MatchQueryBuilder playGroundNo(int playGroundNo) {
-        if (playGroundNo != 0) {
+            query = query + "and m.owner_team_tid in (select t.tid from team t where t.level >= "
+                    + minValue + " and level <= " + maxValue + ") ";
+
+        return this;
+    }
+
+    public MatchQueryBuilder playGroundNo(Integer playGroundNo) {
+        if (playGroundNo != null) {
             query = query + "and m.play_ground_no = " + playGroundNo + " ";
         }
         return this;
     }
 
-    public MatchQueryBuilder isOnlyOngoing(boolean isOnlyOngoing) {
-        if (isOnlyOngoing) {
-            query = query + "and m.status = " + Status.ONGOING.getStatus() + " ";
-        } else {
-            query = query + "and m.status != " + Status.HiDE.getStatus() + " ";
+    public MatchQueryBuilder isOnlyOngoing(Boolean isOnlyOngoing) {
+        if (isOnlyOngoing != null) {
+            if (isOnlyOngoing) {
+                query = query + "and m.status = " + Status.ONGOING.getStatus() + " ";
+            } else {
+                query = query + "and m.status != " + Status.HiDE.getStatus() + " ";
+            }
         }
 
         return this;
     }
 
-    public MatchQueryBuilder offset(int offset) {
-        int offsetValue = pageSize * (offset - 1);
-        query = query + "order by m.start_date limit " + offsetValue + ", " + pageSize;
+    public MatchQueryBuilder offset(Integer offset) {
+        if (offset != null) {
+            int offsetValue = pageSize * (offset - 1);
+            query = query + "order by m.start_date limit " + offsetValue + ", " + pageSize;
+        }
 
         return this;
     }
-
 
     public String build() {
         return query;

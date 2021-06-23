@@ -42,6 +42,7 @@ public class TestEntityGenerator {
         return TeamEntity
                 .builder()
                 .teamName(randomTeamNameString)
+                .level(1)
                 .teamLeadMember(memberEntity)
                 .activityAreaAddress("activityAreaAddress")
                 .registrationDate(new Date())

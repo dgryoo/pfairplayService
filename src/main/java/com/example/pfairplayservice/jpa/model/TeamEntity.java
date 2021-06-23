@@ -26,6 +26,9 @@ public class TeamEntity {
     @Column(nullable = false)
     private String teamName;
 
+    @Column(nullable = false)
+    private int level;
+
     @OneToOne
     private MemberEntity teamLeadMember;
 

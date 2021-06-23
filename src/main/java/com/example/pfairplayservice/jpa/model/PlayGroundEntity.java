@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class PlayGroundEntity {
 
     @Id
-    private int playGroundNo;
+    private Integer playGroundNo;
 
     @Column(nullable = false)
     private String name;
