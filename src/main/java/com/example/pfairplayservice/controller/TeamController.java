@@ -1,7 +1,7 @@
 package com.example.pfairplayservice.controller;
 
-import com.example.pfairplayservice.common.exception.EntityFieldValueChecker;
-import com.example.pfairplayservice.common.exception.SourceNotFoundException;
+import com.example.pfairplayservice.common.exception.deprecated.EntityFieldValueChecker;
+import com.example.pfairplayservice.common.exception.deprecated.SourceNotFoundException;
 import com.example.pfairplayservice.common.filter.FilterManager;
 import com.example.pfairplayservice.jpa.model.MemberEntity;
 import com.example.pfairplayservice.jpa.model.TeamEntity;

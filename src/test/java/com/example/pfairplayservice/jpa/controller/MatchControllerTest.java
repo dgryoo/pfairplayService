@@ -1,7 +1,7 @@
 package com.example.pfairplayservice.jpa.controller;
 
-import com.example.pfairplayservice.common.exception.MatchTimeOverlapException;
-import com.example.pfairplayservice.common.exception.SourceNotFoundException;
+import com.example.pfairplayservice.common.exception.deprecated.MatchTimeOverlapException;
+import com.example.pfairplayservice.common.exception.deprecated.SourceNotFoundException;
 import com.example.pfairplayservice.controller.MatchController;
 import com.example.pfairplayservice.jpa.model.MatchEntity;
 import com.example.pfairplayservice.jpa.model.MemberEntity;
