@@ -1,4 +1,4 @@
-package com.example.pfairplayservice.common.exception;
+package com.example.pfairplayservice.common.exception.deprecated;
 
 
 import com.example.pfairplayservice.model.enumfield.DisClosureOption;
