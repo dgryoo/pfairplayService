@@ -1,8 +1,8 @@
 package com.example.pfairplayservice.controller;
 
-import com.example.pfairplayservice.common.exception.EntityFieldValueChecker;
-import com.example.pfairplayservice.common.exception.MatchTimeOverlapException;
-import com.example.pfairplayservice.common.exception.SourceNotFoundException;
+import com.example.pfairplayservice.common.exception.deprecated.EntityFieldValueChecker;
+import com.example.pfairplayservice.common.exception.deprecated.MatchTimeOverlapException;
+import com.example.pfairplayservice.common.exception.deprecated.SourceNotFoundException;
 import com.example.pfairplayservice.common.util.DateSelector;
 import com.example.pfairplayservice.common.util.MatchQueryBuilder;
 import com.example.pfairplayservice.jpa.model.*;
@@ -26,7 +26,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +62,7 @@ public class MatchController {
     final int limitValue = 20;
 
     @PostMapping("/match")
-    public ResponseEntity createMatch(@RequestBody MatchForPost matchForPost) {
+    public ResponseEntity<Void> createMatch(@RequestBody @Valid MatchForPost matchForPost) {
 
         // 동시간대 Match가 있는지 확인
         List<MatchEntity> matchEntityList = matchRepository.findAllByTid(matchForPost.getOwnerTeamTid());
@@ -88,7 +92,7 @@ public class MatchController {
     }
 
     @GetMapping("/match/{matchNo}")
-    public ResponseEntity<MatchForGet> findByMatchNo(@PathVariable @Min(value = 1, message = "matchNo must be greater or equal 1") Integer matchNo) {
+    public ResponseEntity<MatchForGet> findByMatchNo(@PathVariable Integer matchNo) {
 
         // 해당 matchNo의 Match가 있는지 확인
         Optional<MatchEntity> matchEntity = matchRepository.findById(matchNo);
@@ -102,8 +106,8 @@ public class MatchController {
     }
 
     @PutMapping("/match/{matchNo}")
-    public ResponseEntity<Void> updateByMatchNo(@PathVariable @Min(value = 1, message = "matchNo must be greater or equal 1") Integer matchNo
-            , @RequestBody MatchForPut matchForPut) {
+    public ResponseEntity<Void> updateByMatchNo(@PathVariable Integer matchNo,
+                                                @RequestBody MatchForPut matchForPut) {
 
         // 해당 matchNo의 Match가 있는지 확인
         Optional<MatchEntity> matchEntity = matchRepository.findById(matchNo);
@@ -145,8 +149,8 @@ public class MatchController {
     }
 
     @DeleteMapping("/match/{matchNo}")
-    public ResponseEntity<Void> deleteByMatchNo(@PathVariable @Min(value = 1, message = "matchNo must be greater or equal 1") Integer matchNo
-            , String tid) {
+    public ResponseEntity<Void> deleteByMatchNo(@PathVariable Integer matchNo,
+                                                @RequestParam @NotBlank String tid) {
 
         // 해당 matchNo의 Match가 있는지 확인
         Optional<MatchEntity> matchEntity = matchRepository.findById(matchNo);
@@ -190,10 +194,10 @@ public class MatchController {
     public ResponseEntity<List<MatchForGet>> findMatchListBySpecificDate(@RequestParam Date date,
                                                                          @RequestParam String state,
                                                                          @RequestParam(required = false) String city,
-                                                                         @RequestParam(required = false) Integer minStartTime,
-                                                                         @RequestParam(required = false) Integer maxStartTime,
-                                                                         @RequestParam(required = false) Integer minLevel,
-                                                                         @RequestParam(required = false) Integer maxLevel,
+                                                                         @RequestParam(required = false) @Min(0) @Max(23) Integer minStartTime,
+                                                                         @RequestParam(required = false) @Min(0) @Max(23) Integer maxStartTime,
+                                                                         @RequestParam(required = false) @Min(1) @Max(5) Integer minLevel,
+                                                                         @RequestParam(required = false) @Min(1) @Max(5) Integer maxLevel,
                                                                          @RequestParam(required = false) Integer playGroundNo,
                                                                          @RequestParam(required = false) Boolean isOnlyOngoing,
                                                                          @RequestParam Integer offset) {
@@ -225,23 +229,17 @@ public class MatchController {
     }
 
     @GetMapping("/match/conditions")
-    public ResponseEntity<List<MatchForGet>> findByConditions(@RequestParam Integer month,
+    public ResponseEntity<List<MatchForGet>> findByConditions(@RequestParam @Min(1) @Max(12) Integer month,
                                                               @RequestParam String dayOfWeek,
                                                               @RequestParam String state,
                                                               @RequestParam(required = false) String city,
-                                                              @RequestParam(required = false) Integer minStartTime,
-                                                              @RequestParam(required = false) Integer maxStartTime,
-                                                              @RequestParam(required = false) Integer minLevel,
-                                                              @RequestParam(required = false) Integer maxLevel,
+                                                              @RequestParam(required = false) @Min(0) @Max(23) Integer minStartTime,
+                                                              @RequestParam(required = false) @Min(0) @Max(23) Integer maxStartTime,
+                                                              @RequestParam(required = false) @Min(1) @Max(5) Integer minLevel,
+                                                              @RequestParam(required = false) @Min(1) @Max(5) Integer maxLevel,
                                                               @RequestParam(required = false) Integer playGroundNo,
                                                               @RequestParam(required = false) Boolean isOnlyOngoing,
                                                               @RequestParam Integer offset) {
-
-//        // necessary param null check
-//        if( month == null || dayOfWeek == null || state == null)
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//        required = true 인 param이 없으면 Spring에서 400 BadRequest를 보냄
-
 
         // Get Date List
         List<String> dateList =
@@ -274,21 +272,30 @@ public class MatchController {
     }
 
     @GetMapping("/match/conditions/querydsl")
-    public ResponseEntity<List<MatchForGet>> querydslFindByConditions(@RequestParam @Min(value = 1, message = "month must greater or equal 1") Integer month,
-                                                                      @RequestParam String dayOfWeek,
-                                                                      @RequestParam String state,
-                                                                      @RequestParam(required = false) String city,
-                                                                      @RequestParam(required = false) Integer minStartHour,
-                                                                      @RequestParam(required = false) Integer maxStartHour,
-                                                                      @RequestParam(required = false) Integer minLevel,
-                                                                      @RequestParam(required = false) Integer maxLevel,
+    public ResponseEntity<List<MatchForGet>> querydslFindByConditions(@RequestParam
+                                                                      @Min(value = 1, message = "MONTH01")
+                                                                      @Max(value = 12, message = "MONTH01") Integer month,
+                                                                      @RequestParam
+                                                                      @Pattern(regexp = "^[일|월|화|수|목|금|토]{1}", message = "DOW01") String dayOfWeek,
+                                                                      @RequestParam
+                                                                      @Pattern(regexp = "^[가-힣]{1,10}", message = "STATE01") String state,
+                                                                      @RequestParam(required = false)
+                                                                      @Pattern(regexp = "^[가-힣]{1,10}", message = "CITY01") String city,
+                                                                      @RequestParam(required = false)
+                                                                      @Min(value = 0, message = "MINSH01") @Max(value = 23, message = "MINSH01") Integer minStartHour,
+                                                                      @RequestParam(required = false)
+                                                                      @Min(value = 0, message = "MAXSH01") @Max(value = 23, message = "MAXSH01") Integer maxStartHour,
+                                                                      @RequestParam(required = false)
+                                                                      @Min(value = 1, message = "MINL01") @Max(value = 5, message = "MINL01") Integer minLevel,
+                                                                      @RequestParam(required = false)
+                                                                      @Min(value = 1, message = "MAXL01") @Max(value = 5, message = "MAXL01") Integer maxLevel,
                                                                       @RequestParam(required = false) Integer playGroundNo,
                                                                       @RequestParam(required = false) Boolean isOnlyOngoing,
                                                                       @RequestParam Integer offset) {
 
-        // DayOfWeek
-        if (DayOfWeek.from(dayOfWeek) == null)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//        // DayOfWeek
+//        if (DayOfWeek.from(dayOfWeek) == null)
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 
         // Get Date List
         List<String> dateStringList =

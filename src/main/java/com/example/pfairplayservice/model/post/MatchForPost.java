@@ -6,35 +6,34 @@ import com.example.pfairplayservice.jpa.model.TeamEntity;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Data
 @Builder
 public class MatchForPost {
 
-    @NotNull
-    @Min(value = 1, message = "PlayGroundNo must be greater or equal 1")
+    @NotNull(message = "PGN01")
+    @Min(value = 1, message = "PGN02")
     private Integer playGroundNo;
 
-    @NotNull
-    @Min(value = 0, message = "Price must be greater or equal 0")
+    @NotNull(message = "PRICE01")
     private Integer price;
 
-    @NotNull
-    @NotBlank
+    @NotBlank(message = "OTT01")
     private String ownerTeamTid;
 
-    @NotNull
+    @NotNull(message = "SD01")
     private Date startDate;
 
-    @NotNull
+    @NotNull(message = "ED01")
     private Date endDate;
 
-    @NotNull
+    @NotNull(message = "MSG01")
+    @Size(min = 1, max = 255, message = "MSG02")
     private String message;
 
     public MatchEntity toMatchEntity(TeamEntity ownerTeam, PlayGroundEntity playGroundEntity) {

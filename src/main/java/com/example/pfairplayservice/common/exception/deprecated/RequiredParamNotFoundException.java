@@ -1,4 +1,4 @@
-package com.example.pfairplayservice.common.exception;
+package com.example.pfairplayservice.common.exception.deprecated;
 
 
 import org.springframework.http.HttpStatus;
