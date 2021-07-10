@@ -334,6 +334,46 @@ public class MatchController {
 
     }
 
+    @PatchMapping("/match/score/{matchNo}")
+    public ResponseEntity<Void> ScoreToMatch(@PathVariable Integer matchNo,
+                                             @RequestParam Integer ownerScore,
+                                             @RequestParam Integer guestScore) {
+
+        // 해당 matchNo의 Match가 있는지 확인
+        Optional<MatchEntity> matchEntity = matchRepository.findById(matchNo);
+        if (!matchEntity.isPresent())
+            throw new SourceNotFoundException(String.format("MatchNo : {%s}의 Match가 없습니다.", matchNo));
+
+        // Score, status 업데이트
+        matchRepository.updateOwnerScore(matchNo, ownerScore);
+        matchRepository.updateGuestScore(matchNo, guestScore);
+        matchRepository.updateStatus(matchNo, Status.SCORED.getStatus());
+
+        // 레이팅 반영
+        calculateRating(matchEntity.get().getOwnerTeam().getTid(),
+                matchEntity.get().getGuestTeam().getTid(),
+                ownerScore,
+                guestScore);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
+    private void calculateRating(String ownerTid, String guestTid, int ownerScore, int guestScore) {
+
+        // Owner팀 승리시
+        if (ownerScore > guestScore) {
+            teamRepository.updateRatingByTid(ownerTid, 10);
+            teamRepository.updateRatingByTid(guestTid, -10);
+        }
+
+        // Guest팀 승리시
+        if (ownerScore < guestScore) {
+            teamRepository.updateRatingByTid(ownerTid, -10);
+            teamRepository.updateRatingByTid(guestTid, 10);
+        }
+    }
+
     // match의 시간대가 겹치는지 확인하는 함수
     private void checkOverlapMatchTime(Date startTime, Date endTime, List<MatchEntity> matchEntityList) {
 

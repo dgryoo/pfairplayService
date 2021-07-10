@@ -61,4 +61,8 @@ public class MatchEntity {
     @Column(nullable = false)
     private int status;
 
+    private Integer ownerScore;
+
+    private Integer guestScore;
+
 }

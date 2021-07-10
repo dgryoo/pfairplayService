@@ -4,7 +4,8 @@ public enum Status {
 
     ONGOING(0),
     COMPLETE(1),
-    HiDE(2);
+    HiDE(2),
+    SCORED(3);
 
     private int status;
 
