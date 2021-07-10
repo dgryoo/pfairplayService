@@ -52,5 +52,20 @@ public interface MatchRepository extends JpaRepository<MatchEntity, Integer> {
     @Query(value = "UPDATE soccer_match m set m.guest_team_tid = :guestTeam where m.match_no = :matchNo", nativeQuery = true)
     void dealMatch(@Param("matchNo") int matchNo, @Param("guestTeam") String guestTeam);
 
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE soccer_match m set m.owner_score = :ownerScore where m.match_no = :matchNo", nativeQuery = true)
+    void updateOwnerScore(@Param("matchNo") int matchNo, @Param("ownerScore") int ownerScore);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE soccer_match m set m.guest_score = :guestScore where m.match_no = :matchNo", nativeQuery = true)
+    void updateGuestScore(@Param("matchNo") int matchNo, @Param("guestScore") int guestScore);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE soccer_match m set m.status = :status where m.match_no = :matchNo", nativeQuery = true)
+    void updateStatus(@Param("matchNo") int matchNo, @Param("status") int status);
+
 
 }

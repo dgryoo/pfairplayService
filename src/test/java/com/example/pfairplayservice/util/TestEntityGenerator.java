@@ -47,6 +47,9 @@ public class TestEntityGenerator {
                 .activityAreaAddress("activityAreaAddress")
                 .registrationDate(new Date())
                 .foundDate(new Date())
+                .recommendCount(0)
+                .matchCount(0)
+                .rating(200)
                 .build();
     }
 

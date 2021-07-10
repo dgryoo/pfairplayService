@@ -43,4 +43,10 @@ public class TeamEntity {
     @Temporal(TemporalType.DATE)
     private Date foundDate;
 
+    private int recommendCount;
+
+    private int matchCount;
+
+    private int rating;
+
 }

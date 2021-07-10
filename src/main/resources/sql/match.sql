@@ -11,6 +11,8 @@ create table soccer_match (
                               modified_date timestamp,
                               view_count int not null,
                               status int not null,
+                              owner_score int,
+                              guest_score int,
                               foreign key (play_ground_no) references play_ground(play_ground_no) on delete cascade,
                               foreign key (owner_team_tid) references team(tid) on delete cascade,
                               foreign key (guest_team_tid) references team(tid)

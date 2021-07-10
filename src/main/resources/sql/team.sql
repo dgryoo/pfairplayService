@@ -6,5 +6,8 @@ create table team (
                       activity_area_address varchar(255) not null,
                       registration_date date not null,
                       found_date date not null,
+                      recommend_count int not null,
+                      match_count int not null,
+                      rating int not null,
                       foreign key (team_lead_member_uid) references member(uid)
 ) engine=InnoDB default charset=utf8;

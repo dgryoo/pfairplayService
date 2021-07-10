@@ -39,6 +39,10 @@ public class MatchForGet {
 
     private Status status;
 
+    private Integer ownerScore;
+
+    private Integer guestScore;
+
 
     public static MatchForGet from(MatchEntity matchEntity) {
         if (matchEntity.getGuestTeam() != null) {
@@ -54,6 +58,8 @@ public class MatchForGet {
                     .modifiedDate(matchEntity.getModifiedDate())
                     .viewCount(matchEntity.getViewCount())
                     .status(Status.from(matchEntity.getStatus()))
+                    .ownerScore(matchEntity.getOwnerScore())
+                    .guestScore(matchEntity.getGuestScore())
                     .build();
         } else {
             return MatchForGet.builder()
@@ -68,6 +74,8 @@ public class MatchForGet {
                     .modifiedDate(matchEntity.getModifiedDate())
                     .viewCount(matchEntity.getViewCount())
                     .status(Status.from(matchEntity.getStatus()))
+                    .ownerScore(matchEntity.getOwnerScore())
+                    .guestScore(matchEntity.getGuestScore())
                     .build();
         }
 
@@ -88,6 +96,8 @@ public class MatchForGet {
                 .modifiedDate(null)
                 .viewCount(viewCount)
                 .status(status)
+                .ownerScore(null)
+                .guestScore(null)
                 .build();
     }
 }
