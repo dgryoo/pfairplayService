@@ -34,4 +34,14 @@ public interface TeamRepository extends JpaRepository<TeamEntity, String> {
     @Transactional
     @Query(value = "UPDATE team t set t.found_date  = :foundDate where t.tid = :tid", nativeQuery = true)
     void updateFoundDateByTid(@Param("tid") String tid, @Param("foundDate") Date foundDate);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE team t set t.rating = t.rating + :applyValue where t.tid = :tid", nativeQuery = true)
+    void updateRatingByTid(@Param("tid") String tid, @Param("applyValue") int applyValue);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE team t set t.recommend_count = t.recommend_count + 1 where t.tid = :tid", nativeQuery = true)
+    void recommendTeamByTid(@Param("tid") String tid);
 }

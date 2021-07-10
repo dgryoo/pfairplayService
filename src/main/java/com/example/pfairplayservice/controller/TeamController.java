@@ -113,6 +113,23 @@ public class TeamController {
         return ResponseEntity.status(HttpStatus.OK).body(teamList);
     }
 
+    @PatchMapping("/team/recommend/{tid}")
+    public ResponseEntity<Void> recommendTeam(@PathVariable String tid) {
+        // tid의 TeamEntity가 존재하는지 확인
+        Optional<TeamEntity> teamEntity = teamRepository.findById(tid);
+        if (!teamEntity.isPresent()) {
+            throw new SourceNotFoundException(String.format("tid{%s} not found", tid));
+        }
+
+        // 추천 적용
+        teamRepository.recommendTeamByTid(tid);
+
+        // return
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+
+    }
+
     private boolean isTeamLeader(TeamEntity teamEntity, String uid) {
         if (teamEntity.getTeamLeadMember().getUid().equals(uid)) return true;
         return false;

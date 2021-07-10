@@ -35,6 +35,9 @@ public class TeamForPost {
                 .activityAreaAddress(getActivityAreaAddress())
                 .registrationDate(new Date())
                 .foundDate(getFoundDate())
+                .recommendCount(0)
+                .matchCount(0)
+                .rating(level * 200)
                 .build();
     }
 
