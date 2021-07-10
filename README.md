@@ -339,6 +339,32 @@
 |404|-|해당 uid의 멤버가 없는 경우|
 |500|-|서버오류로 인해 조회 실패|
 
+## 팀 추천(좋아요) (Team)
+
+### API information
+
+|method|requestURL|format|detail|
+|---|---|---|---|
+|PATCH|/team/recommend/{tid}|json|팀 추천|
+
+### path variable
+
+|requestVariableName|type|notnull|defaultValue|detail|constraint|
+|---|---|---|---|---|---|
+|tid|String|Y|-|팀 식별자|
+
+### response body
+
+응답 바디가 없습니다.
+
+### status code
+
+|statusCode|exceptionName|detail|
+|---|---|---|
+|200|-|팀 추천 성공|
+|404|-|해당 tid의 팀이 없는 경우|
+|500|-|서버 오류로 인해 삭제 실패|
+
 # Team endPoint
 
 # MemberTeam
@@ -906,6 +932,34 @@
 |registrationDate|Date|등록일|
 |viewCount|Integer|조회수|
 |status|String|매치의 상태|
+
+### status code
+
+- To be updated
+
+## 매치 점수 등록 (Match)
+
+### API information
+
+|method|requestURL|format|detail|
+|---|---|---|---|
+|PATCH|/match/score/{matchNo}|json|매치 수정|
+
+### path variable
+
+|requestVariableName|type|notnull|defaultValue|detail|constraint|
+|---|---|---|---|---|---|
+|matchNo|Integer|Y|-|멤버 식별자|
+
+### request param
+|parameter|type|notnull|defaultValue|detail|constraint|
+|---|---|---|---|---|---|
+|ownerScore|Integer|Y|-|주최팀 점수|-|
+|guestScore|Integer|Y|-|초대팀 점수|-|
+
+### response body
+
+응답 바디가 없습니다.
 
 ### status code
 
