@@ -1,5 +1,10 @@
 package com.example.pfairplayservice.controller;
 
+import com.example.pfairplayservice.cassandra.model.CTeamEntity;
+import com.example.pfairplayservice.cassandra.model.User;
+import com.example.pfairplayservice.cassandra.repository.CTeamRepository;
+import com.example.pfairplayservice.cassandra.repository.UserRepository;
+import com.example.pfairplayservice.cassandra.udtModel.CMemberEntity;
 import com.example.pfairplayservice.common.exception.deprecated.EntityFieldValueChecker;
 import com.example.pfairplayservice.common.exception.deprecated.SourceNotFoundException;
 import com.example.pfairplayservice.common.filter.FilterManager;
@@ -27,6 +32,12 @@ public class TeamController {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private CTeamRepository cTeamRepository;
 
     @GetMapping("/team/{tid}")
     public ResponseEntity<TeamForGet> findByTid(@PathVariable String tid) {
@@ -127,6 +138,33 @@ public class TeamController {
         // return
         return ResponseEntity.status(HttpStatus.OK).build();
 
+
+    }
+
+    @GetMapping("/team/cass/{uid}")
+    public ResponseEntity<User> findByIdC(@PathVariable Integer uid) {
+
+
+        Optional<User> user = userRepository.findById(uid);
+
+        return ResponseEntity.status(HttpStatus.OK).body(user.get());
+    }
+
+    @PostMapping("/team/cass")
+    public ResponseEntity<Void> createTeamByCass(@RequestBody TeamForPost teamForPost) {
+
+        EntityFieldValueChecker.checkTeamPostFieldValue(teamForPost);
+
+        Optional<MemberEntity> memberEntity = memberRepository.findById(teamForPost.getTeamLeadMemberUid());
+        if (!memberEntity.isPresent()) {
+            throw new SourceNotFoundException(String.format("uid{%s} not found", teamForPost.getTeamLeadMemberUid()));
+        }
+
+        CTeamEntity cTeamEntity = teamForPost.toCTeamEntity(memberEntity.get());
+
+        cTeamRepository.save(cTeamEntity);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
 
     }
 

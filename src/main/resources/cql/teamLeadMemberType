@@ -1,0 +1,13 @@
+create type team_lead_member_type (
+    uid text,
+    id text,
+    password text,
+    name text,
+    birthday date,
+    address text,
+    phone_number text,
+    prefer_position text,
+    level int,
+    phone_number_disclosure_option int,
+    join_date date,
+    recent_login_date date);

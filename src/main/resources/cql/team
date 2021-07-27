@@ -1,0 +1,12 @@
+create table team (
+    activity_area_address text,
+    tid text,
+    recommend_count int,
+    team_name text,
+    level int,
+    team_lead_member team_lead_member_type,
+    registration_date date,
+    found_date date,
+    match_count int,
+    rating int,
+    primary key(activity_area_address, tid, recommend_count));
