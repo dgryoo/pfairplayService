@@ -1,0 +1,7 @@
+create table team_review_counter (
+    tid text,
+    review_id text,
+    thumbs_up_count counter,
+    thumbs_down_count counter,
+    primary key(tid, review_id)
+);
