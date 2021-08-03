@@ -32,8 +32,8 @@ public class TeamReviewForPost {
                 .teamReviewByTidPrimaryKey(TeamReviewByTidPrimaryKey.builder()
                         .tid(tid)
                         .writeDate(writeDate)
+                        .reviewId(reviewId)
                         .build())
-                .reviewId(reviewId)
                 .reviewerTid(reviewerTid)
                 .reviewDetail(reviewDetail)
                 .properTeamLevel(properTeamLevel)
@@ -46,12 +46,9 @@ public class TeamReviewForPost {
                 .teamReviewByReviewerTidPrimaryKey(TeamReviewByReviewerTidPrimaryKey.builder()
                         .reviewerTid(reviewerTid)
                         .writeDate(writeDate)
+                        .reviewId(reviewId)
                         .build())
-                .reviewId(reviewId)
                 .tid(tid)
-                .reviewDetail(reviewDetail)
-                .properTeamLevel(properTeamLevel)
-                .teamMannerPoint(teamMannerPoint)
                 .build();
     }
 }

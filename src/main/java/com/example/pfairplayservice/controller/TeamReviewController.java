@@ -3,6 +3,8 @@ package com.example.pfairplayservice.controller;
 import com.example.pfairplayservice.cassandra.model.TeamReviewByReviewerTid;
 import com.example.pfairplayservice.cassandra.model.TeamReviewByTid;
 import com.example.pfairplayservice.cassandra.model.TeamReviewCounter;
+import com.example.pfairplayservice.cassandra.pk.TeamReviewByTidPrimaryKey;
+import com.example.pfairplayservice.cassandra.pk.TeamReviewCounterPrimaryKey;
 import com.example.pfairplayservice.cassandra.repository.TeamReviewByReviewerTidRepository;
 import com.example.pfairplayservice.cassandra.repository.TeamReviewByTidRepository;
 import com.example.pfairplayservice.cassandra.repository.TeamReviewCounterRepository;
@@ -14,10 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -76,24 +75,29 @@ public class TeamReviewController {
         }
 
         // TeamReviewCounter 조회를 위한 reviewIdCondition
-        String reviewIdCondition = teamReviewByTidList.stream()
-                .map(teamReviewByTid -> "'" + teamReviewByTid.getReviewId() + "'")
-                .collect(Collectors.joining(", "));
-
+        List<String> reviewIdCondition = teamReviewByTidList.stream()
+                .map(teamReviewByTid -> teamReviewByTid.getTeamReviewByTidPrimaryKey()
+                    .getReviewId())
+                .collect(Collectors.toList());
 
         // TeamReviewCounter 조회
         List<TeamReviewCounter> teamReviewCounterList =
-                teamReviewCounterRepository.findTeamReviewCounterByTid(tid, reviewIdCondition);
+                teamReviewCounterRepository.findTeamReviewCounterByTidAndReviewIdList(tid, reviewIdCondition);
+
+        // TeamReviewCounter to Map
+        Map<String, TeamReviewCounter> reviewCounterMap = new HashMap<>();
+
+        for (TeamReviewCounter counter : teamReviewCounterList) {
+            reviewCounterMap.put(counter.getTeamReviewCounterPrimaryKey().getReviewId(), counter);
+        }
 
         // TeamReview, TeamReviewCounter -> TeamReviewForGet
         List<TeamReviewForGet> reviewForGetList = new ArrayList<>();
 
         for (TeamReviewByTid review : teamReviewByTidList) {
-            for (TeamReviewCounter reviewCounter : teamReviewCounterList) {
-                if (review.getReviewId().equals(reviewCounter.getTeamReviewCounterPrimaryKey().getReviewId())) {
-                    reviewForGetList.add(TeamReviewForGet.fromReviewAndCounter(review, reviewCounter));
-                }
-            }
+            reviewForGetList.add(TeamReviewForGet
+                    .fromReviewAndCounter(review,
+                            reviewCounterMap.get(review.getTeamReviewByTidPrimaryKey().getReviewId())));
         }
 
         // return ResponseEntity
@@ -114,24 +118,40 @@ public class TeamReviewController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        // TeamReviewCounter 조회를 위한 reviewIdCondition
-        String reviewIdCondition = teamReviewByReviewerTidList.stream()
-                .map(teamReviewByReviewerTid -> "'" + teamReviewByReviewerTid.getReviewId() + "'")
-                .collect(Collectors.joining(", "));
+        // Mapping ByReviewerId to ByTid
+        List<TeamReviewByTid> teamReviewByTidList = teamReviewByReviewerTidList.parallelStream()
+                .map(teamReviewByReviewerTid -> teamReviewByTidRepository
+                        .findById(TeamReviewByTidPrimaryKey.builder()
+                                .tid(teamReviewByReviewerTid.getTid())
+                                .writeDate(teamReviewByReviewerTid.getTeamReviewByReviewerTidPrimaryKey().getWriteDate())
+                                .reviewId(teamReviewByReviewerTid.getTeamReviewByReviewerTidPrimaryKey().getReviewId())
+                                .build()))
+                .map(teamReviewByTid -> teamReviewByTid.get())
+                .collect(Collectors.toList());
 
         // TeamReviewCounter 조회
-        List<TeamReviewCounter> teamReviewCounterList =
-                teamReviewCounterRepository.findTeamReviewCounterByTid(reviewerTid, reviewIdCondition);
+        List<Optional<TeamReviewCounter>> teamReviewCounterList = teamReviewByTidList.parallelStream()
+                .map(teamReviewByTid -> teamReviewCounterRepository.findTeamReviewCounterByTidAndReviewId(
+                        teamReviewByTid.getTeamReviewByTidPrimaryKey().getTid(),
+                        teamReviewByTid.getTeamReviewByTidPrimaryKey().getReviewId()))
+                .collect(Collectors.toList());
+
+        // TeamReviewCounterList to Map
+        Map<String, TeamReviewCounter> reviewCounterMap = new HashMap<>();
+
+        for (Optional<TeamReviewCounter> o : teamReviewCounterList) {
+            if(o.isPresent()) {
+                reviewCounterMap.put(o.get().getTeamReviewCounterPrimaryKey().getReviewId(), o.get());
+            }
+        }
 
         // TeamReview, TeamReviewCounter -> TeamReviewForGet
         List<TeamReviewForGet> reviewForGetList = new ArrayList<>();
 
-        for (TeamReviewByReviewerTid review : teamReviewByReviewerTidList) {
-            for (TeamReviewCounter reviewCounter : teamReviewCounterList) {
-                if (review.getReviewId().equals(reviewCounter.getTeamReviewCounterPrimaryKey().getReviewId())) {
-                    reviewForGetList.add(TeamReviewForGet.fromReviewAndCounter(review, reviewCounter));
-                }
-            }
+        for (TeamReviewByTid review : teamReviewByTidList) {
+            reviewForGetList.add(TeamReviewForGet
+                    .fromReviewAndCounter(review,
+                            reviewCounterMap.get(review.getTeamReviewByTidPrimaryKey().getReviewId())));
         }
 
         // return ResponseEntity

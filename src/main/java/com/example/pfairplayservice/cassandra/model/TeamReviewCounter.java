@@ -1,14 +1,11 @@
 package com.example.pfairplayservice.cassandra.model;
 
-import com.example.pfairplayservice.cassandra.pk.TeamReviewByTidPrimaryKey;
 import com.example.pfairplayservice.cassandra.pk.TeamReviewCounterPrimaryKey;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
-
-import java.util.UUID;
 
 @Data
 @Builder
@@ -19,9 +16,9 @@ public class TeamReviewCounter {
     private TeamReviewCounterPrimaryKey teamReviewCounterPrimaryKey;
 
     @Column(value = "thumbs_up_count")
-    private int thumbsUpCount;
+    private Integer thumbsUpCount;
 
     @Column(value = "thumbs_down_count")
-    private int thumbsDownCount;
+    private Integer thumbsDownCount;
 
 }

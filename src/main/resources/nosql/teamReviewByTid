@@ -6,5 +6,5 @@ create table team_review_by_tid (
     review_detail text,
     proper_team_level int,
     team_manner_point int,
-    primary key(tid, write_date))
+    primary key(tid, write_date, review_id))
 with clustering order by (write_date DESC);

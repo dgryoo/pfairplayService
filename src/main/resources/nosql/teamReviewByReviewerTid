@@ -3,8 +3,5 @@ create table team_review_by_reviewer_tid (
     write_date timestamp,
     review_id text,
     tid text,
-    review_detail text,
-    proper_team_level int,
-    team_manner_point int,
-    primary key(reviewer_tid, write_date))
+    primary key(reviewer_tid, write_date, review_id))
 with clustering order by (write_date DESC);
