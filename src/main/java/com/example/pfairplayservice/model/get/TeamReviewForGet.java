@@ -1,6 +1,5 @@
 package com.example.pfairplayservice.model.get;
 
-import com.example.pfairplayservice.cassandra.model.TeamReviewByReviewerTid;
 import com.example.pfairplayservice.cassandra.model.TeamReviewByTid;
 import com.example.pfairplayservice.cassandra.model.TeamReviewCounter;
 import lombok.Builder;
@@ -26,35 +25,35 @@ public class TeamReviewForGet {
 
     private Integer teamMannerPoint;
 
-    private int thumbsUpCount;
+    private Integer thumbsUpCount;
 
-    private int thumbsDownCount;
+    private Integer thumbsDownCount;
 
     public static TeamReviewForGet fromReviewAndCounter(TeamReviewByTid review, TeamReviewCounter counter) {
+
+        if (counter != null) {
+            return TeamReviewForGet.builder()
+                    .tid(review.getTeamReviewByTidPrimaryKey().getTid())
+                    .writeDate(review.getTeamReviewByTidPrimaryKey().getWriteDate())
+                    .reviewId(review.getTeamReviewByTidPrimaryKey().getReviewId())
+                    .reviewerTid(review.getReviewerTid())
+                    .reviewDetail(review.getReviewDetail())
+                    .properTeamLevel(review.getProperTeamLevel())
+                    .teamMannerPoint(review.getTeamMannerPoint())
+                    .thumbsUpCount(counter.getThumbsUpCount())
+                    .thumbsDownCount(counter.getThumbsDownCount())
+                    .build();
+        }
+
         return TeamReviewForGet.builder()
                 .tid(review.getTeamReviewByTidPrimaryKey().getTid())
                 .writeDate(review.getTeamReviewByTidPrimaryKey().getWriteDate())
-                .reviewId(review.getReviewId())
+                .reviewId(review.getTeamReviewByTidPrimaryKey().getReviewId())
                 .reviewerTid(review.getReviewerTid())
                 .reviewDetail(review.getReviewDetail())
                 .properTeamLevel(review.getProperTeamLevel())
                 .teamMannerPoint(review.getTeamMannerPoint())
-                .thumbsDownCount(counter.getThumbsUpCount())
-                .thumbsDownCount(counter.getThumbsDownCount())
                 .build();
-    }
 
-    public static TeamReviewForGet fromReviewAndCounter(TeamReviewByReviewerTid review, TeamReviewCounter counter) {
-        return TeamReviewForGet.builder()
-                .tid(review.getTid())
-                .writeDate(review.getTeamReviewByReviewerTidPrimaryKey().getWriteDate())
-                .reviewId(review.getReviewId())
-                .reviewerTid(review.getTeamReviewByReviewerTidPrimaryKey().getReviewerTid())
-                .reviewDetail(review.getReviewDetail())
-                .properTeamLevel(review.getProperTeamLevel())
-                .teamMannerPoint(review.getTeamMannerPoint())
-                .thumbsDownCount(counter.getThumbsUpCount())
-                .thumbsDownCount(counter.getThumbsDownCount())
-                .build();
     }
 }
