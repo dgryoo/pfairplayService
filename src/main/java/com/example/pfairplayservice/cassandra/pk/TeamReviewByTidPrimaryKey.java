@@ -23,4 +23,7 @@ public class TeamReviewByTidPrimaryKey implements Serializable {
     @PrimaryKeyColumn(name = "write_date", ordinal = 1, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
     private Date writeDate;
 
+    @PrimaryKeyColumn(name = "review_id", ordinal = 2, type = PrimaryKeyType.CLUSTERED)
+    private String reviewId;
+
 }
