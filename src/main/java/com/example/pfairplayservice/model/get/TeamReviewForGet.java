@@ -2,6 +2,8 @@ package com.example.pfairplayservice.model.get;
 
 import com.example.pfairplayservice.cassandra.model.TeamReviewByTid;
 import com.example.pfairplayservice.cassandra.model.TeamReviewCounter;
+import com.example.pfairplayservice.jpa.model.TeamReviewCounterEntity;
+import com.example.pfairplayservice.jpa.model.TeamReviewEntity;
 import lombok.Builder;
 import lombok.Data;
 
@@ -49,6 +51,34 @@ public class TeamReviewForGet {
                 .tid(review.getTeamReviewByTidPrimaryKey().getTid())
                 .writeDate(review.getTeamReviewByTidPrimaryKey().getWriteDate())
                 .reviewId(review.getTeamReviewByTidPrimaryKey().getReviewId())
+                .reviewerTid(review.getReviewerTid())
+                .reviewDetail(review.getReviewDetail())
+                .properTeamLevel(review.getProperTeamLevel())
+                .teamMannerPoint(review.getTeamMannerPoint())
+                .build();
+
+    }
+
+    public static TeamReviewForGet fromReviewAndCounter(TeamReviewEntity review, TeamReviewCounterEntity counter) {
+
+        if (counter != null) {
+            return TeamReviewForGet.builder()
+                    .tid(review.getTid())
+                    .writeDate(review.getWriteDate())
+                    .reviewId(review.getReviewId())
+                    .reviewerTid(review.getReviewerTid())
+                    .reviewDetail(review.getReviewDetail())
+                    .properTeamLevel(review.getProperTeamLevel())
+                    .teamMannerPoint(review.getTeamMannerPoint())
+                    .thumbsUpCount(counter.getThumbsUpCount())
+                    .thumbsDownCount(counter.getThumbsDownCount())
+                    .build();
+        }
+
+        return TeamReviewForGet.builder()
+                .tid(review.getTid())
+                .writeDate(review.getWriteDate())
+                .reviewId(review.getReviewId())
                 .reviewerTid(review.getReviewerTid())
                 .reviewDetail(review.getReviewDetail())
                 .properTeamLevel(review.getProperTeamLevel())
