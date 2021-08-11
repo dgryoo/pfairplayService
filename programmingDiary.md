@@ -64,7 +64,7 @@
  - 기대했던 값은 tid 만 조회하는 것인데 jpql은 전부다 조회하는것으로 나옴.
 select memberteam0_.tid as tid1_1_, memberteam0_.uid as uid2_1_ from member_team_list memberteam0_ where memberteam0_.uid=?
  
- - https://www.callicoder.com/hibernate-spring-boot-jpa-composite-primary-key-example/
+ - https://www.callicoder.com/hibernate-spring-boot-mysql-composite-primary-key-example/
  search : 2. Retrieving all employees of a particular company
  /*
  Spring Data JPA will automatically parse this method name
@@ -76,7 +76,7 @@ select memberteam0_.tid as tid1_1_, memberteam0_.uid as uid2_1_ from member_team
 
 ## ConversionFailedException (solved)
  @Query(value = "SELECT * FROM test.team t WHERE t.tid in (SELECT mt.tid FROM test.member_team_list mt where mt.uid = 'member1')", nativeQuery = true)
- ConversionFailedException: Failed to convert from type [java.lang.Object[]] to type [com.example.pfairplayservice.jpa.model.TeamEntity] for value '{team1, myground, 2020-01-01 09:00:00.0, 2020-01-01 09:00:00.0, testname1, member1}'; nested exception is org.springframework.core.convert.ConverterNotFoundException: No converter found capable of converting from type [java.lang.String] to type [com.example.pfairplayservice.jpa.model.TeamEntity]] with root cause
+ ConversionFailedException: Failed to convert from type [java.lang.Object[]] to type [TeamEntity] for value '{team1, myground, 2020-01-01 09:00:00.0, 2020-01-01 09:00:00.0, testname1, member1}'; nested exception is org.springframework.core.convert.ConverterNotFoundException: No converter found capable of converting from type [java.lang.String] to type [TeamEntity]] with root cause
  데이터는 받아와지는데 TeamEntity로 Conversion이 안됨.
  
 ## RetrieveTeamListByUid, RetrieveMemberListByTid (solved)
@@ -93,12 +93,12 @@ select memberteam0_.tid as tid1_1_, memberteam0_.uid as uid2_1_ from member_team
  
  - Entity에 notnull으로 설정된것은 필수적으로 넣어주어야함.
 
- - PersistenceException: org.hibernate.PersistentObjectException: detached entity passed to persist: com.example.pfairplayservice.jpa.model.MemberEntity
+ - PersistenceException: org.hibernate.PersistentObjectException: detached entity passed to persist: MemberEntity
      @GeneratedValue(generator = "member-uid", strategy = GenerationType.AUTO)
      @GenericGenerator(name = "member-uid", strategy = "uuid")
      와 같은 어노테이션이 있기때문에 임의로 builder에서 uid를 지정해주었을 경우 에러발생.
    
-## constructor MemberTeamId in class com.example.pfairplayservice.jpa.id.MemberTeamId cannot be applied to given types; (solved)
+## constructor MemberTeamId in class MemberTeamId cannot be applied to given types; (solved)
  - 기본생성자를 만들어주지않아서 발생
 
 ## JdbcSQLException (solved)
