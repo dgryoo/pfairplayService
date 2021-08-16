@@ -16,7 +16,19 @@
     <dependencies>
         <dependency>
             <groupId>com.pfairplayservice</groupId>
-            <artifactId>storage</artifactId>
+            <artifactId>cassandra</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.pfairplayservice</groupId>
+            <artifactId>mysql</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.pfairplayservice</groupId>
+            <artifactId>kafka</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
