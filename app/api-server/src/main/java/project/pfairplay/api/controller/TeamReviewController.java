@@ -165,6 +165,7 @@ public class TeamReviewController {
     }
 
     public void sendMessage(TeamReviewThumbs teamReviewThumbs) {
-        kafkaTemplate.send(TOPIC, 0,"thumbsChange", teamReviewThumbs);
+        kafkaTemplate.send(TOPIC,teamReviewThumbs.getReviewId(), teamReviewThumbs);
     }
+
 }

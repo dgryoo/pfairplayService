@@ -13,6 +13,22 @@
     <artifactId>kafka</artifactId>
     <packaging>jar</packaging>
 
+    <dependencies>
+
+        <!-- Kafka dependency start-->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+        <!-- Kafka dependency end-->
+
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

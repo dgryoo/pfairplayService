@@ -12,8 +12,25 @@
 
     <artifactId>api-server</artifactId>
 
-    <!-- storage dependency-->
+
     <dependencies>
+
+        <!-- spring dependency start-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- spring dependency start-->
+
+        <!-- storage dependency start -->
         <dependency>
             <groupId>com.pfairplayservice</groupId>
             <artifactId>cassandra</artifactId>
@@ -32,7 +49,42 @@
             <version>0.0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <!-- storage dependency end -->
+
+        <!-- QueryDsl dependency start-->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+        </dependency>
+        <!-- QueryDsl dependency end-->
+
+        <!-- Mysql dependency end-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- Mysql dependency end-->
+
+        <!-- Kafka dependency start-->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+        </dependency>
+        <!-- Kafka dependency end-->
+
     </dependencies>
+
+
 
     <build>
         <plugins>
