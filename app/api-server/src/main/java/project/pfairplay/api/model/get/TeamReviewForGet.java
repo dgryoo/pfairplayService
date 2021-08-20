@@ -8,6 +8,8 @@ import project.pfairplay.storage.mysql.model.TeamReviewCounterEntity;
 import project.pfairplay.storage.mysql.model.TeamReviewEntity;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
@@ -85,5 +87,43 @@ public class TeamReviewForGet {
                 .teamMannerPoint(review.getTeamMannerPoint())
                 .build();
 
+    }
+
+    public static TeamReviewForGet fromReviewAndCounter(TeamReviewEntity review, Map<String, List<String>> counterMap) {
+
+        Integer up = 0;
+        Integer down = 0;
+
+        if(counterMap.isEmpty()) {
+            return TeamReviewForGet.builder()
+                    .tid(review.getTid())
+                    .writeDate(review.getWriteDate())
+                    .reviewId(review.getReviewId())
+                    .reviewerTid(review.getReviewerTid())
+                    .reviewDetail(review.getReviewDetail())
+                    .properTeamLevel(review.getProperTeamLevel())
+                    .teamMannerPoint(review.getTeamMannerPoint())
+                    .thumbsUpCount(up)
+                    .thumbsDownCount(down)
+                    .build();
+        }
+
+        if(counterMap.get(review.getReviewId()).get(0) != null)
+            up = Integer.valueOf(counterMap.get(review.getReviewId()).get(0));
+
+        if(counterMap.get(review.getReviewId()).get(1) != null)
+            down = Integer.valueOf(counterMap.get(review.getReviewId()).get(1));
+
+        return TeamReviewForGet.builder()
+                .tid(review.getTid())
+                .writeDate(review.getWriteDate())
+                .reviewId(review.getReviewId())
+                .reviewerTid(review.getReviewerTid())
+                .reviewDetail(review.getReviewDetail())
+                .properTeamLevel(review.getProperTeamLevel())
+                .teamMannerPoint(review.getTeamMannerPoint())
+                .thumbsUpCount(up)
+                .thumbsDownCount(down)
+                .build();
     }
 }
