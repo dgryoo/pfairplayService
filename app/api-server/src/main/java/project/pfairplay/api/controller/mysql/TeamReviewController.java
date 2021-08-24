@@ -1,4 +1,4 @@
-package project.pfairplay.api.controller;
+package project.pfairplay.api.controller.mysql;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;

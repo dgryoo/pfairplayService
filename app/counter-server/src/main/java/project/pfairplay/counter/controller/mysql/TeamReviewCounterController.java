@@ -1,4 +1,4 @@
-package project.pfairplay.counter.controller;
+package project.pfairplay.counter.controller.mysql;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
