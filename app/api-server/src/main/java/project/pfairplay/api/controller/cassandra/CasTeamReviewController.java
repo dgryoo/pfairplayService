@@ -1,4 +1,4 @@
-package project.pfairplay.api.controller;
+package project.pfairplay.api.controller.cassandra;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

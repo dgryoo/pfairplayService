@@ -1,4 +1,4 @@
-package project.pfairplay.api.controller;
+package project.pfairplay.api.controller.mysql;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.DateTemplate;
