@@ -334,7 +334,7 @@ public class MatchController {
 
     }
 
-    @PatchMapping("/match/score/{matchNo}")
+    @PutMapping("/match/score/{matchNo}")
     public ResponseEntity<Void> ScoreToMatch(@PathVariable Integer matchNo,
                                              @RequestParam Integer ownerScore,
                                              @RequestParam Integer guestScore) {
