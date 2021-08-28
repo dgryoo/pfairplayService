@@ -29,12 +29,10 @@ public class TeamReviewController {
 
     final int limitValue = 10;
 
-    // kafka
     private static final String TOPIC = "thumbs";
 
     @Autowired
     private KafkaTemplate<String, TeamReviewThumbs> kafkaTemplate;
-    //kafka
 
     @Autowired
     private EntityManager entityManager;

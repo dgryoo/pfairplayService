@@ -1,4 +1,4 @@
-package project.pfairplay.api.run;
+package project.pfairplay.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

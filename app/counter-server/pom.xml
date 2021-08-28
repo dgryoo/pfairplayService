@@ -44,6 +44,12 @@
             <version>0.0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.pfairplayservice</groupId>
+            <artifactId>redis</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- storage dependency end -->
 
         <!-- mysql dependency start -->

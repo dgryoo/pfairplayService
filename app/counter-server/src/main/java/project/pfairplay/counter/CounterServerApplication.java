@@ -1,4 +1,4 @@
-package project.pfairplay.counter.run;
+package project.pfairplay.counter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
