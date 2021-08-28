@@ -18,4 +18,13 @@ public class SharedKafkaTopicConfig {
                 .build();
     }
 
+    @Bean
+    public NewTopic createRdsThumbsTopic() {
+        return TopicBuilder.name("rdsThumbs")
+                .partitions(2)
+                .replicas(1)
+                .config(TopicConfig.COMPRESSION_TYPE_CONFIG, "gzip")
+                .build();
+    }
+
 }

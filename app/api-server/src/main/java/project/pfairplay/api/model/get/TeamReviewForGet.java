@@ -94,7 +94,7 @@ public class TeamReviewForGet {
         Integer up = 0;
         Integer down = 0;
 
-        if(counterMap.isEmpty()) {
+        if (counterMap.isEmpty()) {
             return TeamReviewForGet.builder()
                     .tid(review.getTid())
                     .writeDate(review.getWriteDate())
@@ -108,10 +108,10 @@ public class TeamReviewForGet {
                     .build();
         }
 
-        if(counterMap.get(review.getReviewId()).get(0) != null)
+        if (counterMap.get(review.getReviewId()).get(0) != null)
             up = Integer.valueOf(counterMap.get(review.getReviewId()).get(0));
 
-        if(counterMap.get(review.getReviewId()).get(1) != null)
+        if (counterMap.get(review.getReviewId()).get(1) != null)
             down = Integer.valueOf(counterMap.get(review.getReviewId()).get(1));
 
         return TeamReviewForGet.builder()
@@ -126,4 +126,34 @@ public class TeamReviewForGet {
                 .thumbsDownCount(down)
                 .build();
     }
+
+    public static TeamReviewForGet fromReviewAndCounter(TeamReviewByTid teamReviewByTid, TeamReviewCounterEntity teamReviewCounterEntity) {
+
+        if (teamReviewCounterEntity != null) {
+            return TeamReviewForGet.builder()
+                    .tid(teamReviewByTid.getTeamReviewByTidPrimaryKey().getTid())
+                    .writeDate(teamReviewByTid.getTeamReviewByTidPrimaryKey().getWriteDate())
+                    .reviewId(teamReviewByTid.getTeamReviewByTidPrimaryKey().getReviewId())
+                    .reviewerTid(teamReviewByTid.getReviewerTid())
+                    .reviewDetail(teamReviewByTid.getReviewDetail())
+                    .properTeamLevel(teamReviewByTid.getProperTeamLevel())
+                    .teamMannerPoint(teamReviewByTid.getTeamMannerPoint())
+                    .thumbsUpCount(teamReviewCounterEntity.getThumbsUpCount())
+                    .thumbsDownCount(teamReviewCounterEntity.getThumbsDownCount())
+                    .build();
+        }
+
+        return TeamReviewForGet.builder()
+                .tid(teamReviewByTid.getTeamReviewByTidPrimaryKey().getTid())
+                .writeDate(teamReviewByTid.getTeamReviewByTidPrimaryKey().getWriteDate())
+                .reviewId(teamReviewByTid.getTeamReviewByTidPrimaryKey().getReviewId())
+                .reviewerTid(teamReviewByTid.getReviewerTid())
+                .reviewDetail(teamReviewByTid.getReviewDetail())
+                .properTeamLevel(teamReviewByTid.getProperTeamLevel())
+                .teamMannerPoint(teamReviewByTid.getTeamMannerPoint())
+                .thumbsUpCount(0)
+                .thumbsDownCount(0)
+                .build();
+    }
+
 }
