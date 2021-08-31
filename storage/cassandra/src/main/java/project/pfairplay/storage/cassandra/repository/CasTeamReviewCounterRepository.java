@@ -1,7 +1,9 @@
 package project.pfairplay.storage.cassandra.repository;
 
 
+import com.datastax.oss.driver.api.core.DefaultConsistencyLevel;
 import org.springframework.data.cassandra.repository.CassandraRepository;
+import org.springframework.data.cassandra.repository.Consistency;
 import org.springframework.data.cassandra.repository.Query;
 import project.pfairplay.storage.cassandra.model.TeamReviewCounter;
 import project.pfairplay.storage.cassandra.pk.TeamReviewCounterPrimaryKey;
