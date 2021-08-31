@@ -39,7 +39,7 @@
 * Nosql
 
 ## 시스템 구조
-![pfairplay](https://user-images.githubusercontent.com/59459120/130646160-8488626b-66a4-4297-8e71-f200d5ec1841.png)
+![pfairplay2](https://user-images.githubusercontent.com/59459120/131499786-4511f04a-0973-4f64-8516-d1ccf24ac566.png)
 
 ##  API Server (Producer)
 * [API Server](https://github.com/dgryoo/pfairplayService/tree/main/app/api-server)
@@ -54,7 +54,7 @@
 * [Kafka](https://github.com/dgryoo/pfairplayService/tree/main/storage/kafka)
 
 ## ERD 설계 (Mysql)
-![pfairplay_diagram](https://user-images.githubusercontent.com/59459120/130648665-669ec4bb-fd88-4179-9621-dc691201691f.png)
+![pfairplay_table](https://user-images.githubusercontent.com/59459120/131504636-0e86a080-8933-4915-b902-b342d1c3fe99.png)
 
 ## Rest API 문서
 
