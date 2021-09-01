@@ -1,5 +1,6 @@
 package project.pfairplay.api.controller.cassandra;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,7 @@ public class CasTeamReviewController {
     @Autowired
     private TeamReviewByReviewerTidRepository teamReviewByReviewerTidRepository;
 
+    @Operation(summary = "팀리뷰 등록")
     @PostMapping("/cas/teamReview")
     public ResponseEntity<Void> createTeamReview(@RequestBody TeamReviewForPost teamReviewForPost) {
 
@@ -69,6 +71,7 @@ public class CasTeamReviewController {
 
     }
 
+    @Operation(summary = "팀리뷰 목록 조회")
     @GetMapping("/cas/teamReview/{tid}")
     public ResponseEntity<List<TeamReviewForGet>> findTeamReviewByTid(@PathVariable String tid,
                                                                       @RequestParam Integer page) {
@@ -112,6 +115,7 @@ public class CasTeamReviewController {
 
     }
 
+    @Operation(summary = "내가 등록한 팀리뷰 목록 조회")
     @GetMapping("/cas/teamReview/my/{reviewerTid}")
     public ResponseEntity<List<TeamReviewForGet>> findTeamReviewByReviewerTid(@PathVariable String reviewerTid,
                                                                               @RequestParam Integer page) {

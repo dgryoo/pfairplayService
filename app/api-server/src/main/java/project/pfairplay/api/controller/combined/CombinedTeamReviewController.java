@@ -1,5 +1,6 @@
 package project.pfairplay.api.controller.combined;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -46,9 +47,10 @@ public class CombinedTeamReviewController {
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
-    
-    
 
+
+
+    @Operation(summary = "팀리뷰 등록")
     @PostMapping("/combined/teamReview")
     public ResponseEntity<Void> createTeamReview(@RequestBody TeamReviewForPost teamReviewForPost) {
 
@@ -75,6 +77,7 @@ public class CombinedTeamReviewController {
 
     }
 
+    @Operation(summary = "팀리뷰 목록 조회")
     @GetMapping("/combined/teamReview/{tid}")
     public ResponseEntity<List<TeamReviewForGet>> findTeamReviewByTid(@PathVariable String tid,
                                                                       @RequestParam Integer page) {
@@ -114,6 +117,7 @@ public class CombinedTeamReviewController {
 
     }
 
+    @Operation(summary = "내가 등록한 팀리뷰 목록 조회")
     @GetMapping("/combined/teamReview/my/{reviewerTid}")
     public ResponseEntity<List<TeamReviewForGet>> findTeamReviewByReviewerTid(@PathVariable String reviewerTid,
                                                                               @RequestParam Integer page) {
@@ -165,6 +169,7 @@ public class CombinedTeamReviewController {
         
     }
 
+    @Operation(summary = "팀리뷰 좋아요 Up")
     @PutMapping("/combined/teamReview/inThumbsUp")
     public ResponseEntity<Void> increaseThumbsUpByTidAndReviewId(@RequestParam String reviewId) {
 
@@ -178,6 +183,7 @@ public class CombinedTeamReviewController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @Operation(summary = "팀리뷰 좋아요 Down")
     @PutMapping("/combined/teamReview/deThumbsUp")
     public ResponseEntity<Void> decreaseThumbsUpByTidAndReviewId(@RequestParam String reviewId) {
         TeamReviewThumbs teamReviewThumbs = TeamReviewThumbs.builder()
@@ -190,6 +196,7 @@ public class CombinedTeamReviewController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @Operation(summary = "팀리뷰 싫어요 Up")
     @PutMapping("/combined/teamReview/inThumbsDown")
     public ResponseEntity<Void> increaseThumbsDownByTidAndReviewId(@RequestParam String reviewId) {
         TeamReviewThumbs teamReviewThumbs = TeamReviewThumbs.builder()
@@ -202,6 +209,7 @@ public class CombinedTeamReviewController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @Operation(summary = "팀리뷰 싫어요 Down")
     @PutMapping("/combined/teamReview/deThumbsDown")
     public ResponseEntity<Void> decreaseThumbsDownByTidAndReviewId(@RequestParam String reviewId) {
         TeamReviewThumbs teamReviewThumbs = TeamReviewThumbs.builder()

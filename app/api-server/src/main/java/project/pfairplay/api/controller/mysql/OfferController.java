@@ -1,5 +1,6 @@
 package project.pfairplay.api.controller.mysql;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,7 @@ public class OfferController {
     @Autowired
     private MatchRepository matchRepository;
 
+    @Operation(summary = "매치에 참여 요청")
     @PostMapping("/offer")
     public ResponseEntity<Void> createOffer(@RequestBody OfferForPost offerForPost) {
 
@@ -72,6 +74,7 @@ public class OfferController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @Operation(summary = "매치 참여 요청 상세 조회")
     @GetMapping("/offer/{offerNo}")
     public ResponseEntity<OfferForGet> findByOfferNo(@PathVariable int offerNo) {
 
@@ -87,6 +90,7 @@ public class OfferController {
 
     }
 
+    @Operation(summary = "매치 참여 요청 삭제")
     @DeleteMapping("/offer/{offerNo}")
     public ResponseEntity<Void> deleteByOfferNo(@PathVariable int offerNo, @RequestParam String tid) {
 
@@ -106,6 +110,7 @@ public class OfferController {
 
     }
 
+    @Operation(summary = "매치 참여 요청 수락")
     @PutMapping("/offer/accept/{offerNo}")
     public ResponseEntity<Void> acceptOfferByOfferNo(@PathVariable int offerNo, @RequestParam String tid) {
 
@@ -140,6 +145,7 @@ public class OfferController {
 
     }
 
+    @Operation(summary = "매치 참여 요청 거절")
     @PutMapping("/offer/reject/{offerNo}")
     public ResponseEntity<Void> rejectOfferByOfferNo(@PathVariable int offerNo, @RequestParam String tid) {
 

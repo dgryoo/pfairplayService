@@ -95,6 +95,17 @@
         </dependency>
         <!-- Redis dependency end-->
 
+        <!-- Swagger dependency start-->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+        </dependency>
+        <!-- Swagger dependency end-->
+
     </dependencies>
 
 

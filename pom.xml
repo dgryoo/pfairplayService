@@ -141,6 +141,19 @@
             </dependency>
             <!-- Redis dependency end-->
 
+            <!-- Swagger dependency start-->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>1.5.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>1.5.2</version>
+            </dependency>
+            <!-- Swagger dependency end-->
+
         </dependencies>
     </dependencyManagement>
 
@@ -156,7 +169,6 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.11.3</version>
         </dependency>
-
     </dependencies>
 
 

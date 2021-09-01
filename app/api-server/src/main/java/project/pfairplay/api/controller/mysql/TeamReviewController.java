@@ -1,6 +1,7 @@
 package project.pfairplay.api.controller.mysql;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,7 @@ public class TeamReviewController {
     QTeamReviewCounterEntity qTeamReviewCounterEntity;
 
 
+    @Operation(summary = "팀 리뷰 등록")
     @PostMapping("/teamReview")
     public ResponseEntity<Void> createTeamReview(@RequestBody TeamReviewForPost teamReviewForPost) {
 
@@ -66,6 +68,7 @@ public class TeamReviewController {
 
     }
 
+    @Operation(summary = "팀 리뷰 조회")
     @GetMapping("/teamReview/tid")
     public ResponseEntity<List<TeamReviewForGet>> findTeamReviewListByTid(@RequestParam String tid,
                                                                           @RequestParam Integer page) {
@@ -113,6 +116,7 @@ public class TeamReviewController {
 
     }
 
+    @Operation(summary = "팀 리뷰 좋아요 Up")
     @PutMapping("/teamReview/inThumbsUp")
     public ResponseEntity<Void> increaseThumbsUpByTidAndReviewId(@RequestParam String reviewId) {
 
@@ -126,6 +130,7 @@ public class TeamReviewController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @Operation(summary = "팀 리뷰 좋아요 Down")
     @PutMapping("/teamReview/deThumbsUp")
     public ResponseEntity<Void> decreaseThumbsUpByTidAndReviewId(@RequestParam String reviewId) {
         TeamReviewThumbs teamReviewThumbs = TeamReviewThumbs.builder()
@@ -138,6 +143,7 @@ public class TeamReviewController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @Operation(summary = "팀 리뷰 싫어요 Up")
     @PutMapping("/teamReview/inThumbsDown")
     public ResponseEntity<Void> increaseThumbsDownByTidAndReviewId(@RequestParam String reviewId) {
         TeamReviewThumbs teamReviewThumbs = TeamReviewThumbs.builder()
@@ -150,6 +156,7 @@ public class TeamReviewController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @Operation(summary = "팀 리뷰 싫어요 Down")
     @PutMapping("/teamReview/deThumbsDown")
     public ResponseEntity<Void> decreaseThumbsDownByTidAndReviewId(@RequestParam String reviewId) {
         TeamReviewThumbs teamReviewThumbs = TeamReviewThumbs.builder()

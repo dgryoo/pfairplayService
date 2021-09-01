@@ -1,5 +1,6 @@
 package project.pfairplay.api.controller.mysql;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ public class MemberController {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Operation(summary = "멤버 조회")
     @GetMapping("/member/{uid}")
     public ResponseEntity<MemberForGet> findByUid(@PathVariable String uid) {
         Optional<MemberEntity> memberEntity = memberRepository.findById(uid);
@@ -31,10 +33,10 @@ public class MemberController {
         if (!memberEntity.isPresent()) {
             throw new SourceNotFoundException(String.format("UID{%s} not found", uid));
         }
-        System.out.println("왜안대냐");
         return ResponseEntity.status(HttpStatus.OK).body(MemberForGet.from(memberEntity.get()));
     }
 
+    @Operation(summary = "멤버 등록")
     @PostMapping("/member")
     public ResponseEntity<Void> createMember(@RequestBody MemberForPost memberForPost) {
         EntityFieldValueChecker.checkMemberPostFieldValue(memberForPost);
@@ -46,6 +48,7 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @Operation(summary = "멤버 수정")
     @PutMapping("/member/{uid}")
     public ResponseEntity<Void> updateByUid(@PathVariable String uid, @RequestBody MemberForPut memberForPut) {
         Optional<MemberEntity> memberEntity = memberRepository.findById(uid);
@@ -69,6 +72,7 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @Operation(summary = "멤버 삭제")
     @DeleteMapping("/member/{uid}")
     public ResponseEntity<Void> deleteByUid(@PathVariable String uid) {
 
@@ -81,6 +85,7 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @Operation(summary = "특정 팀에 등록된 멤버 조회")
     @GetMapping("/member/team/{tid}")
     public ResponseEntity<List<MemberForGet>> findMemberListByTid(@PathVariable String tid) {
         List<MemberEntity> memberEntityList = memberRepository.findByMemberTeamIdTid(tid);
