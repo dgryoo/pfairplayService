@@ -1,5 +1,6 @@
 package project.pfairplay.api.controller.mysql;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,7 @@ public class NeedTeamArticleController {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Operation(summary = "팀을 구하는 글 작성")
     @PostMapping("/needTeamArticle")
     public ResponseEntity<Void> createNeedTeamArticle(@RequestBody NeedTeamArticleForPost needTeamArticle) {
         EntityFieldValueChecker.checkNeedTeamArticlePostFieldValue(needTeamArticle);
@@ -45,6 +47,7 @@ public class NeedTeamArticleController {
 
     }
 
+    @Operation(summary = "팀을 구하는 글 목록 조회")
     @GetMapping("/needTeamArticle")
     public ResponseEntity<List<SummarizedNeedTeamArticle>> findAll() {
         List<NeedTeamArticleEntity> needTeamArticleEntityList = needTeamArticleRepository.findAll();
@@ -62,6 +65,7 @@ public class NeedTeamArticleController {
 
     }
 
+    @Operation(summary = "팀을 구하는 글 상세 조회")
     @GetMapping("/needTeamArticle/{articleNo}")
     public ResponseEntity<NeedTeamArticleForGet> findByArticleNo(@PathVariable int articleNo) {
         Optional<NeedTeamArticleEntity> needTeamArticleEntity = needTeamArticleRepository.findById(articleNo);
@@ -75,6 +79,7 @@ public class NeedTeamArticleController {
         return ResponseEntity.status(HttpStatus.OK).body(NeedTeamArticleForGet.from(needTeamArticleEntity.get()));
     }
 
+    @Operation(summary = "팀을 구하는 글 삭제")
     @DeleteMapping("/needTeamArticle/{articleNo}")
     public ResponseEntity<Void> deleteByArticleNo(@PathVariable int articleNo, @RequestParam String uid) {
         Optional<NeedTeamArticleEntity> needTeamArticleEntity = needTeamArticleRepository.findById(articleNo);
@@ -92,6 +97,7 @@ public class NeedTeamArticleController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @Operation(summary = "팀을 구하는 글 수정")
     @PutMapping("/needTeamArticle/{articleNo}")
     public ResponseEntity<Void> updateByArticleNo(@PathVariable int articleNo, @RequestBody NeedTeamArticleForPut needTeamArticleModifier) {
 

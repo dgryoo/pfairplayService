@@ -1,6 +1,7 @@
 package project.pfairplay.api.controller.redis;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -36,6 +37,7 @@ public class RdsTeamReviewController {
 
     QTeamReviewEntity qTeamReviewEntity = QTeamReviewEntity.teamReviewEntity;
 
+    @Operation(summary = "팀리뷰 목록 조회")
     @GetMapping("/redis/teamReview/tid")
     public ResponseEntity<List<TeamReviewForGet>> findTeamReviewListByTid(@RequestParam String tid,
                                                                     @RequestParam Integer page) {
@@ -77,6 +79,7 @@ public class RdsTeamReviewController {
 
     }
 
+    @Operation(summary = "팀리뷰 좋아요 Up")
     @PutMapping("/redis/teamReview/inThumbsUp")
     public ResponseEntity<Void> increaseThumbsUpByTidAndReviewId(@RequestParam String reviewId) {
 
@@ -87,6 +90,7 @@ public class RdsTeamReviewController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @Operation(summary = "팀리뷰 좋아요 Down")
     @PutMapping("/redis/teamReview/deThumbsUp")
     public ResponseEntity<Void> decreaseThumbsUpByTidAndReviewId(@RequestParam String reviewId) {
 
@@ -97,6 +101,7 @@ public class RdsTeamReviewController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @Operation(summary = "팀리뷰 싫어요 Up")
     @PutMapping("/redis/teamReview/inThumbsDown")
     public ResponseEntity<Void> increaseThumbsDownByTidAndReviewId(@RequestParam String reviewId) {
 
@@ -107,6 +112,7 @@ public class RdsTeamReviewController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @Operation(summary = "팀리뷰 좋아요 Down")
     @PutMapping("/redis/teamReview/deThumbsDown")
     public ResponseEntity<Void> decreaseThumbsDownByTidAndReviewId(@RequestParam String reviewId) {
 

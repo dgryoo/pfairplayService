@@ -1,5 +1,6 @@
 package project.pfairplay.api.controller.mysql;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,7 @@ public class MemberTeamController {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Operation(summary = "팀에 멤버 등록")
     @PostMapping("/memberTeam")
     public ResponseEntity<Void> createMemberTeam(@RequestBody MemberTeamId memberTeamId) {
         Optional<TeamEntity> teamEntity = teamRepository.findById(memberTeamId.getTid());
@@ -56,6 +58,7 @@ public class MemberTeamController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @Operation(summary = "팀에서 멤버 방출")
     @DeleteMapping("/memberTeam")
     public ResponseEntity<Void> deleteMemberTeam(@RequestBody MemberTeamId memberTeamId) {
 

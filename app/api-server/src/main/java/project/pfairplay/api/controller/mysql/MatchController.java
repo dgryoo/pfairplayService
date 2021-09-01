@@ -5,6 +5,7 @@ import com.querydsl.core.types.dsl.DateTemplate;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,6 +62,7 @@ public class MatchController {
 
     final int limitValue = 20;
 
+    @Operation(summary = "매치 등록")
     @PostMapping("/match")
     public ResponseEntity<Void> createMatch(@RequestBody @Valid MatchForPost matchForPost) {
 
@@ -91,6 +93,7 @@ public class MatchController {
 
     }
 
+    @Operation(summary = "매치 조회")
     @GetMapping("/match/{matchNo}")
     public ResponseEntity<MatchForGet> findByMatchNo(@PathVariable Integer matchNo) {
 
@@ -105,6 +108,7 @@ public class MatchController {
 
     }
 
+    @Operation(summary = "매치 정보 수정")
     @PutMapping("/match/{matchNo}")
     public ResponseEntity<Void> updateByMatchNo(@PathVariable Integer matchNo,
                                                 @RequestBody MatchForPut matchForPut) {
@@ -148,6 +152,7 @@ public class MatchController {
 
     }
 
+    @Operation(summary = "매치 삭제")
     @DeleteMapping("/match/{matchNo}")
     public ResponseEntity<Void> deleteByMatchNo(@PathVariable Integer matchNo,
                                                 @RequestParam @NotBlank String tid) {
@@ -170,26 +175,7 @@ public class MatchController {
 
     }
 
-//    @GetMapping("/match/recommend/{tid}")
-//    public ResponseEntity<List<MatchForGet>> recommendMatch(@PathVariable String tid) {
-//
-//        // 해당 tid의 Team이 있는지 확인
-//        Optional<TeamEntity> teamEntity = teamRepository.findById(tid);
-//        if (!teamEntity.isPresent()) {
-//            throw new SourceNotFoundException(String.format("tid{%s} not found", tid));
-//        }
-//
-//        List<MatchEntity> matchEntityList = matchRepository.findAll();
-//
-//        List<MatchForGet> recommendMatchList = matchEntityList.stream()
-//                .filter(matchEntity -> matchEntity.getOwnerTeam().getTeamLeadMember().getLevel()
-//                        == teamEntity.get().getTeamLeadMember().getLevel())
-//                .map(MatchForGet::from)
-//                .collect(Collectors.toList());
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(recommendMatchList);
-//    }
-
+    @Operation(summary = "날짜 조건으로 매치 조회 ")
     @GetMapping("/match/specificDate")
     public ResponseEntity<List<MatchForGet>> findMatchListBySpecificDate(@RequestParam Date date,
                                                                          @RequestParam String state,
@@ -228,6 +214,7 @@ public class MatchController {
 
     }
 
+    @Operation(summary = "월, 요일 조건으로 매치 조회")
     @GetMapping("/match/conditions")
     public ResponseEntity<List<MatchForGet>> findByConditions(@RequestParam @Min(1) @Max(12) Integer month,
                                                               @RequestParam String dayOfWeek,
@@ -271,6 +258,7 @@ public class MatchController {
 
     }
 
+    @Operation(summary = "월, 요일 조건으로 매치 조회")
     @GetMapping("/match/conditions/querydsl")
     public ResponseEntity<List<MatchForGet>> querydslFindByConditions(@RequestParam
                                                                       @Min(value = 1, message = "MONTH01")
@@ -334,6 +322,7 @@ public class MatchController {
 
     }
 
+    @Operation(summary = "종료된 매치에 점수 등록")
     @PutMapping("/match/score/{matchNo}")
     public ResponseEntity<Void> ScoreToMatch(@PathVariable Integer matchNo,
                                              @RequestParam Integer ownerScore,

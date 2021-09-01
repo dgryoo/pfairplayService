@@ -1,5 +1,6 @@
 package project.pfairplay.api.controller.mysql;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ public class TeamController {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Operation(summary = "팀 조회")
     @GetMapping("/team/{tid}")
     public ResponseEntity<TeamForGet> findByTid(@PathVariable String tid) {
         Optional<TeamEntity> teamEntity = teamRepository.findById(tid);
@@ -40,6 +42,7 @@ public class TeamController {
         return ResponseEntity.status(HttpStatus.OK).body(TeamForGet.from(teamEntity.get()));
     }
 
+    @Operation(summary = "팀 등록")
     @PostMapping("/team")
     public ResponseEntity<Void> createTeam(@RequestBody TeamForPost teamForPost) {
 
@@ -61,6 +64,7 @@ public class TeamController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @Operation(summary = "팀 정보 수정")
     @PutMapping("/team/{tid}")
     public ResponseEntity<Void> updateTeamByTid(@PathVariable String tid, @RequestBody TeamForPut teamForPut) {
 
@@ -83,6 +87,7 @@ public class TeamController {
 
     }
 
+    @Operation(summary = "팀 삭제")
     @DeleteMapping("/team/{tid}")
     public ResponseEntity<Void> deleteByTid(@PathVariable String tid, @RequestParam String uid) {
         Optional<TeamEntity> teamEntity = teamRepository.findById(tid);
@@ -101,6 +106,7 @@ public class TeamController {
 
     }
 
+    @Operation(summary = "멤버가 가입된 팀 목록 조회")
     @GetMapping("/team/member/{uid}")
     public ResponseEntity<List<TeamForGet>> findTeamListByUid(@PathVariable String uid) {
         List<TeamEntity> teamEntityList = teamRepository.findByMemberTeamIdUid(uid);
@@ -113,6 +119,7 @@ public class TeamController {
         return ResponseEntity.status(HttpStatus.OK).body(teamList);
     }
 
+    @Operation(summary = "매치 상대팀 추천")
     @PatchMapping("/team/recommend/{tid}")
     public ResponseEntity<Void> recommendTeam(@PathVariable String tid) {
         // tid의 TeamEntity가 존재하는지 확인
