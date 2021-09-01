@@ -48,6 +48,9 @@
 ##  Counter Server (Consumer)
 * [Counter Server](https://github.com/dgryoo/pfairplayService/tree/main/app/counter-server)
 
+##  Batch Server (By Linux Crontab)
+* [Batch-server](https://github.com/dgryoo/pfairplayService/tree/main/app/batch-server)
+
 ##  Storage Module
 * [Mysql](https://github.com/dgryoo/pfairplayService/tree/main/storage/mysql)
 * [Cassandra](https://github.com/dgryoo/pfairplayService/tree/main/storage/cassandra)
