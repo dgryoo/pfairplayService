@@ -55,7 +55,14 @@
 * [Kafka](https://github.com/dgryoo/pfairplayService/tree/main/storage/kafka)
 
 ## Database design
-![pfairplay_table](https://user-images.githubusercontent.com/59459120/131523175-6d55ee6e-d55f-41dd-befa-4816160c0a64.png)
+![pfairplay_table](https://user-images.githubusercontent.com/59459120/131725335-ac4df751-55b5-42ee-aa61-4791496a6ecb.png)
 
-## Rest API 문서
+## Key Issues
 
+* [Multiple Condition Filtering API](https://github.com/dgryoo/pfairplayService/issues/79)
+* [Countermeasure for Big data in review](https://github.com/dgryoo/pfairplayService/issues/80)
+* [Race Condition, when count Up/Down](https://github.com/dgryoo/pfairplayService/issues/81)
+
+## Rest API Document
+
+* [PFairplay API Document](https://github.com/dgryoo/pfairplayService/issues/83)
